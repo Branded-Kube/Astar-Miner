@@ -7,5 +7,6 @@ namespace Vupa
     class TestClass
     {
         //hej gunnar
+        //Goddav Bjarne
     }
 }
