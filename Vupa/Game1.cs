@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Vupa
 {
@@ -8,6 +9,8 @@ namespace Vupa
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        Grid[,] grid;
 
         public Game1()
         {
@@ -20,6 +23,8 @@ namespace Vupa
         {
             // TODO: Add your initialization logic here
 
+            grid = new Grid[10, 10];
+
             base.Initialize();
         }
 
@@ -27,6 +32,13 @@ namespace Vupa
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            for (int x = 0; x < grid.GetLength(0); x++)
+            {
+                for (int y = 0; y < grid.GetLength(1); y++)
+                {
+                    grid[x, y] = new Grid(Content.Load<Texture2D>("dirt2"), new Rectangle());
+                }
+            }
             // TODO: use this.Content to load your game content here
         }
 
@@ -43,6 +55,24 @@ namespace Vupa
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            _spriteBatch.Begin();
+
+            for (int x = 0; x < grid.GetLength(0); x++)
+            {
+                for (int y = 0; y < grid.GetLength(1); y++)
+                {
+                    if (grid[x, y] != null)
+                    {
+                        int size = 36;
+                        Vector2 position = new Vector2(x * size, y * size);
+                        grid[x, y].Draw(_spriteBatch, position);
+                        Console.WriteLine("something");
+
+                    }
+                }
+            }
+
+            _spriteBatch.End();
 
             // TODO: Add your drawing code here
 
