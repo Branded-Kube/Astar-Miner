@@ -81,11 +81,11 @@ namespace Vupa
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             cellImage = Content.Load<Texture2D>("dirt");
-            agentTexture = Content.Load<Texture2D>("worker");
-
+            agentTexture = Content.Load<Texture2D>("worker2");
 
 
             agent = new Unit(agentTexture, startLoc, a_star);
+            
 
         }
 
@@ -105,8 +105,10 @@ namespace Vupa
                 endLoc.X = (int)mClick.X / 50;
                 endLoc.Y = (int)mClick.Y / 50;
             }
+
             agent.setDestination(startLoc.X, startLoc.Y, endLoc.X, endLoc.Y);
-            base.Update(gameTime);
+            //base.Update(gameTime);
+
             agent.Update(gameTime);
             base.Update(gameTime);
         }
