@@ -31,7 +31,7 @@ namespace Vupa
         private bool options = true;
         private Texture2D button;
 
-        Grid[,] grid;
+        
 
         private A_Star a_star;
 
@@ -107,11 +107,23 @@ namespace Vupa
 
             cellImage = Content.Load<Texture2D>("dirt");
             agentTexture = Content.Load<Texture2D>("worker");
-
+            font = Content.Load<SpriteFont>("font");
+            button = Content.Load<Texture2D>("Btn");
 
 
             agent = new Unit(agentTexture, startLoc, a_star);
 
+
+            buttonSearchMethod = new Button(40, 400, "How do ye wish to search?", button);
+            buttonDFS = new Button(300, 400, "DFS", button);
+            buttonBFS = new Button(350, 400, "BFS", button);
+            buttonStartSearch = new Button(500, 50, "Start search", button);
+
+            buttonDFS.Click += DFS_Click;
+            buttonBFS.Click += BFS_Click;
+            buttonSearchMethod.Click += ButtonSearchMethod_Click;
+
+            buttonlist.Add(buttonSearchMethod);
         }
 
         private void ButtonStartSearch_Click(object sender, EventArgs e)
@@ -225,14 +237,14 @@ namespace Vupa
             }
             foreach (var item in buttonlist)
             {
-                item.Draw(_spriteBatch);
+                item.Draw(spriteBatch);
             }
 
             for (int i = 0; i < agent.a_star.Path.Count; i++)
             {
                 spriteBatch.Draw(cellImage, new Vector2(agent.a_star.Path[i].X * 50, agent.a_star.Path[i].Y * 50), Color.Yellow);
             }
-            _spriteBatch.DrawString(font, $"Selected search method:  {chosenOption}", new Vector2(500, 0), Color.Black);
+            spriteBatch.DrawString(font, $"Selected search method:  {chosenOption}", new Vector2(500, 0), Color.Black);
 
             spriteBatch.Draw(cellImage, new Vector2(startLoc.X * 50, startLoc.Y * 50), Color.Green);
             spriteBatch.Draw(cellImage, new Vector2(endLoc.X * 50, endLoc.Y * 50), Color.Red);
