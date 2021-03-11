@@ -31,6 +31,7 @@ namespace Vupa
             graphics.PreferredBackBufferWidth = 500;
             graphics.PreferredBackBufferHeight = 500;
             this.IsMouseVisible = true;
+            graphics.ApplyChanges();
         }
 
         protected override void Initialize()
