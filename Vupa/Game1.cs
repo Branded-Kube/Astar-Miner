@@ -1,6 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 
 namespace Vupa
@@ -12,6 +17,21 @@ namespace Vupa
         private Texture2D cellImage;
 
         private Texture2D agentTexture;
+        public static SpriteFont font;
+
+        private List<Button> buttonlist;
+        private List<Button> buttonlistDel;
+        private List<Button> buttonlistAdd;
+        private Button buttonDFS;
+        private Button buttonBFS;
+        private Button buttonSearchMethod;
+        private Button buttonStartSearch;
+
+        private string chosenOption;
+        private bool options = true;
+        private Texture2D button;
+
+        Grid[,] grid;
 
         private A_Star a_star;
 
@@ -32,6 +52,11 @@ namespace Vupa
             graphics.PreferredBackBufferHeight = 500;
             this.IsMouseVisible = true;
             graphics.ApplyChanges();
+            IsMouseVisible = true;
+
+            buttonlist = new List<Button>();
+            buttonlistDel = new List<Button>();
+            buttonlistAdd = new List<Button>();
         }
 
         protected override void Initialize()
@@ -89,6 +114,57 @@ namespace Vupa
 
         }
 
+        private void ButtonStartSearch_Click(object sender, EventArgs e)
+        {
+        
+            if (chosenOption == "DFS")
+            {
+                //TODO DFS stuff
+            }
+
+            else if (chosenOption == "BFS")
+            {
+                //TODO BFS stuff
+            }
+        }
+
+        private void ButtonSearchMethod_Click(object sender, EventArgs e)
+        {
+            if (options == true)
+            {
+                buttonlistAdd.Add(buttonDFS);
+                buttonlistAdd.Add(buttonBFS);
+                Debug.WriteLine("Options unlocked");
+
+                options = false;
+            }
+
+            else if(options == false)
+            {
+                buttonlistDel.Add(buttonDFS);
+                buttonlistDel.Add(buttonBFS);
+
+                buttonlistDel.Add(buttonStartSearch);
+
+                buttonlistAdd.Clear();
+                options = true;
+            }
+            
+
+        }
+        private void DFS_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Using DFS");
+            chosenOption = "DFS";
+            buttonlistAdd.Add(buttonStartSearch);
+        }
+        private void BFS_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Using BFS");
+            chosenOption = "BFS";
+            buttonlistAdd.Add(buttonStartSearch);
+        }
+
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
@@ -106,6 +182,27 @@ namespace Vupa
                 endLoc.Y = (int)mClick.Y / 50;
             }
             agent.setDestination(startLoc.X, startLoc.Y, endLoc.X, endLoc.Y);
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();
+
+
+            foreach (var item in buttonlistDel)
+            {
+                buttonlist.Remove(item);
+            }
+
+            foreach (var item in buttonlistAdd)
+            {
+                buttonlist.Add(item);
+
+            }
+
+            foreach (var item in buttonlist)
+            {
+                item.Update();
+
+            }
+
             base.Update(gameTime);
             agent.Update(gameTime);
             base.Update(gameTime);
@@ -126,11 +223,16 @@ namespace Vupa
                         spriteBatch.Draw(cellImage, new Vector2(x * 50, y * 50), Color.DarkGray);
                 }
             }
+            foreach (var item in buttonlist)
+            {
+                item.Draw(_spriteBatch);
+            }
 
             for (int i = 0; i < agent.a_star.Path.Count; i++)
             {
                 spriteBatch.Draw(cellImage, new Vector2(agent.a_star.Path[i].X * 50, agent.a_star.Path[i].Y * 50), Color.Yellow);
             }
+            _spriteBatch.DrawString(font, $"Selected search method:  {chosenOption}", new Vector2(500, 0), Color.Black);
 
             spriteBatch.Draw(cellImage, new Vector2(startLoc.X * 50, startLoc.Y * 50), Color.Green);
             spriteBatch.Draw(cellImage, new Vector2(endLoc.X * 50, endLoc.Y * 50), Color.Red);
