@@ -8,6 +8,8 @@ namespace Vupa
 {
     class Grid
     {
+        private VisualManager visualManager;
+
         Texture2D texture;
         Rectangle rectangle;
 
@@ -15,6 +17,8 @@ namespace Vupa
         {
             texture = newTexture;
             rectangle = newRectangle;
+            //visualManager = new VisualManager(, this.DisplayRectangle);
+
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 position)

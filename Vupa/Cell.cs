@@ -1,19 +1,20 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 
-namespace AStarExample
+namespace Vupa
 {
     enum CellType { START, GOAL, WALL, EMPTY };
 
     class Cell
     {
-        private Image sprite;
+        private Texture2D sprite;
 
         private Point myPos;
 
@@ -71,40 +72,51 @@ namespace AStarExample
             walkAble = true;
 
             myColor = Color.White;
+            
+            LoadContent(Game1.content);
         }
 
-        public void Render(Graphics dc)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            dc.FillRectangle(new SolidBrush(myColor), BoundingRectangle);
-            dc.DrawRectangle(new Pen(Color.Black), BoundingRectangle);
+           // spriteBatch.FillRectangle(new SolidBrush(myColor), BoundingRectangle);
+           // spriteBatch.DrawRectangle(new Pen(Color.Black), BoundingRectangle);
             if (sprite != null)
             {
-                dc.DrawImage(sprite, BoundingRectangle);
+                spriteBatch.Draw(sprite, BoundingRectangle, MyColor);
             }
             if (myNode != null)
             {
                 if (myNode.Parent != null)
                 {
-                    dc.DrawString(string.Format("{0}", "P: " + myNode.Parent.Position.ToString()), new Font("Arial", 7, FontStyle.Bold), new SolidBrush(Color.Black), myPos.X * cellSize, myPos.Y * cellSize);
+                    spriteBatch.DrawString(Game1.font, string.Format("{0}", "P: " + myNode.Parent.Position.ToString()), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize)+ 15), Color.Black);
+
                 }
 
-                dc.DrawString(string.Format("{0}", "F:" + myNode.F), new Font("Arial", 7, FontStyle.Bold), new SolidBrush(Color.Black), myPos.X * cellSize, (myPos.Y * cellSize) + 25);
-                dc.DrawString(string.Format("{0}", "G:" + myNode.G), new Font("Arial", 7, FontStyle.Bold), new SolidBrush(Color.Black), myPos.X * cellSize, (myPos.Y * cellSize) + 40);
-                dc.DrawString(string.Format("{0}", "H:" + myNode.H), new Font("Arial", 7, FontStyle.Bold), new SolidBrush(Color.Black), myPos.X * cellSize, (myPos.Y * cellSize) + 55);
+                spriteBatch.DrawString(Game1.font, string.Format("{0}", "F:" + myNode.F), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 30), Color.Black );
+                spriteBatch.DrawString(Game1.font, string.Format("{0}", "G:" + myNode.G), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 45), Color.Black);
+                spriteBatch.DrawString(Game1.font, string.Format("{0}", "H:" + myNode.H), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 60), Color.Black);
+
 
             }
 
-            dc.DrawString(string.Format("{0}", myPos), new Font("Arial", 7, FontStyle.Bold), new SolidBrush(Color.Black), myPos.X * cellSize, (myPos.Y * cellSize) + 10);
+            spriteBatch.DrawString(Game1.font, string.Format("{0}", myPos), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) ), Color.Black );
 
 
         }
 
-        public void Click(ref CellType clickType)
+       public void LoadContent(ContentManager content)
+        {
+            sprite = Game1.content.Load<Texture2D>("dirt2");
+
+        }
+        public void Click(ref CellType clickType, ContentManager content)
         {
 
             if (clickType == CellType.START)
             {
-                sprite = Image.FromFile(@"Images\Start.png");
+                //sprite = Image.FromFile(@"Images\Start.png");
+                sprite = content.Load<Texture2D>("worker");
+
                 myType = clickType;
                 clickType = CellType.GOAL;
                 VisualManager.start = MyPos;
@@ -112,7 +124,9 @@ namespace AStarExample
             }
             else if (clickType == CellType.GOAL && myType != CellType.START)
             {
-                sprite = Image.FromFile(@"Images\Goal.png");
+                //sprite = Image.FromFile(@"Images\Goal.png");
+                sprite = content.Load<Texture2D>("worker");
+
                 clickType = CellType.WALL;
                 myType = CellType.GOAL;
                 VisualManager.goal = MyPos;
@@ -120,9 +134,12 @@ namespace AStarExample
             }
             else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
             {
-                sprite = Image.FromFile(@"Images\Wall.png");
+                //sprite = Image.FromFile(@"Images\Wall.png");
+                sprite = content.Load<Texture2D>("dirt");
                 myType = CellType.WALL;
                 WalkAble = false;
+                myColor = Color.White;
+
             }
         }
     }

@@ -1,17 +1,20 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AStarExample
+namespace Vupa
 {
     class VisualManager
     {
         //Handeling of graphics
-        private BufferedGraphics backBuffer;
-        private Graphics dc;
+        //private BufferedGraphics backBuffer;
+        //private Graphics dc;
+     
         private Rectangle displayRectangle;
 
         //Handeling of nodes
@@ -22,6 +25,10 @@ namespace AStarExample
         private int cellCount;
 
         AStar aStar;
+
+        private MouseState mouseCurrent;
+        private MouseState mouseLast;
+        private Rectangle mouseRectangle;
 
         private CellType clickType;
 
@@ -36,13 +43,13 @@ namespace AStarExample
             set { grid = value; }
         }
 
-        public VisualManager(Graphics dc, Rectangle displayRectangle)
+        public VisualManager(SpriteBatch spriteBatch, Rectangle displayRectangle)
         {
             //Create's (Allocates) a buffer in memory with the size of the display
-            this.backBuffer = BufferedGraphicsManager.Current.Allocate(dc, displayRectangle);
+           // this.backBuffer = BufferedGraphicsManager.Current.Allocate(dc, displayRectangle);
 
             //Sets the graphics context to the graphics in the buffer
-            this.dc = backBuffer.Graphics;
+            //this.dc = backBuffer.Graphics;
 
             //Sets the displayRectangle
             this.displayRectangle = displayRectangle;
@@ -54,18 +61,20 @@ namespace AStarExample
             CreateGrid();
         }
 
-        public void Render()
+        public void Render(SpriteBatch spriteBatch)
         {
-            dc.Clear(Color.White);
+            //dc.Clear(Color.White);
 
             foreach (Cell cell in grid)
             {
-                cell.Render(dc);
+                cell.Draw(spriteBatch);
             }
 
             //Renders the content of the buffered graphics context to the real context(Swap buffers)
-            backBuffer.Render();
+            //backBuffer.Render();
         }
+
+      
 
         public void FindPath()
         {
@@ -75,17 +84,41 @@ namespace AStarExample
 
         }
 
-        public void ClickCell(Point mousePos)
+        public void Update()
         {
+            mouseLast = mouseCurrent;
+            mouseCurrent = Mouse.GetState();
+            mouseRectangle = new Rectangle(mouseCurrent.X, mouseCurrent.Y, 1, 1);
+
             foreach (Cell cell in grid)
             {
-                if (cell.BoundingRectangle.IntersectsWith(new Rectangle(mousePos, new Size(1, 1))))
+                //if (cell.BoundingRectangle.IntersectsWith(new Rectangle(mousePos, new Size(1, 1))))
+                if (cell.BoundingRectangle.Intersects(mouseRectangle))
                 {
-                    cell.Click(ref clickType);
+                    if (mouseLast.LeftButton == ButtonState.Pressed && mouseCurrent.LeftButton == ButtonState.Released)
+                    {
+                        cell.Click(ref clickType, Game1.content);
+
+                    }
                 }
+
 
             }
         }
+        
+        //public void ClickCell(Point mousePos)
+        //{
+
+        //    foreach (Cell cell in grid)
+        //    {
+        //        //if (cell.BoundingRectangle.IntersectsWith(new Rectangle(mousePos, new Size(1, 1))))
+        //        if (cell.BoundingRectangle.Intersects(new Rectangle(mousePos.X,mousePos.Y, 1, 1)))
+        //        {
+        //            cell.Click(ref clickType);
+        //        }
+
+        //    }
+        //}
 
         public void CreateGrid()
         {
@@ -122,19 +155,21 @@ namespace AStarExample
 
         public void ColorNodes()
         {
-            foreach (Cell item in grid)
+
+
+            foreach (Cell cell in grid)
             {
-                if (aStar.Open.Exists(x => x.Position == item.MyPos) && item.MyPos != start && item.MyPos != goal)
+                if (aStar.Open.Exists(x => x.Position == cell.MyPos) && cell.MyPos != start && cell.MyPos != goal)
                 {
-                    item.MyColor = Color.CornflowerBlue;
+                    cell.MyColor = Color.CornflowerBlue;
                 }
-                if (aStar.Closed.Exists(x => x.Position == item.MyPos) && item.MyPos != start && item.MyPos != goal)
+                if (aStar.Closed.Exists(x => x.Position == cell.MyPos) && cell.MyPos != start && cell.MyPos != goal)
                 {
-                    item.MyColor = Color.Orange;
+                    cell.MyColor = Color.Orange;
                 }
-                if (finalPath.Exists(x => x.Position == item.MyPos) && item.MyPos != start && item.MyPos != goal)
+                if (finalPath.Exists(x => x.Position == cell.MyPos) && cell.MyPos != start && cell.MyPos != goal)
                 {
-                    item.MyColor = Color.GreenYellow;
+                    cell.MyColor = Color.Green;
                 }
             }
         }
