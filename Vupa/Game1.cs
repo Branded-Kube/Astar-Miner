@@ -41,15 +41,9 @@ namespace Vupa
 
         private MouseState mClick;
 
-       
 
         public Point startLoc = new Point(3, 4);
         public Point endLoc = new Point(9, 9);
-
-
-
-
-       
 
 
         public Game1()
@@ -71,7 +65,7 @@ namespace Vupa
           //  grid = new Grid[10, 10]; 
 
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
-            _graphics.PreferredBackBufferWidth = 1200;
+            _graphics.PreferredBackBufferWidth = 2000;
             _graphics.PreferredBackBufferHeight = 900;
             _graphics.ApplyChanges();
             base.Initialize();
@@ -86,7 +80,7 @@ namespace Vupa
             font = Content.Load<SpriteFont>("font");
 
             button = Content.Load<Texture2D>("Btn");
-            buttonSearchMethod = new Button(550, 400, "How do ye wish to search?", button);
+            buttonSearchMethod = new Button(1100, 0, "How do ye wish to search?", button);
             buttonDFS = new Button(600, 300, "DFS", button);
             buttonBFS = new Button(600, 350, "BFS", button);
             buttonStartSearch = new Button(550, 50, "Start search", button);
@@ -249,8 +243,6 @@ namespace Vupa
        
             //agent.Draw(_spriteBatch);
 
-
-            _spriteBatch.End();
             base.Draw(gameTime);
         }
 
