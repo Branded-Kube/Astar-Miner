@@ -75,7 +75,7 @@ namespace Vupa
         }
 
       
-
+        //colors in the nodes of the final path so the player can see the optimal route
         public void FindPath()
         {
             finalPath = aStar.FindPath(start, goal, CreateNodes());
@@ -84,6 +84,7 @@ namespace Vupa
 
         }
 
+        //checks if the mouse is hovering over a cell, and if the left mouse button has been clicked
         public void Update()
         {
             mouseLast = mouseCurrent;
@@ -120,6 +121,7 @@ namespace Vupa
         //    }
         //}
 
+        
         public void CreateGrid()
         {
             grid = new List<Cell>();
@@ -137,6 +139,7 @@ namespace Vupa
             }
         }
 
+        //creates a node for each individual cell in the grid, excluding the cells marked unwalkable
         public List<Node> CreateNodes()
         {
             List<Node> allNodes = new List<Node>();
@@ -153,6 +156,7 @@ namespace Vupa
             return allNodes;
         }
 
+        //colors in the nodes with  different colors to represent the open nodes, and the closed nodes that were evaluated, and the final path
         public void ColorNodes()
         {
 
