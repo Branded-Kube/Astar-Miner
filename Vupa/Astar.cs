@@ -31,6 +31,13 @@ namespace Vupa
             open = new List<Node>();
         }
 
+
+        //creates a list of nodes to put into the final path.
+        //sets the starting node as current node to have a position to evaluate other nodes from. 
+        //runs a while loop with nested for loops in, to check the x,y positions of ajacent nodes
+        //runs through the nodes around currentnode and gives them a G value of 10 if they are (up, down, left, right) or a G value of 14 if they are diagonal to currentnode
+        //
+
         public List<Node> FindPath(Point myStart, Point myGoal, List<Node> nodes)
         {
             Point start = myStart;

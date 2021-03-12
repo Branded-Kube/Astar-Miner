@@ -54,7 +54,7 @@ namespace Vupa
             set { myPos = value; }
         }
 
-
+        
         public Rectangle BoundingRectangle
         {
             get
@@ -110,13 +110,7 @@ namespace Vupa
 
         }
 
-        void Layout1()
-        {
-           
-    
-        }
-
-
+        //checks what type of click the player is using (start = put start point on clicked cell, goal = put goal point on clicked cell, wall = put wall on clicked cell)
         public void Click(ref CellType clickType, ContentManager content)
         {
 
