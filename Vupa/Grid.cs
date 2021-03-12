@@ -21,12 +21,12 @@ namespace Vupa
 
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
-        {
-            if (texture != null)
-            {
-                spriteBatch.Draw(texture, position, Color.White);
-            }
-        }
+//        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+//        {
+//            if (texture != null)
+//            {
+//                spriteBatch.Draw(texture, position, Color.White);
+//            }
+//        }
     }
 }
