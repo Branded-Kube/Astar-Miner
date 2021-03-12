@@ -33,15 +33,15 @@ namespace Vupa
         private bool options = true;
         private Texture2D button;
 
-        
+        Grid grid;
 
-        private A_Star a_star;
+        
 
         private Unit agent;
 
         private MouseState mClick;
 
-        public static Cell[,] cellInfo = new Cell[10, 10];
+       
 
         public Point startLoc = new Point(3, 4);
         public Point endLoc = new Point(9, 9);
@@ -49,12 +49,12 @@ namespace Vupa
 
 
 
-        public static SpriteFont font;
+       
 
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             content = Content;
             IsMouseVisible = true;
@@ -67,15 +67,8 @@ namespace Vupa
         protected override void Initialize()
         {
             // Create the tile objects in the array
-            for (int x = 0; x < cellInfo.GetLength(0); x++)
-            {
-                for (int y = 0; y < cellInfo.GetLength(0); y++)
-                {
-                    cellInfo[x, y] = new Cell();
-                }
-            }
 
-            grid = new Grid[10, 10];
+            grid = new Grid[10, 10]; 
 
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
             _graphics.PreferredBackBufferWidth = 1200;
@@ -104,6 +97,8 @@ namespace Vupa
             buttonStartSearch.Click += ButtonStartSearch_Click;
             buttonStartAstar.Click += ButtonStartAStar_Click;
             buttonlist.Add(buttonSearchMethod);
+        }
+
         private void ButtonStartAStar_Click(object sender, EventArgs e)
         {
             //TODO AStar starter
@@ -127,7 +122,7 @@ namespace Vupa
             else
             {
             }
-                Debug.WriteLine("No searching method chosen");
+            Debug.WriteLine("No searching method chosen");
         }
 
         private void ButtonSearchMethod_Click(object sender, EventArgs e)
@@ -141,7 +136,7 @@ namespace Vupa
                 options = false;
             }
 
-            else if(options == false)
+            else if (options == false)
             {
                 buttonlistDel.Add(buttonDFS);
                 buttonlistDel.Add(buttonBFS);
@@ -151,7 +146,7 @@ namespace Vupa
                 buttonlistAdd.Clear();
                 options = true;
             }
-            
+
 
         }
         private void DFS_Click(object sender, EventArgs e)
@@ -167,11 +162,13 @@ namespace Vupa
             buttonlistAdd.Add(buttonStartSearch);
         }
 
-       private void AgentMoving()
+        private void AgentMoving()
         {
-              
+
             agent.setDestination(startLoc.X, startLoc.Y, endLoc.X, endLoc.Y);
         }
+
+
 
         protected override void Update(GameTime gameTime)
         {
@@ -228,7 +225,7 @@ namespace Vupa
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
+            _spriteBatch.Begin();
 
             //for (int x = 0; x < grid.GetLength(0); x++)
             //{
@@ -249,12 +246,11 @@ namespace Vupa
 
             _spriteBatch.End();
 
-            spriteBatch.Draw(cellImage, new Vector2(startLoc.X * 50, startLoc.Y * 50), Color.Green);
-            spriteBatch.Draw(cellImage, new Vector2(endLoc.X * 50, endLoc.Y * 50), Color.Red);
-            agent.Draw(spriteBatch);
+       
+            agent.Draw(_spriteBatch);
 
 
-            spriteBatch.End();
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
 
