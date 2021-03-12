@@ -65,7 +65,7 @@ namespace Vupa
           //  grid = new Grid[10, 10]; 
 
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
-            _graphics.PreferredBackBufferWidth = 2000;
+            _graphics.PreferredBackBufferWidth = 1300;
             _graphics.PreferredBackBufferHeight = 900;
             _graphics.ApplyChanges();
             base.Initialize();
@@ -80,11 +80,11 @@ namespace Vupa
             font = Content.Load<SpriteFont>("font");
 
             button = Content.Load<Texture2D>("Btn");
-            buttonSearchMethod = new Button(1100, 0, "How do ye wish to search?", button);
-            buttonDFS = new Button(600, 300, "DFS", button);
-            buttonBFS = new Button(600, 350, "BFS", button);
-            buttonStartSearch = new Button(550, 50, "Start search", button);
-            buttonStartAstar = new Button(550, 100, "Start A*", button);
+            buttonSearchMethod = new Button(1050, 700, "How do ye wish to search?", button);
+            buttonDFS = new Button(1100, 300, "DFS", button);
+            buttonBFS = new Button(1100, 350, "BFS", button);
+            buttonStartSearch = new Button(1050, 50, "Start search", button);
+            buttonStartAstar = new Button(1050, 100, "Start A*", button);
             buttonDFS.Click += DFS_Click;
             buttonBFS.Click += BFS_Click;
             buttonSearchMethod.Click += ButtonSearchMethod_Click;
@@ -97,7 +97,7 @@ namespace Vupa
         {
             //TODO AStar starter
             Debug.WriteLine("A* starting");
-            AgentMoving();
+            visualManager.FindPath();
         }
         private void ButtonStartSearch_Click(object sender, EventArgs e)
         {
@@ -154,12 +154,6 @@ namespace Vupa
             Debug.WriteLine("Using BFS");
             chosenOption = "BFS";
             buttonlistAdd.Add(buttonStartSearch);
-        }
-
-        private void AgentMoving()
-        {
-
-           // agent.setDestination(startLoc.X, startLoc.Y, endLoc.X, endLoc.Y);
         }
 
 
@@ -220,22 +214,13 @@ namespace Vupa
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-
-            //for (int x = 0; x < grid.GetLength(0); x++)
-            //{
-            //    for (int y = 0; y < grid.GetLength(1); y++)
-            //    {
-            //        if (grid[x, y] != null)
-            //        {
-            //            int size = 36;
-            //            Vector2 position = new Vector2(x * size, y * size);
-            //            grid[x, y].Draw(_spriteBatch, position);
-            //            //Console.WriteLine("something");
-
-            //        }
-            //    }
-            //}
             visualManager.Render(_spriteBatch);
+
+            foreach (var item in buttonlist)
+            {
+                item.Draw(_spriteBatch);
+            }
+            _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 0), Color.Black);
 
 
             _spriteBatch.End();
