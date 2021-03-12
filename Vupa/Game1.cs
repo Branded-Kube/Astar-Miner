@@ -37,7 +37,7 @@ namespace Vupa
 
         
 
-        private Unit agent;
+        
 
         private MouseState mClick;
 
@@ -165,7 +165,7 @@ namespace Vupa
         private void AgentMoving()
         {
 
-            agent.setDestination(startLoc.X, startLoc.Y, endLoc.X, endLoc.Y);
+           // agent.setDestination(startLoc.X, startLoc.Y, endLoc.X, endLoc.Y);
         }
 
 
@@ -219,7 +219,7 @@ namespace Vupa
             
 
             base.Update(gameTime);
-            agent.Update(gameTime);
+            //agent.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -247,7 +247,7 @@ namespace Vupa
             _spriteBatch.End();
 
        
-            agent.Draw(_spriteBatch);
+            //agent.Draw(_spriteBatch);
 
 
             _spriteBatch.End();
