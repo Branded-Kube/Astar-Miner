@@ -33,7 +33,7 @@ namespace Vupa
         private bool options = true;
         private Texture2D button;
 
-        Grid grid;
+    //    Grid grid;
 
         
 
@@ -68,7 +68,7 @@ namespace Vupa
         {
             // Create the tile objects in the array
 
-            grid = new Grid[10, 10]; 
+          //  grid = new Grid[10, 10]; 
 
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
             _graphics.PreferredBackBufferWidth = 1200;
