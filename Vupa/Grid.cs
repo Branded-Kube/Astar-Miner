@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using Microsoft.Xna.Framework;
+//using Microsoft.Xna.Framework.Graphics;
+//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
 namespace Vupa
 {
@@ -21,12 +21,12 @@ namespace Vupa
 
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
-        {
-            if (texture != null)
-            {
-                spriteBatch.Draw(texture, position, Color.White);
-            }
-        }
-    }
-}
+//        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+//        {
+//            if (texture != null)
+//            {
+//                spriteBatch.Draw(texture, position, Color.White);
+//            }
+//        }
+//    }
+//}

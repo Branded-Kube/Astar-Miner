@@ -2,7 +2,11 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+
 
 namespace Vupa
 {
@@ -13,7 +17,34 @@ namespace Vupa
         public static ContentManager content;
         private VisualManager visualManager;
 
-        Grid[,] grid;
+        private Texture2D agentTexture;
+        public static SpriteFont font;
+
+        private List<Button> buttonlist;
+        private List<Button> buttonlistDel;
+        private List<Button> buttonlistAdd;
+        private Button buttonDFS;
+        private Button buttonBFS;
+        private Button buttonSearchMethod;
+        private Button buttonStartSearch;
+        private Button buttonStartAstar;
+
+        private string chosenOption;
+        private bool options = true;
+        private Texture2D button;
+
+        
+
+        private A_Star a_star;
+
+        private Unit agent;
+
+        private MouseState mClick;
+
+        public static Cell[,] cellInfo = new Cell[10, 10];
+
+        public Point startLoc = new Point(3, 4);
+        public Point endLoc = new Point(9, 9);
 
 
 
@@ -23,18 +54,28 @@ namespace Vupa
 
         public Game1()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             content = Content;
             IsMouseVisible = true;
 
+            buttonlist = new List<Button>();
+            buttonlistDel = new List<Button>();
+            buttonlistAdd = new List<Button>();
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // Create the tile objects in the array
+            for (int x = 0; x < cellInfo.GetLength(0); x++)
+            {
+                for (int y = 0; y < cellInfo.GetLength(0); y++)
+                {
+                    cellInfo[x, y] = new Cell();
+                }
+            }
 
-            //grid = new Grid[10, 10];
+            grid = new Grid[10, 10];
 
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
             _graphics.PreferredBackBufferWidth = 1200;
@@ -51,23 +92,107 @@ namespace Vupa
             //agentTexture = Content.Load<Texture2D>("worker");
             font = Content.Load<SpriteFont>("font");
 
+            button = Content.Load<Texture2D>("Btn");
+            buttonSearchMethod = new Button(550, 400, "How do ye wish to search?", button);
+            buttonDFS = new Button(600, 300, "DFS", button);
+            buttonBFS = new Button(600, 350, "BFS", button);
+            buttonStartSearch = new Button(550, 50, "Start search", button);
+            buttonStartAstar = new Button(550, 100, "Start A*", button);
+            buttonDFS.Click += DFS_Click;
+            buttonBFS.Click += BFS_Click;
+            buttonSearchMethod.Click += ButtonSearchMethod_Click;
+            buttonStartSearch.Click += ButtonStartSearch_Click;
+            buttonStartAstar.Click += ButtonStartAStar_Click;
+            buttonlist.Add(buttonSearchMethod);
+        private void ButtonStartAStar_Click(object sender, EventArgs e)
+        {
+            //TODO AStar starter
+            Debug.WriteLine("A* starting");
+            AgentMoving();
+        }
+        private void ButtonStartSearch_Click(object sender, EventArgs e)
+        {
+            if (chosenOption == "DFS")
+            {
+                //TODO DFS stuff
+                Debug.WriteLine("Starting DFS search");
+                buttonlistAdd.Add(buttonStartAstar);
+            }
+            else if (chosenOption == "BFS")
+            {
+                //TODO BFS stuff
+                Debug.WriteLine("Starting BFS search");
+                buttonlistAdd.Add(buttonStartAstar);
+            }
+            else
+            {
+            }
+                Debug.WriteLine("No searching method chosen");
+        }
 
+        private void ButtonSearchMethod_Click(object sender, EventArgs e)
+        {
+            if (options == true)
+            {
+                buttonlistAdd.Add(buttonDFS);
+                buttonlistAdd.Add(buttonBFS);
+                Debug.WriteLine("Options unlocked");
 
-            //for (int x = 0; x < grid.GetLength(0); x++)
-            //{
-            //    for (int y = 0; y < grid.GetLength(1); y++)
-            //    {
-            //        grid[x, y] = new Grid(Content.Load<Texture2D>("dirt2"), new Rectangle());
-            //    }
-            //}
-            // TODO: use this.Content to load your game content here
+                options = false;
+            }
 
-           
+            else if(options == false)
+            {
+                buttonlistDel.Add(buttonDFS);
+                buttonlistDel.Add(buttonBFS);
 
+                buttonlistDel.Add(buttonStartSearch);
+
+                buttonlistAdd.Clear();
+                options = true;
+            }
+            
+
+        }
+        private void DFS_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Using DFS");
+            chosenOption = "DFS";
+            buttonlistAdd.Add(buttonStartSearch);
+        }
+        private void BFS_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Using BFS");
+            chosenOption = "BFS";
+            buttonlistAdd.Add(buttonStartSearch);
+        }
+
+       private void AgentMoving()
+        {
+              
+            agent.setDestination(startLoc.X, startLoc.Y, endLoc.X, endLoc.Y);
         }
 
         protected override void Update(GameTime gameTime)
         {
+            // Allows the game to exit
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                this.Exit();
+            mClick = Mouse.GetState();
+            if (mClick.LeftButton == ButtonState.Pressed)
+            {
+                startLoc.X = (int)mClick.X / 50;
+                startLoc.Y = (int)mClick.Y / 50;
+            }
+            if (mClick.RightButton == ButtonState.Pressed)
+            {
+                endLoc.X = (int)mClick.X / 50;
+                endLoc.Y = (int)mClick.Y / 50;
+            }
+
+       
+
+           
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -77,13 +202,33 @@ namespace Vupa
             // TODO: Add your update logic here
             visualManager.Update();
 
+            foreach (var item in buttonlistDel)
+            {
+                buttonlist.Remove(item);
+            }
+
+            foreach (var item in buttonlistAdd)
+            {
+                buttonlist.Add(item);
+
+            }
+
+            foreach (var item in buttonlist)
+            {
+                item.Update();
+
+            }
+
+            
+
             base.Update(gameTime);
+            agent.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
+            spriteBatch.Begin();
 
             //for (int x = 0; x < grid.GetLength(0); x++)
             //{
@@ -104,9 +249,15 @@ namespace Vupa
 
             _spriteBatch.End();
 
-            // TODO: Add your drawing code here
+            spriteBatch.Draw(cellImage, new Vector2(startLoc.X * 50, startLoc.Y * 50), Color.Green);
+            spriteBatch.Draw(cellImage, new Vector2(endLoc.X * 50, endLoc.Y * 50), Color.Red);
+            agent.Draw(spriteBatch);
 
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
+
+
     }
 }
