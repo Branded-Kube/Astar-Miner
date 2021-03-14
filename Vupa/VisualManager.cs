@@ -35,7 +35,7 @@ namespace Vupa
         //Collections
         private List<Cell> grid;
 
-        private List<Node> finalPath;
+        public static List<Node> finalPath;
 
         public List<Cell> Grid
         {
@@ -134,7 +134,7 @@ namespace Vupa
             {
                 for (int y = 0; y < cellCount; y++)
                 {
-                    grid.Add(new Cell(new Point(x, y), cellSize));
+                    grid.Add(new Cell(new Point(x , y), cellSize));
                 }
             }
         }
@@ -159,10 +159,12 @@ namespace Vupa
         //colors in the nodes with  different colors to represent the open nodes, and the closed nodes that were evaluated, and the final path
         public void ColorNodes()
         {
-
-
             foreach (Cell cell in grid)
             {
+                if (cell.MyPos!= start && cell.MyPos != goal)
+                {
+                    cell.MyColor = Color.White;
+                }
                 if (aStar.Open.Exists(x => x.Position == cell.MyPos) && cell.MyPos != start && cell.MyPos != goal)
                 {
                     cell.MyColor = Color.CornflowerBlue;
