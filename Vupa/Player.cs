@@ -23,8 +23,6 @@ namespace Vupa
         int score = 0;
         bool correct;
         Point fogPosition;
-        int xborder = 900;
-        int yborder = 800;
 
         public Player(Point start)
         {
@@ -41,7 +39,6 @@ namespace Vupa
             move();
             this.playerRectangle.X = position.X;
             this.playerRectangle.Y = position.Y;
-            this.playerRectangle = new Rectangle(position, size);
             this.fogRectangle = new Rectangle(fogPosition, fogSize);
 
 
@@ -56,9 +53,10 @@ namespace Vupa
                 if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
                 {
                     position.Y -= 100;
-                    CorrectPath();
 
                     fogPosition.Y -= 100;
+                    CorrectPath();
+
                 }
 
             }
@@ -176,7 +174,7 @@ namespace Vupa
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
             spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
-            spriteBatch.DrawString(Game1.font,$"Score: {score}", new Vector2(1050, 500), Color.Black);
+            spriteBatch.DrawString(Game1.font,$"Score: {score}", new Vector2(1050, 500), Color.Green);
 
         }
 

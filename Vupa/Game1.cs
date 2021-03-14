@@ -33,7 +33,7 @@ namespace Vupa
         private bool options = true;
         private Texture2D button;
         private Player player;
-        private Player fogwar;
+        //private Player fogwar;
         //private FogWar fogwar;
         //private FogWar fwCenter;
         public static Rectangle border;
@@ -72,7 +72,7 @@ namespace Vupa
             
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
             player = new Player(startLoc);
-            fogwar = new Player(startLoc);
+            //fogwar = new Player(startLoc);
             //fwCenter = new FogWar();
             _graphics.PreferredBackBufferWidth = 1300;
             _graphics.PreferredBackBufferHeight = 900;
@@ -105,7 +105,7 @@ namespace Vupa
             buttonlist.Add(buttonSearchMethod);
 
             player.LoadContent(Content);
-            fogwar.LoadContent(Content);
+            //fogwar.LoadContent(Content);
             //fwCenter.LoadContent(Content);
         }
 
@@ -225,7 +225,7 @@ namespace Vupa
             }
 
 
-            fogwar.Update();
+            //fogwar.Update();
 
             //fwCenter.Update();
             
@@ -239,15 +239,15 @@ namespace Vupa
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
             visualManager.Render(_spriteBatch);
+            //fogwar.Draw(_spriteBatch);
             player.Draw(_spriteBatch);
-            fogwar.Draw(_spriteBatch);
 
             foreach (var item in buttonlist)
             {
                 item.Draw(_spriteBatch);
             }
             _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 0), Color.Black);
-            
+
             //fwCenter.Draw(_spriteBatch);
 
             _spriteBatch.End();
