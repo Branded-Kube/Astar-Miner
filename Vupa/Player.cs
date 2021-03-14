@@ -28,7 +28,7 @@ namespace Vupa
         {
             this.position = start;
             this.fogPosition = new Point(-1500, -1500);
-            this.size = new Point(100,100);
+            this.size = new Point(100, 100);
             this.playerRectangle = new Rectangle(position, size);
             this.fogSize = new Point(3098, 3098);
 
@@ -36,7 +36,7 @@ namespace Vupa
         }
         public void Update()
         {
-            move();
+            Move();
             this.playerRectangle.X = position.X;
             this.playerRectangle.Y = position.Y;
             this.fogRectangle = new Rectangle(fogPosition, fogSize);
@@ -44,11 +44,11 @@ namespace Vupa
 
         }
 
-        public void move()
+        public void Move()
         {
 
             KeyboardState newState = Keyboard.GetState();
-            if (playerRectangle.Top >= Game1.border.Top +1)
+            if (playerRectangle.Top >= Game1.border.Top + 1)
             {
                 if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
                 {
