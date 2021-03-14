@@ -159,10 +159,12 @@ namespace Vupa
         //colors in the nodes with  different colors to represent the open nodes, and the closed nodes that were evaluated, and the final path
         public void ColorNodes()
         {
-
-
             foreach (Cell cell in grid)
             {
+                if (cell.MyPos!= start && cell.MyPos != goal)
+                {
+                    cell.MyColor = Color.White;
+                }
                 if (aStar.Open.Exists(x => x.Position == cell.MyPos) && cell.MyPos != start && cell.MyPos != goal)
                 {
                     cell.MyColor = Color.CornflowerBlue;

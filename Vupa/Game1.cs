@@ -32,6 +32,8 @@ namespace Vupa
         private string chosenOption;
         private bool options = true;
         private Texture2D button;
+        private Player player;
+        public static Rectangle border;
 
     //    Grid grid;
 
@@ -42,7 +44,7 @@ namespace Vupa
         private MouseState mClick;
 
 
-        public Point startLoc = new Point(3, 4);
+        public Point startLoc = new Point(0, 0);
         public Point endLoc = new Point(9, 9);
 
 
@@ -64,9 +66,14 @@ namespace Vupa
 
           //  grid = new Grid[10, 10]; 
 
+            
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
+            player = new Player(startLoc);
             _graphics.PreferredBackBufferWidth = 1300;
             _graphics.PreferredBackBufferHeight = 900;
+            var bordersize = new Point(_graphics.PreferredBackBufferWidth  , _graphics.PreferredBackBufferHeight  );
+            var borderPosition = new Point(0,0);
+             border = new Rectangle(borderPosition, bordersize);
             _graphics.ApplyChanges();
             base.Initialize();
         }
@@ -91,6 +98,8 @@ namespace Vupa
             buttonStartSearch.Click += ButtonStartSearch_Click;
             buttonStartAstar.Click += ButtonStartAStar_Click;
             buttonlist.Add(buttonSearchMethod);
+
+            player.LoadContent(Content);
         }
 
         private void ButtonStartAStar_Click(object sender, EventArgs e)
@@ -204,10 +213,11 @@ namespace Vupa
 
             }
 
-            
+            player.Update();
 
             base.Update(gameTime);
             //agent.Update(gameTime);
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -221,8 +231,7 @@ namespace Vupa
                 item.Draw(_spriteBatch);
             }
             _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 0), Color.Black);
-
-
+            player.Draw(_spriteBatch);
             _spriteBatch.End();
 
        
