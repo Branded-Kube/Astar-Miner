@@ -29,7 +29,7 @@ namespace Vupa
             this.position = start;
             this.fogPosition = new Point(-1500, -1500);
             this.size = new Point(100,100);
-            this.fogSize = new Point(3100, 3100);
+            this.fogSize = new Point(3098, 3098);
 
          
         }
