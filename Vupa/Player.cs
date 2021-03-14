@@ -12,19 +12,27 @@ namespace Vupa
     class Player
     {
         Texture2D sprite;
+        private Texture2D fogSprite;
         Color color = Color.Black;
         Rectangle playerRectangle;
+        Rectangle fogRectangle;
         Point size;
+        Point fogSize;
         KeyboardState oldState;
         Point position;
         int score = 0;
         bool correct;
+        Point fogPosition;
+        int xborder = 900;
+        int yborder = 800;
 
         public Player(Point start)
         {
             this.position = start;
+            this.fogPosition = new Point(-1500, -1500);
             this.size = new Point(100,100);
             this.playerRectangle = new Rectangle(position, size);
+            this.fogSize = new Point(3098, 3098);
 
 
         }
@@ -33,6 +41,8 @@ namespace Vupa
             move();
             this.playerRectangle.X = position.X;
             this.playerRectangle.Y = position.Y;
+            this.playerRectangle = new Rectangle(position, size);
+            this.fogRectangle = new Rectangle(fogPosition, fogSize);
 
 
         }
@@ -48,6 +58,7 @@ namespace Vupa
                     position.Y -= 100;
                     CorrectPath();
 
+                    fogPosition.Y -= 100;
                 }
 
             }
@@ -56,6 +67,7 @@ namespace Vupa
                 if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
                 {
                     position.Y += 100;
+                    fogPosition.Y += 100;
                     CorrectPath();
 
                 }
@@ -65,6 +77,7 @@ namespace Vupa
                 if (newState.IsKeyDown(Keys.NumPad4) && oldState.IsKeyUp(Keys.NumPad4))
                 {
                     position.X -= 100;
+                    fogPosition.X -= 100;
                     CorrectPath();
 
                 }
@@ -74,6 +87,7 @@ namespace Vupa
                 if (newState.IsKeyDown(Keys.NumPad6) && oldState.IsKeyUp(Keys.NumPad6))
                 {
                     position.X += 100;
+                    fogPosition.X += 100;
                     CorrectPath();
 
                 }
@@ -84,6 +98,8 @@ namespace Vupa
                 {
                     position.X -= 100;
                     position.Y -= 100;
+                    fogPosition.X -= 100;
+                    fogPosition.Y -= 100;
                     CorrectPath();
 
                 }
@@ -94,6 +110,8 @@ namespace Vupa
                 {
                     position.X += 100;
                     position.Y += 100;
+                    fogPosition.X += 100;
+                    fogPosition.Y += 100;
                     CorrectPath();
 
                 }
@@ -104,6 +122,8 @@ namespace Vupa
                 {
                     position.X += 100;
                     position.Y -= 100;
+                    fogPosition.X += 100;
+                    fogPosition.Y -= 100;
                     CorrectPath();
 
                 }
@@ -114,6 +134,8 @@ namespace Vupa
                 {
                     position.X -= 100;
                     position.Y += 100;
+                    fogPosition.X -= 100;
+                    fogPosition.Y += 100;
                     CorrectPath();
 
 
@@ -146,12 +168,14 @@ namespace Vupa
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("worker");
+            fogSprite = content.Load<Texture2D>("fogwar");
 
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
+            spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
             spriteBatch.DrawString(Game1.font,$"Score: {score}", new Vector2(1050, 500), Color.Black);
 
         }
