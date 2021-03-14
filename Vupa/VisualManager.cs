@@ -35,7 +35,7 @@ namespace Vupa
         //Collections
         private List<Cell> grid;
 
-        private List<Node> finalPath;
+        public static List<Node> finalPath;
 
         public List<Cell> Grid
         {

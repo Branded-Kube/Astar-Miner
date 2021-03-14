@@ -184,13 +184,17 @@ namespace Vupa
                 endLoc.Y = (int)mClick.Y / 50;
             }
 
-       
+            player.Update();
 
-           
+
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
                 visualManager.FindPath();
+            }
+             
 
 
             // TODO: Add your update logic here
@@ -213,7 +217,6 @@ namespace Vupa
 
             }
 
-            player.Update();
 
             base.Update(gameTime);
             //agent.Update(gameTime);
