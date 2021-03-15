@@ -71,7 +71,6 @@ namespace Vupa
 
             
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
-            player = new Player(startLoc);
             //fogwar = new Player(startLoc);
             //fwCenter = new FogWar();
             _graphics.PreferredBackBufferWidth = 1300;
@@ -80,6 +79,20 @@ namespace Vupa
             var borderPosition = new Point(0,0);
              border = new Rectangle(borderPosition, bordersize);
             _graphics.ApplyChanges();
+            Level level = new Level(1);
+            startLoc = level.SetStart(startLoc);
+            endLoc = level.SetGoal(endLoc);
+
+
+            VisualManager.start = startLoc;
+            VisualManager.goal = endLoc;
+
+
+            Debug.WriteLine(startLoc);
+            Debug.WriteLine(endLoc);
+
+            player = new Player(startLoc);
+
             base.Initialize();
         }
 
@@ -180,16 +193,16 @@ namespace Vupa
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             mClick = Mouse.GetState();
-            if (mClick.LeftButton == ButtonState.Pressed)
-            {
-                startLoc.X = (int)mClick.X / 50;
-                startLoc.Y = (int)mClick.Y / 50;
-            }
-            if (mClick.RightButton == ButtonState.Pressed)
-            {
-                endLoc.X = (int)mClick.X / 50;
-                endLoc.Y = (int)mClick.Y / 50;
-            }
+            //if (mClick.LeftButton == ButtonState.Pressed)
+            //{
+            //    startLoc.X = (int)mClick.X / 50;
+            //    startLoc.Y = (int)mClick.Y / 50;
+            //}
+            //if (mClick.RightButton == ButtonState.Pressed)
+            //{
+            //    endLoc.X = (int)mClick.X / 50;
+            //    endLoc.Y = (int)mClick.Y / 50;
+            //}
 
             player.Update();
 
