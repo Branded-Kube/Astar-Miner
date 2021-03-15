@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -33,7 +34,7 @@ namespace Vupa
         private CellType clickType;
 
         //Collections
-        private List<Cell> grid;
+        public static List<Cell> grid;
 
         public static List<Node> finalPath;
 
@@ -106,22 +107,8 @@ namespace Vupa
 
             }
         }
-        
-        //public void ClickCell(Point mousePos)
-        //{
+    
 
-        //    foreach (Cell cell in grid)
-        //    {
-        //        //if (cell.BoundingRectangle.IntersectsWith(new Rectangle(mousePos, new Size(1, 1))))
-        //        if (cell.BoundingRectangle.Intersects(new Rectangle(mousePos.X,mousePos.Y, 1, 1)))
-        //        {
-        //            cell.Click(ref clickType);
-        //        }
-
-        //    }
-        //}
-
-        
         public void CreateGrid()
         {
             grid = new List<Cell>();
@@ -143,7 +130,6 @@ namespace Vupa
         public List<Node> CreateNodes()
         {
             List<Node> allNodes = new List<Node>();
-
             foreach (Cell cell in grid)
             {
                 if (cell.WalkAble)
@@ -177,6 +163,13 @@ namespace Vupa
                 {
                     cell.MyColor = Color.Green;
                 }
+            }
+        }
+        public void LoadContent(ContentManager content)
+        {
+            foreach (Cell cell in grid)
+            {
+                cell.LoadContent(content);
             }
         }
     }

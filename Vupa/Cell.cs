@@ -107,8 +107,26 @@ namespace Vupa
        public void LoadContent(ContentManager content)
         {
             sprite = Game1.content.Load<Texture2D>("ground");
+            if (!walkAble)
+            {
+                sprite = Game1.content.Load<Texture2D>("dirt");
+
+            }
+            if (MyPos == VisualManager.start)
+            {
+                sprite = Game1.content.Load<Texture2D>("worker");
+                myColor = Color.MediumSeaGreen;
+
+            }
+            else if (MyPos == VisualManager.goal)
+            {
+                sprite = Game1.content.Load<Texture2D>("worker");
+                myColor = Color.OrangeRed;
+
+            }
 
         }
+      
 
         //checks what type of click the player is using (start = put start point on clicked cell, goal = put goal point on clicked cell, wall = put wall on clicked cell)
         public void Click(ref CellType clickType, ContentManager content)
