@@ -33,7 +33,7 @@ namespace Vupa
         private CellType clickType;
 
         //Collections
-        private List<Cell> grid;
+        public static List<Cell> grid;
 
         public static List<Node> finalPath;
 
@@ -143,7 +143,6 @@ namespace Vupa
         public List<Node> CreateNodes()
         {
             List<Node> allNodes = new List<Node>();
-
             foreach (Cell cell in grid)
             {
                 if (cell.WalkAble)

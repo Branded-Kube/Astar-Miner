@@ -19,18 +19,21 @@ namespace Vupa
         Point size;
         Point fogSize;
         KeyboardState oldState;
-        Point position;
+        public Point position;
         int score = 0;
         bool correct;
         Point fogPosition;
 
         public Player(Point start)
         {
-            this.position = start;
-            this.fogPosition = new Point(-1500, -1500);
+            this.position = new Point(start.X *100, start.Y*100);
+           // this.fogPosition = new Point(-1500, -1500);
+            this.fogPosition = new Point(position.X -1500, position.Y -1500);
+
             this.size = new Point(100, 100);
             this.playerRectangle = new Rectangle(position, size);
             this.fogSize = new Point(3098, 3098);
+            this.fogRectangle = new Rectangle(fogPosition, fogSize);
 
 
         }
@@ -39,8 +42,8 @@ namespace Vupa
             Move();
             this.playerRectangle.X = position.X;
             this.playerRectangle.Y = position.Y;
-            this.fogRectangle = new Rectangle(fogPosition, fogSize);
-
+            this.fogRectangle.X = position.X -1500;
+            this.fogRectangle.Y = position.Y - 1500;
 
         }
 

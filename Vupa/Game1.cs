@@ -35,17 +35,17 @@ namespace Vupa
         private Player player;
         public static Rectangle border;
 
-    //    Grid grid;
+        //    Grid grid;
 
-        
+        public int lvlnumber = 1;
 
         
 
         private MouseState mClick;
 
 
-        public Point startLoc = new Point(0, 0);
-        public Point endLoc = new Point(9, 9);
+        public Point startLoc;
+        public Point endLoc;
 
 
         public Game1()
@@ -68,26 +68,17 @@ namespace Vupa
 
             
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
-            player = new Player(startLoc);
             _graphics.PreferredBackBufferWidth = 1300;
             _graphics.PreferredBackBufferHeight = 900;
             var bordersize = new Point(_graphics.PreferredBackBufferWidth  , _graphics.PreferredBackBufferHeight  );
             var borderPosition = new Point(0,0);
              border = new Rectangle(borderPosition, bordersize);
             _graphics.ApplyChanges();
-            Level level = new Level(1);
-            startLoc = level.SetStart(startLoc);
-            endLoc = level.SetGoal(endLoc);
-
-
-            VisualManager.start = startLoc;
-            VisualManager.goal = endLoc;
-
-
-            Debug.WriteLine(startLoc);
-            Debug.WriteLine(endLoc);
 
             player = new Player(startLoc);
+
+            GenerateLvl();
+
 
             base.Initialize();
         }
@@ -198,7 +189,6 @@ namespace Vupa
             //    endLoc.Y = (int)mClick.Y / 50;
             //}
 
-            player.Update();
 
 
 
@@ -230,11 +220,32 @@ namespace Vupa
                 item.Update();
 
             }
+            if (player.position.X /100 == endLoc.X && player.position.Y / 100 == endLoc.Y)
+            {
+                lvlnumber = 2;
+                GenerateLvl();
+            }
+            player.Update();
 
             base.Update(gameTime);
             //agent.Update(gameTime);
 
         }
+        public void GenerateLvl()
+        {
+            Level level = new Level(lvlnumber);
+            startLoc = level.SetStart(startLoc);
+            endLoc = level.SetGoal(endLoc);
+            VisualManager.start = startLoc;
+            VisualManager.goal = endLoc;
+            Debug.WriteLine(startLoc);
+            Debug.WriteLine(endLoc);
+            visualManager.FindPath();
+            player.position = new Point(startLoc.X *100, startLoc.Y *100);
+        }
+
+      
+
 
         protected override void Draw(GameTime gameTime)
         {
