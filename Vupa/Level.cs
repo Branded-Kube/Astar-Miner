@@ -26,6 +26,7 @@ namespace Vupa
             {
                 start = new Point(0, 0);
 
+
             }
             if (lvlNumber == 2)
             {
@@ -51,13 +52,12 @@ namespace Vupa
             if (lvlNumber == 1)
             {
                 VisualManager.grid[11].WalkAble = false;
-                VisualManager.grid[11].LoadContent(content);
 
             }
             if (lvlNumber == 2)
             {
-                VisualManager.grid[2].WalkAble = false;
-                VisualManager.grid[2].LoadContent(content);
+                VisualManager.grid[95].WalkAble = false;
+                VisualManager.grid[94].WalkAble = false;
             }
         }
 

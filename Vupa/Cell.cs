@@ -106,11 +106,22 @@ namespace Vupa
 
        public void LoadContent(ContentManager content)
         {
-            var texture = "ground";
-            sprite = Game1.content.Load<Texture2D>($"{texture}");
+            sprite = Game1.content.Load<Texture2D>("ground");
             if (!walkAble)
             {
                 sprite = Game1.content.Load<Texture2D>("dirt");
+
+            }
+            if (MyPos == VisualManager.start)
+            {
+                sprite = Game1.content.Load<Texture2D>("worker");
+                myColor = Color.MediumSeaGreen;
+
+            }
+            else if (MyPos == VisualManager.goal)
+            {
+                sprite = Game1.content.Load<Texture2D>("worker");
+                myColor = Color.OrangeRed;
 
             }
 

@@ -238,13 +238,17 @@ namespace Vupa
             endLoc = level.SetGoal(endLoc);
             VisualManager.start = startLoc;
             VisualManager.goal = endLoc;
+            
+
             Debug.WriteLine(startLoc);
             Debug.WriteLine(endLoc);
             visualManager.FindPath();
             player.position = new Point(startLoc.X *100, startLoc.Y *100);
+            visualManager.LoadContent(Content);
+
         }
 
-      
+
 
 
         protected override void Draw(GameTime gameTime)
