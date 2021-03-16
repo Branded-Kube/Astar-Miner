@@ -32,17 +32,17 @@ namespace Vupa
 
             return new Point();
         }
-        public Point SetGoal(Point goal)
+        public Point SetGoal()
         {
             if (lvlNumber == 1)
             {
-                goal = new Point(9, 7);
+                return new Point(9, 7);
             }
             if (lvlNumber == 2)
             {
-                goal = new Point(9, 1);
+                return new Point(9, 1);
             }
-            return goal;
+            return new Point(5, 5);
         }
         public void SetWalls()
         {

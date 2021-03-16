@@ -243,7 +243,7 @@ namespace Vupa
         {
             Level level = new Level(lvlnumber);
             startLoc = level.SetStart();
-            endLoc = level.SetGoal(endLoc);
+            endLoc = level.SetGoal();
             VisualManager.start = startLoc;
             VisualManager.goal = endLoc;
             
