@@ -121,7 +121,7 @@ namespace Vupa
             {
                 for (int y = 0; y < cellCount; y++)
                 {
-                    grid.Add(new Cell(new Point(x , y), cellSize));
+                    grid.Add(new Cell(new Point( x+1 ,  y+1), cellSize));
                 }
             }
         }

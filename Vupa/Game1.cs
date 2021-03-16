@@ -47,7 +47,8 @@ namespace Vupa
 
         public Point startLoc;
         public Point endLoc;
-
+        int sizeX = 900;
+        int sizeY = 900;
 
         public Game1()
         {
@@ -67,19 +68,20 @@ namespace Vupa
 
           //  grid = new Grid[10, 10]; 
 
-            
-            visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, 1000,1000));
-            _graphics.PreferredBackBufferWidth = 1300;
-            _graphics.PreferredBackBufferHeight = 900;
-            var bordersize = new Point(_graphics.PreferredBackBufferWidth  , _graphics.PreferredBackBufferHeight  );
-            var borderPosition = new Point(0,0);
-             border = new Rectangle(borderPosition, bordersize);
-            _graphics.ApplyChanges();
+           
 
+            visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, sizeX, sizeY));
+            _graphics.PreferredBackBufferWidth = 1200;
+            _graphics.PreferredBackBufferHeight = 1100;
+            var bordersize = new Point(_graphics.PreferredBackBufferWidth - 200  , _graphics.PreferredBackBufferHeight -100  );
+            var borderPosition = new Point(sizeX / 10, sizeY / 10);
+             border = new Rectangle(borderPosition, bordersize);
+            //_graphics.IsFullScreen = true;
             player = new Player(startLoc);
 
             GenerateLvl();
 
+            _graphics.ApplyChanges();
 
             base.Initialize();
         }

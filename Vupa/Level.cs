@@ -9,22 +9,19 @@ namespace Vupa
 {
     class Level
     {
-        Point startLoc;
-        public Point goalLoc;
         int lvlNumber;
-        ContentManager content;
 
         public Level(int lvlnumber)
         {
             this.lvlNumber = lvlnumber;
-            SetWalls();
+            //SetWalls();
         }
 
         public Point SetStart(Point start)
         {
             if (lvlNumber == 1)
             {
-                start = new Point(0, 0);
+                start = new Point(1, 1);
 
 
             }

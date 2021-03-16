@@ -50,6 +50,8 @@ namespace Vupa
 
         public Point MyPos
         {
+            //get { return (myPos) + new Point(1, 1); }
+
             get { return myPos; }
             set { myPos = value; }
         }
@@ -65,7 +67,11 @@ namespace Vupa
 
         public Cell(Point pos, int size)
         {
-            this.myPos = pos;
+            //this.myPos = pos;
+            this.myPos.X = pos.X;
+            this.myPos.Y = pos.Y;
+
+            
 
             this.cellSize = size;
 
@@ -78,8 +84,6 @@ namespace Vupa
 
         public void Draw(SpriteBatch spriteBatch)
         {
-           // spriteBatch.FillRectangle(new SolidBrush(myColor), BoundingRectangle);
-           // spriteBatch.DrawRectangle(new Pen(Color.Black), BoundingRectangle);
             if (sprite != null)
             {
                 spriteBatch.Draw(sprite, BoundingRectangle, MyColor);
@@ -133,7 +137,6 @@ namespace Vupa
         {
             if (clickType == CellType.START)
             {
-                //sprite = Image.FromFile(@"Images\Start.png");
                 sprite = content.Load<Texture2D>("worker");
 
                 myType = clickType;
@@ -143,7 +146,6 @@ namespace Vupa
             }
             else if (clickType == CellType.GOAL && myType != CellType.START)
             {
-                //sprite = Image.FromFile(@"Images\Goal.png");
                 sprite = content.Load<Texture2D>("worker");
 
                 clickType = CellType.WALL;
@@ -153,7 +155,6 @@ namespace Vupa
             }
             else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
             {
-                //sprite = Image.FromFile(@"Images\Wall.png");
                 sprite = content.Load<Texture2D>("dirt");
                 myType = CellType.WALL;
                 WalkAble = false;
