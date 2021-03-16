@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Vupa
 {
-    class Node : IComparable<Node>
+    public class Node : IComparable<Node>
     {
         private int f;
 
