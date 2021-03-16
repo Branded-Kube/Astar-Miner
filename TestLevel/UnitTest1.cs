@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xna.Framework;
+using System;
 using Vupa;
 
 namespace TestLevel
@@ -8,7 +9,7 @@ namespace TestLevel
     public class UnitTest1
     {
         [TestMethod]
-        public void TestSetStart()
+        public void TestSetStart1()
         {
             //Arrange
             Level level = new Level(1);
@@ -21,6 +22,19 @@ namespace TestLevel
         }
 
         [TestMethod]
+        public void TestSetStart2()
+        {
+            //Arrange
+            Level level = new Level(2);
+            Point expected = new Point(9, 7);
+            //Act
+            Point actual = level.SetStart();
+            //Assert
+            Assert.AreEqual(expected, actual);
+
+        }
+
+        [TestMethod]
         public void TestSetStartWrongValue()
         {
             //Arrange
@@ -29,7 +43,30 @@ namespace TestLevel
             //Act
             Point actual = level.SetStart();
             //Assert
-            Assert.AreNotEqual(expected, actual);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestSetGoal1()
+        {
+            //Arrange
+            Level level = new Level(1);
+            Point expected = new Point(9, 7);
+
+            //Act
+            Point actual = level.SetGoal();
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void TestZero()
+        {
+            //Arrange
+            Level level = new Level(1);
+            level.SetStart();
         }
     }
 }
