@@ -50,7 +50,7 @@ namespace Vupa
 
         public Point MyPos
         {
-            //get { return (myPos) + new Point(1, 1); }
+           // get { return (myPos) + new Point(1, 1); }
 
             get { return myPos; }
             set { myPos = value; }
@@ -67,9 +67,9 @@ namespace Vupa
 
         public Cell(Point pos, int size)
         {
-            //this.myPos = pos;
-            this.myPos.X = pos.X;
-            this.myPos.Y = pos.Y;
+            this.myPos = pos;
+            //this.myPos.X = pos.X +1;
+            //this.myPos.Y = pos.Y +1;
 
             
 

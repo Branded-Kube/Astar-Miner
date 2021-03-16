@@ -35,6 +35,8 @@ namespace Vupa
         private Texture2D button;
         private Player player;
         public static Rectangle border;
+        private Texture2D backgroundSprite;
+        private Rectangle backgroundRectangle;
 
         //    Grid grid;
 
@@ -47,8 +49,8 @@ namespace Vupa
 
         public Point startLoc;
         public Point endLoc;
-        int sizeX = 900;
-        int sizeY = 900;
+        int sizeX = 1000;
+        int sizeY = 1000;
 
         public Game1()
         {
@@ -71,10 +73,11 @@ namespace Vupa
            
 
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, sizeX, sizeY));
-            _graphics.PreferredBackBufferWidth = 1200;
-            _graphics.PreferredBackBufferHeight = 1100;
-            var bordersize = new Point(_graphics.PreferredBackBufferWidth - 200  , _graphics.PreferredBackBufferHeight -100  );
-            var borderPosition = new Point(sizeX / 10, sizeY / 10);
+            _graphics.PreferredBackBufferWidth = 1300;
+            _graphics.PreferredBackBufferHeight = 1200;
+            backgroundRectangle = new Rectangle(0,0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            var bordersize = new Point(_graphics.PreferredBackBufferWidth -300 , _graphics.PreferredBackBufferHeight -200   );
+            var borderPosition = new Point(100, 100);
              border = new Rectangle(borderPosition, bordersize);
             //_graphics.IsFullScreen = true;
             player = new Player(startLoc);
@@ -94,6 +97,7 @@ namespace Vupa
             //agentTexture = Content.Load<Texture2D>("worker");
             font = Content.Load<SpriteFont>("font");
             textBox = Content.Load<Texture2D>("textbox");
+            backgroundSprite = Content.Load<Texture2D>("background");
 
             button = Content.Load<Texture2D>("Btn");
             buttonSearchMethod = new Button(1050, 700, "How do ye wish to search?", button);
@@ -257,8 +261,11 @@ namespace Vupa
 
         protected override void Draw(GameTime gameTime)
         {
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
+            _spriteBatch.Draw(backgroundSprite, backgroundRectangle, Color.White);
+
             visualManager.Render(_spriteBatch);
 
             player.Draw(_spriteBatch);
@@ -271,7 +278,6 @@ namespace Vupa
             }
             _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
 
-            
             _spriteBatch.End();
 
        

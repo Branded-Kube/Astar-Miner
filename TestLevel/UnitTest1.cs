@@ -17,6 +17,7 @@ namespace TestLevel
             Point actual = level.SetStart();
             //Assert
             Assert.AreEqual(expected, actual);
+            
         }
 
         [TestMethod]

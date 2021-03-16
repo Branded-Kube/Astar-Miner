@@ -21,7 +21,7 @@ namespace Vupa
         {
             if (lvlNumber == 1)
             {
-                start = new Point(1, 1);
+                return new Point(1, 1);
 
 
             }
