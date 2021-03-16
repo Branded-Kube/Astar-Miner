@@ -236,7 +236,7 @@ namespace Vupa
         public void GenerateLvl()
         {
             Level level = new Level(lvlnumber);
-            startLoc = level.SetStart(startLoc);
+            startLoc = level.SetStart();
             endLoc = level.SetGoal(endLoc);
             VisualManager.start = startLoc;
             VisualManager.goal = endLoc;
