@@ -12,6 +12,8 @@ namespace Vupa
         public List<Node> closed;
 
         public List<Node> open;
+        //public static Node neighbour;
+        public Node neighbour { get; set; }
 
         public List<Node> Closed
         {
@@ -59,7 +61,7 @@ namespace Vupa
                     {
                         if (x != 0 || y != 0)
                         {
-                            Node neighbour = nodes.Find(node => node.Position.X == currentNode.Position.X - x && node.Position.Y == currentNode.Position.Y - y);
+                            neighbour = nodes.Find(node => node.Position.X == currentNode.Position.X - x && node.Position.Y == currentNode.Position.Y - y);
 
                             if (neighbour != null)
                             {

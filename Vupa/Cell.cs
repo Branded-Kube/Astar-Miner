@@ -50,6 +50,8 @@ namespace Vupa
 
         public Point MyPos
         {
+           // get { return (myPos) + new Point(1, 1); }
+
             get { return myPos; }
             set { myPos = value; }
         }
@@ -66,6 +68,10 @@ namespace Vupa
         public Cell(Point pos, int size)
         {
             this.myPos = pos;
+            //this.myPos.X = pos.X +1;
+            //this.myPos.Y = pos.Y +1;
+
+            
 
             this.cellSize = size;
 
@@ -133,23 +139,28 @@ namespace Vupa
         {
             if (clickType == CellType.START)
             {
-                //sprite = Image.FromFile(@"Images\Start.png");
                 sprite = content.Load<Texture2D>("worker");
 
-                //if (clickType == CellType.START)
-                //{
-                //    //sprite = Image.FromFile(@"Images\Start.png");
-                //    sprite = content.Load<Texture2D>("worker");
+                myType = clickType;
+                clickType = CellType.GOAL;
+                VisualManager.start = MyPos;
+                myColor = Color.MediumSeaGreen;
+            }
+            else if (clickType == CellType.GOAL && myType != CellType.START)
+            {
+                sprite = content.Load<Texture2D>("worker");
 
-                //    myType = clickType;
-                //    clickType = CellType.GOAL;
-                //    VisualManager.start = MyPos;
-                //    myColor = Color.MediumSeaGreen;
-                //}
-                //else if (clickType == CellType.GOAL && myType != CellType.START)
-                //{
-                //    //sprite = Image.FromFile(@"Images\Goal.png");
-                //    sprite = content.Load<Texture2D>("worker");
+                clickType = CellType.WALL;
+                myType = CellType.GOAL;
+                VisualManager.goal = MyPos;
+                myColor = Color.OrangeRed;
+            }
+            else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
+            {
+                sprite = content.Load<Texture2D>("dirt");
+                myType = CellType.WALL;
+                WalkAble = false;
+                myColor = Color.White;
 
                 //    clickType = CellType.WALL;
                 //    myType = CellType.GOAL;

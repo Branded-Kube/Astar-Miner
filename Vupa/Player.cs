@@ -28,7 +28,6 @@ namespace Vupa
         public Player(Point start)
         {
             this.position = new Point(start.X *100, start.Y*100);
-           // this.fogPosition = new Point(-1500, -1500);
             this.fogPosition = new Point(position.X -1500, position.Y -1500);
 
             this.size = new Point(100, 100);
