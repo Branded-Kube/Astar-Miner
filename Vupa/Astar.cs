@@ -12,7 +12,8 @@ namespace Vupa
         public List<Node> closed;
 
         public List<Node> open;
-        public static Node neighbour;
+        //public static Node neighbour;
+        public Node neighbour { get; set; }
 
         public List<Node> Closed
         {

@@ -12,7 +12,7 @@ namespace TestLevel
         {
             //Arrange
             Level level = new Level(1);
-            Point expected = new Point(0, 0);
+            Point expected = new Point(1, 1);
             //Act
             Point actual = level.SetStart();
             //Assert
@@ -25,7 +25,7 @@ namespace TestLevel
         {
             //Arrange
             Level level = new Level(1);
-            Point expected = new Point(1, 1);
+            Point expected = new Point(0, 0);
             //Act
             Point actual = level.SetStart();
             //Assert

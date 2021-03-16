@@ -38,11 +38,11 @@ namespace Vupa
 
         public static List<Node> finalPath;
 
-        public List<Cell> Grid
-        {
-            get { return grid; }
-            set { grid = value; }
-        }
+        //public List<Cell> Grid
+        //{
+        //    get { return grid; }
+        //    set { grid = value; }
+        //}
 
         public VisualManager(SpriteBatch spriteBatch, Rectangle displayRectangle)
         {
