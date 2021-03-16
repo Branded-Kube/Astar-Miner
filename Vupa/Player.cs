@@ -13,6 +13,7 @@ namespace Vupa
     {
         Texture2D sprite;
         private Texture2D fogSprite;
+        private Texture2D scoreBox;
         Color color = Color.Black;
         Rectangle playerRectangle;
         Rectangle fogRectangle;
@@ -169,15 +170,16 @@ namespace Vupa
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("worker");
-            fogSprite = content.Load<Texture2D>("fogwar");
-
+            fogSprite = content.Load<Texture2D>("fogwar2");
+            scoreBox = content.Load<Texture2D>("textbox2");
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
             spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
-            spriteBatch.DrawString(Game1.font,$"Score: {score}", new Vector2(1050, 500), Color.Green);
+            spriteBatch.Draw(scoreBox, new Vector2(1098, 532), Color.White);
+            spriteBatch.DrawString(Game1.font,$"Score: {score}", new Vector2(1100, 540), Color.LightGreen);
 
         }
 

@@ -19,6 +19,7 @@ namespace Vupa
 
         private Texture2D agentTexture;
         public static SpriteFont font;
+        private Texture2D textBox;
 
         private List<Button> buttonlist;
         private List<Button> buttonlistDel;
@@ -90,6 +91,7 @@ namespace Vupa
             //cellImage = Content.Load<Texture2D>("dirt");
             //agentTexture = Content.Load<Texture2D>("worker");
             font = Content.Load<SpriteFont>("font");
+            textBox = Content.Load<Texture2D>("textbox");
 
             button = Content.Load<Texture2D>("Btn");
             buttonSearchMethod = new Button(1050, 700, "How do ye wish to search?", button);
@@ -234,7 +236,7 @@ namespace Vupa
         public void GenerateLvl()
         {
             Level level = new Level(lvlnumber);
-            startLoc = level.SetStart(startLoc);
+            startLoc = level.SetStart();
             endLoc = level.SetGoal(endLoc);
             VisualManager.start = startLoc;
             VisualManager.goal = endLoc;
@@ -259,11 +261,13 @@ namespace Vupa
 
             player.Draw(_spriteBatch);
 
+            _spriteBatch.Draw(textBox, new Vector2(522, 0), Color.White);
+
             foreach (var item in buttonlist)
             {
                 item.Draw(_spriteBatch);
             }
-            _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 0), Color.White);
+            _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
 
             
             _spriteBatch.End();

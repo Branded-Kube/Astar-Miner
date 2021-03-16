@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Vupa
 {
-    class AStar
+    public class AStar
     {
-        private List<Node> closed;
+        public List<Node> closed;
 
-        private List<Node> open;
+        public List<Node> open;
 
         public List<Node> Closed
         {

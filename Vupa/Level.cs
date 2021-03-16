@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Vupa
 {
-    class Level
+    public class Level
     {
         Point startLoc;
         public Point goalLoc;
@@ -17,23 +17,23 @@ namespace Vupa
         public Level(int lvlnumber)
         {
             this.lvlNumber = lvlnumber;
-            SetWalls();
+            //SetWalls();
         }
 
-        public Point SetStart(Point start)
+        public Point SetStart()
         {
             if (lvlNumber == 1)
             {
-                start = new Point(0, 0);
+                return new Point(0, 0);
 
 
             }
             if (lvlNumber == 2)
             {
-                start = new Point(9, 7);
+                return new Point(9, 7);
             }
 
-            return start;
+            return new Point();
         }
         public Point SetGoal(Point goal)
         {
