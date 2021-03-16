@@ -43,7 +43,7 @@ namespace TestLevel
             //Act
             Point actual = level.SetStart();
             //Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreNotEqual(expected, actual);
         }
 
         [TestMethod]
