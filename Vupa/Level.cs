@@ -48,13 +48,15 @@ namespace Vupa
         {
             if (LvlNumber == 1)
             {
-                VisualManager.grid[11].WalkAble = false;
+                Game1.visualManager.grid[11].WalkAble = false;
 
             }
             if (LvlNumber == 2)
             {
-                VisualManager.grid[95].WalkAble = false;
-                VisualManager.grid[94].WalkAble = false;
+                Game1.visualManager.grid[95].WalkAble = false;
+                Game1.visualManager.grid[94].WalkAble = false;
+
+
             }
         }
 

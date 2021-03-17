@@ -15,7 +15,7 @@ namespace Vupa
         public static GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public static ContentManager content;
-        private VisualManager visualManager;
+        public static VisualManager visualManager;
 
         private Texture2D agentTexture;
         public static SpriteFont font;
@@ -48,6 +48,7 @@ namespace Vupa
 
 
         public Point startLoc;
+       //public Point StartLoc { get; set; }
         public Point endLoc;
         int sizeX = 1000;
         int sizeY = 1000;
@@ -210,7 +211,7 @@ namespace Vupa
 
 
             // TODO: Add your update logic here
-            visualManager.Update();
+           // visualManager.Update();
 
             foreach (var item in buttonlistDel)
             {

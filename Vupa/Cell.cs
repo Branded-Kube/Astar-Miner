@@ -12,7 +12,7 @@ namespace Vupa
 {
     enum CellType { START, GOAL, WALL, EMPTY };
 
-    class Cell
+    public class Cell
     {
         private Texture2D sprite;
 
@@ -135,48 +135,48 @@ namespace Vupa
 
 
         //checks what type of click the player is using (start = put start point on clicked cell, goal = put goal point on clicked cell, wall = put wall on clicked cell)
-        public void Click(ref CellType clickType, ContentManager content)
-        {
-            if (clickType == CellType.START)
-            {
-                sprite = content.Load<Texture2D>("worker");
+        //public void Click(ref CellType clickType, ContentManager content)
+        //{
+        //    if (clickType == CellType.START)
+        //    {
+        //        sprite = content.Load<Texture2D>("worker");
 
-                myType = clickType;
-                clickType = CellType.GOAL;
-                VisualManager.start = MyPos;
-                myColor = Color.MediumSeaGreen;
-            }
-            else if (clickType == CellType.GOAL && myType != CellType.START)
-            {
-                sprite = content.Load<Texture2D>("worker");
+        //        myType = clickType;
+        //        clickType = CellType.GOAL;
+        //        VisualManager.start = MyPos;
+        //        myColor = Color.MediumSeaGreen;
+        //    }
+        //    else if (clickType == CellType.GOAL && myType != CellType.START)
+        //    {
+        //        sprite = content.Load<Texture2D>("worker");
 
-                clickType = CellType.WALL;
-                myType = CellType.GOAL;
-                VisualManager.goal = MyPos;
-                myColor = Color.OrangeRed;
-            }
-            else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
-            {
-                sprite = content.Load<Texture2D>("dirt");
-                myType = CellType.WALL;
-                WalkAble = false;
-                myColor = Color.White;
+        //        clickType = CellType.WALL;
+        //        myType = CellType.GOAL;
+        //        VisualManager.goal = MyPos;
+        //        myColor = Color.OrangeRed;
+        //    }
+        //    else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
+        //    {
+        //        sprite = content.Load<Texture2D>("dirt");
+        //        myType = CellType.WALL;
+        //        WalkAble = false;
+        //        myColor = Color.White;
 
-                //    clickType = CellType.WALL;
-                //    myType = CellType.GOAL;
-                //    VisualManager.goal = MyPos;
-                //    myColor = Color.OrangeRed;
-                //}
-                //else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
-                //{
-                //    //sprite = Image.FromFile(@"Images\Wall.png");
-                //    sprite = content.Load<Texture2D>("dirt");
-                //    myType = CellType.WALL;
-                //    WalkAble = false;
-                //    myColor = Color.White;
+        //        //    clickType = CellType.WALL;
+        //        //    myType = CellType.GOAL;
+        //        //    VisualManager.goal = MyPos;
+        //        //    myColor = Color.OrangeRed;
+        //        //}
+        //        //else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
+        //        //{
+        //        //    //sprite = Image.FromFile(@"Images\Wall.png");
+        //        //    sprite = content.Load<Texture2D>("dirt");
+        //        //    myType = CellType.WALL;
+        //        //    WalkAble = false;
+        //        //    myColor = Color.White;
 
-                //}
-            }
-        }
+        //        //}
+        //    }
+        //}
     }
 }

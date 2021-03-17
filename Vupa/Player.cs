@@ -246,8 +246,12 @@ namespace Vupa
             {
                 CorrectPath();
             }
+            //position = Game1.;
+            VisualManager.start.X = position.X / 100;
+            VisualManager.start.Y = position.Y / 100;
 
-            
+
+            Game1.visualManager.FindPath();
             correctPathCheck = false;
             oldState = newState;
             return position;
