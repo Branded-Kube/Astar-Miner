@@ -23,9 +23,9 @@ namespace Vupa
         KeyboardState oldState;
         public Point position;
         int score = 0;
-        int lvlNumber = 2;
         bool correct;
         Point fogPosition;
+        
 
         public Keys currentKey;
 
@@ -285,7 +285,7 @@ namespace Vupa
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
-            if (lvlNumber > 1)
+            if (Game1.level.LvlNumber == 2)
             {
                 spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
 

@@ -37,13 +37,11 @@ namespace Vupa
         public static Rectangle border;
         private Texture2D backgroundSprite;
         private Rectangle backgroundRectangle;
+        public static Level level;
 
         //    Grid grid;
 
-        public int lvlnumber = 1;
-        public int LvlNumber { get { return this.lvlnumber; } set { this.lvlnumber = value; } }
-
-
+        private int lvlnumber = 1;
 
 
         private MouseState mClick;
@@ -243,7 +241,7 @@ namespace Vupa
         }
         public void GenerateLvl()
         {
-            Level level = new Level(lvlnumber);
+            level = new Level(lvlnumber);
             startLoc = level.SetStart();
             endLoc = level.SetGoal();
             VisualManager.start = startLoc;
