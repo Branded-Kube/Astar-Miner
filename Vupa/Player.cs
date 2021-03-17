@@ -41,7 +41,6 @@ namespace Vupa
         {
             this.position = new Point(start.X *100, start.Y*100);
             this.fogPosition = new Point(position.X -1500, position.Y -1500);
-
             this.size = new Point(100, 100);
             this.playerRectangle = new Rectangle(position, size);
             this.fogSize = new Point(3098, 3098);
@@ -252,6 +251,8 @@ namespace Vupa
 
 
             Game1.visualManager.FindPath();
+            Game1.visualManager.LoadContent(Game1.content);
+
             correctPathCheck = false;
             oldState = newState;
             return position;
