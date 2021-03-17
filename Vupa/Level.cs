@@ -12,6 +12,7 @@ namespace Vupa
         Point startLoc;
         public Point goalLoc;
         int lvlNumber;
+        public int LvlNumber { get { return this.lvlNumber; } set { this.lvlNumber = value; } }
         ContentManager content;
 
         public Level(int lvlnumber)

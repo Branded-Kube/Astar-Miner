@@ -39,8 +39,10 @@ namespace Vupa
         //    Grid grid;
 
         public int lvlnumber = 1;
+        public int LvlNumber { get { return this.lvlnumber; } set { this.lvlnumber = value; } }
 
-        
+
+
 
         private MouseState mClick;
 

@@ -22,6 +22,7 @@ namespace Vupa
         KeyboardState oldState;
         public Point position;
         int score = 0;
+        int lvlNumber = 2;
         bool correct;
         Point fogPosition;
 
@@ -177,7 +178,11 @@ namespace Vupa
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
-            spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+            if (lvlNumber > 1)
+            {
+                spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+
+            }
             spriteBatch.Draw(scoreBox, new Vector2(1098, 532), Color.White);
             spriteBatch.DrawString(Game1.font,$"Score: {score}", new Vector2(1100, 540), Color.LightGreen);
 
