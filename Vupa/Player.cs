@@ -71,9 +71,9 @@ namespace Vupa
 
             //  currentKey = newState.
 
-            if ((playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1))
+            if (newState.IsKeyDown(Keys.NumPad1) && oldState.IsKeyUp(Keys.NumPad1))
             {
-                if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
+                if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
                 {
                     currentKey = Keys.NumPad1;
                 }
@@ -155,7 +155,7 @@ namespace Vupa
 
             
 
-            if (pressedKey == Keys.NumPad1 && oldKey == Keys.NumPad1)
+            if (pressedKey == Keys.NumPad1)
             {
                 position.X -= 100;
                 position.Y += 100;
