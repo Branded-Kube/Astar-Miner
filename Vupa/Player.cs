@@ -14,7 +14,7 @@ namespace Vupa
     {
         Texture2D sprite;
         private Texture2D fogSprite;
-        private Texture2D scoreBox;
+        private Texture2D healthBox;
         Color color = Color.Black;
         Rectangle playerRectangle;
         Rectangle fogRectangle;
@@ -22,16 +22,18 @@ namespace Vupa
         Point fogSize;
         KeyboardState oldState;
         public Point position;
-        int score = 0;
+        int health = 5;
+        public int score;
         bool correct;
         Point fogPosition;
         
 
         public Keys currentKey;
-
         public Keys oldKey;
 
         bool correctPathCheck = false;
+
+        public bool isAlive = true;
 
         KeyboardState newState;
 
@@ -50,7 +52,7 @@ namespace Vupa
         }
         public void Update()
         {
-
+            DeathCheck();
             CheckState();
 
 
@@ -67,81 +69,79 @@ namespace Vupa
         {
             newState = Keyboard.GetState();
 
-            //Debug.WriteLine(currentKey);
-
-            //  currentKey = newState.
-
-            if (newState.IsKeyDown(Keys.NumPad1) && oldState.IsKeyUp(Keys.NumPad1))
+            if (isAlive == true)
             {
-                if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
+                if (newState.IsKeyDown(Keys.NumPad1) && oldState.IsKeyUp(Keys.NumPad1))
                 {
-                    currentKey = Keys.NumPad1;
-                }
-            }
-
-            if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
-            {
-                if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
-                {
-                    currentKey = Keys.NumPad2;
-                }
-            }
-
-             if (newState.IsKeyDown(Keys.NumPad3) && oldState.IsKeyUp(Keys.NumPad3))
-            {
-                if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
-                {
-                    currentKey = Keys.NumPad3;
+                    if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
+                    {
+                        currentKey = Keys.NumPad1;
+                    }
                 }
 
-            }
-
-            if (newState.IsKeyDown(Keys.NumPad4) && oldState.IsKeyUp(Keys.NumPad4))
-            {
-                if ((playerRectangle.Left >= Game1.border.Left + 1))
+                if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
                 {
-                    currentKey = Keys.NumPad4;
+                    if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
+                    {
+                        currentKey = Keys.NumPad2;
+                    }
                 }
 
-            }
-
-             if (newState.IsKeyDown(Keys.NumPad6) && oldState.IsKeyUp(Keys.NumPad6))
-            {
-                if ((playerRectangle.Right <= Game1.border.Right - 1))
+                if (newState.IsKeyDown(Keys.NumPad3) && oldState.IsKeyUp(Keys.NumPad3))
                 {
-                    currentKey = Keys.NumPad6;
+                    if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
+                    {
+                        currentKey = Keys.NumPad3;
+                    }
+
                 }
 
-            }
-
-            if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
-            {
-               if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Top >= Game1.border.Top + 1)
+                if (newState.IsKeyDown(Keys.NumPad4) && oldState.IsKeyUp(Keys.NumPad4))
                 {
-                    currentKey = Keys.NumPad7;
+                    if ((playerRectangle.Left >= Game1.border.Left + 1))
+                    {
+                        currentKey = Keys.NumPad4;
+                    }
+
                 }
-                
 
-            }
-
-             if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
-            {
-                if ((playerRectangle.Top >= Game1.border.Top + 1))
+                if (newState.IsKeyDown(Keys.NumPad6) && oldState.IsKeyUp(Keys.NumPad6))
                 {
-                    currentKey = Keys.NumPad8;
+                    if ((playerRectangle.Right <= Game1.border.Right - 1))
+                    {
+                        currentKey = Keys.NumPad6;
+                    }
+
                 }
-            }
 
-             if (newState.IsKeyDown(Keys.NumPad9) && oldState.IsKeyUp(Keys.NumPad9))
-            {
-               if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Top >= Game1.border.Top + 1)
+                if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
                 {
-                    currentKey = Keys.NumPad9;
-                }  
-            }
+                    if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Top >= Game1.border.Top + 1)
+                    {
+                        currentKey = Keys.NumPad7;
+                    }
 
-            oldState = newState;
-            //  oldKey = currentKey;
+
+                }
+
+                if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
+                {
+                    if ((playerRectangle.Top >= Game1.border.Top + 1))
+                    {
+                        currentKey = Keys.NumPad8;
+                    }
+                }
+
+                if (newState.IsKeyDown(Keys.NumPad9) && oldState.IsKeyUp(Keys.NumPad9))
+                {
+                    if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Top >= Game1.border.Top + 1)
+                    {
+                        currentKey = Keys.NumPad9;
+                    }
+                }
+
+                oldState = newState;
+            }
 
 
             
@@ -266,36 +266,52 @@ namespace Vupa
                     if (node.Position.X == position.X / 100 && node.Position.Y == position.Y / 100)
                     {
                         Debug.WriteLine("plus");
-                        score += 50;
+                        health += 1;
+                        score += 1;
                         correct = true;
                     }
                 }
                 if (correct == false)
                 {
-                    score -= 50;
+                    health -= 2;
                     Debug.WriteLine("minus");
                 }
 
             correct = false;
 
         }
+
+        private void DeathCheck()
+        {
+            if (health <= 0)
+            {
+                isAlive = false;
+            }
+        }
+
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("worker");
             fogSprite = content.Load<Texture2D>("fogwar2");
-            scoreBox = content.Load<Texture2D>("textbox2");
+            healthBox = content.Load<Texture2D>("textbox2");
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
+            spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+
             if (Game1.level.LvlNumber == 2)
             {
                 spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
-
             }
-            spriteBatch.Draw(scoreBox, new Vector2(1098, 532), Color.White);
-            spriteBatch.DrawString(Game1.font,$"Score: {score}", new Vector2(1100, 540), Color.LightGreen);
+            if (isAlive == true)
+            {
+                spriteBatch.Draw(healthBox, new Vector2(1098, 532), Color.White);
+                spriteBatch.DrawString(Game1.font, $"health: {health}", new Vector2(1100, 540), Color.LightGreen);
+            }
+          
+            
 
         }
 

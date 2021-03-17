@@ -29,6 +29,8 @@ namespace Vupa
         private Button buttonSearchMethod;
         private Button buttonStartSearch;
         private Button buttonStartAstar;
+        private Button buttonSaveHighScore;
+        private Button buttonRestart;
 
         private string chosenOption;
         private bool options = true;
@@ -106,14 +108,29 @@ namespace Vupa
             buttonBFS = new Button(1100, 350, "BFS", button);
             buttonStartSearch = new Button(1050, 50, "Start search", button);
             buttonStartAstar = new Button(1050, 100, "Start A*", button);
+            buttonSaveHighScore = new Button(500,600, "Save highscore", button);
+            buttonRestart = new Button(500, 650, "Restart game", button);
+
             buttonDFS.Click += DFS_Click;
             buttonBFS.Click += BFS_Click;
             buttonSearchMethod.Click += ButtonSearchMethod_Click;
             buttonStartSearch.Click += ButtonStartSearch_Click;
             buttonStartAstar.Click += ButtonStartAStar_Click;
+            buttonSaveHighScore.Click += ButtonSaveHighScore_Click;
+            buttonRestart.Click += ButtonRestart_Click;
             buttonlist.Add(buttonSearchMethod);
 
             player.LoadContent(Content);
+        }
+
+        private void ButtonSaveHighScore_Click(object sender, EventArgs e)
+        {
+            // Save Highscore stuff her
+        }
+
+        private void ButtonRestart_Click(object sender, EventArgs e)
+        {
+            // Restart spil her
         }
 
         private void ButtonStartAStar_Click(object sender, EventArgs e)
@@ -179,10 +196,30 @@ namespace Vupa
             buttonlistAdd.Add(buttonStartSearch);
         }
 
+        public void GameOver()
+        {
+           // Debug.WriteLine("GameOver");
+
+            buttonlistDel.Add(buttonSearchMethod);
+            buttonlistDel.Add(buttonDFS);
+            buttonlistDel.Add(buttonBFS);
+            buttonlistDel.Add(buttonStartSearch);
+            buttonlistDel.Add(buttonStartAstar);
+
+            buttonlistAdd.Clear();
+
+            buttonlistAdd.Add(buttonSaveHighScore);
+            buttonlistAdd.Add(buttonRestart);
+        }
 
 
         protected override void Update(GameTime gameTime)
         {
+            if (player.isAlive == false)
+            {
+                GameOver();
+            }
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
@@ -271,14 +308,25 @@ namespace Vupa
 
             player.Draw(_spriteBatch);
 
-            _spriteBatch.Draw(textBox, new Vector2(522, 0), Color.White);
+            
 
             foreach (var item in buttonlist)
             {
                 item.Draw(_spriteBatch);
             }
-            _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
+            
+            if (player.isAlive == true)
+            {
+                _spriteBatch.Draw(textBox, new Vector2(522, 0), Color.White);
+                _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
+            }
+           
 
+            if (player.isAlive == false)
+            {
+                _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(500, 500), Color.Red);
+            }
+            
             _spriteBatch.End();
 
        
