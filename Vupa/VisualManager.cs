@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Vupa
 {
-    class VisualManager
+   public class VisualManager
     {
         //Handeling of graphics
         //private BufferedGraphics backBuffer;
@@ -34,7 +34,7 @@ namespace Vupa
         private CellType clickType;
 
         //Collections
-        public static List<Cell> grid;
+        public List<Cell> grid;
 
         public static List<Node> finalPath;
 
@@ -86,27 +86,27 @@ namespace Vupa
         }
 
         //checks if the mouse is hovering over a cell, and if the left mouse button has been clicked
-        public void Update()
-        {
-            mouseLast = mouseCurrent;
-            mouseCurrent = Mouse.GetState();
-            mouseRectangle = new Rectangle(mouseCurrent.X, mouseCurrent.Y, 1, 1);
+        //public void Update()
+        //{
+        //    mouseLast = mouseCurrent;
+        //    mouseCurrent = Mouse.GetState();
+        //    mouseRectangle = new Rectangle(mouseCurrent.X, mouseCurrent.Y, 1, 1);
 
-            foreach (Cell cell in grid)
-            {
-                //if (cell.BoundingRectangle.IntersectsWith(new Rectangle(mousePos, new Size(1, 1))))
-                if (cell.BoundingRectangle.Intersects(mouseRectangle))
-                {
-                    if (mouseLast.LeftButton == ButtonState.Pressed && mouseCurrent.LeftButton == ButtonState.Released)
-                    {
-                        cell.Click(ref clickType, Game1.content);
+        //    foreach (Cell cell in grid)
+        //    {
+        //        //if (cell.BoundingRectangle.IntersectsWith(new Rectangle(mousePos, new Size(1, 1))))
+        //        if (cell.BoundingRectangle.Intersects(mouseRectangle))
+        //        {
+        //            if (mouseLast.LeftButton == ButtonState.Pressed && mouseCurrent.LeftButton == ButtonState.Released)
+        //            {
+        //                cell.Click(ref clickType, Game1.content);
 
-                    }
-                }
+        //            }
+        //        }
 
 
-            }
-        }
+        //    }
+        //}
     
 
         public void CreateGrid()

@@ -9,23 +9,23 @@ namespace Vupa
 {
     public class Level
     {
-        int lvlNumber;
-
+        //int LvlNumber;
+        public int LvlNumber { get; set; }
         public Level(int lvlnumber)
         {
-            this.lvlNumber = lvlnumber;
+            this.LvlNumber = lvlnumber;
             //SetWalls();
         }
 
         public Point SetStart()
         {
-            if (lvlNumber == 1)
+            if (LvlNumber == 1)
             {
                 return new Point(1, 1);
 
 
             }
-            if (lvlNumber == 2)
+            if (LvlNumber == 2)
             {
                 return new Point(9, 7);
             }
@@ -34,11 +34,11 @@ namespace Vupa
         }
         public Point SetGoal()
         {
-            if (lvlNumber == 1)
+            if (LvlNumber == 1)
             {
                 return new Point(9, 7);
             }
-            if (lvlNumber == 2)
+            if (LvlNumber == 2)
             {
                 return new Point(9, 1);
             }
@@ -46,15 +46,17 @@ namespace Vupa
         }
         public void SetWalls()
         {
-            if (lvlNumber == 1)
+            if (LvlNumber == 1)
             {
-                VisualManager.grid[11].WalkAble = false;
+                Game1.visualManager.grid[11].WalkAble = false;
 
             }
-            if (lvlNumber == 2)
+            if (LvlNumber == 2)
             {
-                VisualManager.grid[95].WalkAble = false;
-                VisualManager.grid[94].WalkAble = false;
+                Game1.visualManager.grid[95].WalkAble = false;
+                Game1.visualManager.grid[94].WalkAble = false;
+
+
             }
         }
 

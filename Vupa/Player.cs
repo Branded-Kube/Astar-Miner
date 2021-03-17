@@ -26,6 +26,7 @@ namespace Vupa
         public int score;
         bool correct;
         Point fogPosition;
+        
 
         public Keys currentKey;
         public Keys oldKey;
@@ -42,7 +43,6 @@ namespace Vupa
         {
             this.position = new Point(start.X *100, start.Y*100);
             this.fogPosition = new Point(position.X -1500, position.Y -1500);
-
             this.size = new Point(100, 100);
             this.playerRectangle = new Rectangle(position, size);
             this.fogSize = new Point(3098, 3098);
@@ -245,8 +245,14 @@ namespace Vupa
             {
                 CorrectPath();
             }
+            //position = Game1.;
+            VisualManager.start.X = position.X / 100;
+            VisualManager.start.Y = position.Y / 100;
 
-            
+
+            Game1.visualManager.FindPath();
+            Game1.visualManager.LoadContent(Game1.content);
+
             correctPathCheck = false;
             oldState = newState;
             return position;
@@ -301,6 +307,13 @@ namespace Vupa
                 spriteBatch.Draw(healthBox, new Vector2(1098, 532), Color.White);
                 spriteBatch.DrawString(Game1.font, $"health: {health}", new Vector2(1100, 540), Color.LightGreen);
             }
+            if (Game1.level.LvlNumber == 2)
+            {
+                spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+
+            }
+            spriteBatch.Draw(scoreBox, new Vector2(1098, 532), Color.White);
+            spriteBatch.DrawString(Game1.font,$"Score: {score}", new Vector2(1100, 540), Color.LightGreen);
 
             
 

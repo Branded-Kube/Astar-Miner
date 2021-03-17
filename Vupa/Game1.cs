@@ -15,7 +15,7 @@ namespace Vupa
         public static GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public static ContentManager content;
-        private VisualManager visualManager;
+        public static VisualManager visualManager;
 
         private Texture2D agentTexture;
         public static SpriteFont font;
@@ -39,17 +39,18 @@ namespace Vupa
         public static Rectangle border;
         private Texture2D backgroundSprite;
         private Rectangle backgroundRectangle;
+        public static Level level;
 
         //    Grid grid;
 
-        public int lvlnumber = 1;
+        private int lvlnumber = 1;
 
-        
 
         private MouseState mClick;
 
 
         public Point startLoc;
+       //public Point StartLoc { get; set; }
         public Point endLoc;
         int sizeX = 1000;
         int sizeY = 1000;
@@ -247,7 +248,7 @@ namespace Vupa
 
 
             // TODO: Add your update logic here
-            visualManager.Update();
+           // visualManager.Update();
 
             foreach (var item in buttonlistDel)
             {
@@ -278,7 +279,7 @@ namespace Vupa
         }
         public void GenerateLvl()
         {
-            Level level = new Level(lvlnumber);
+            level = new Level(lvlnumber);
             startLoc = level.SetStart();
             endLoc = level.SetGoal();
             VisualManager.start = startLoc;
