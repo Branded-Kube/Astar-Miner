@@ -50,11 +50,13 @@ namespace Vupa
 
         public Point MyPos
         {
+           // get { return (myPos) + new Point(1, 1); }
+
             get { return myPos; }
             set { myPos = value; }
         }
 
-        
+
         public Rectangle BoundingRectangle
         {
             get
@@ -66,20 +68,24 @@ namespace Vupa
         public Cell(Point pos, int size)
         {
             this.myPos = pos;
+            //this.myPos.X = pos.X +1;
+            //this.myPos.Y = pos.Y +1;
+
+            
 
             this.cellSize = size;
 
             walkAble = true;
 
             myColor = Color.White;
-            
+
             LoadContent(Game1.content);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-           // spriteBatch.FillRectangle(new SolidBrush(myColor), BoundingRectangle);
-           // spriteBatch.DrawRectangle(new Pen(Color.Black), BoundingRectangle);
+            // spriteBatch.FillRectangle(new SolidBrush(myColor), BoundingRectangle);
+            // spriteBatch.DrawRectangle(new Pen(Color.Black), BoundingRectangle);
             if (sprite != null)
             {
                 spriteBatch.Draw(sprite, BoundingRectangle, MyColor);
@@ -88,7 +94,7 @@ namespace Vupa
             {
                 if (myNode.Parent != null)
                 {
-                    spriteBatch.DrawString(Game1.font, string.Format("{0}", "P: " + myNode.Parent.Position.ToString()), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize)+ 15), Color.White);
+                    spriteBatch.DrawString(Game1.font, string.Format("{0}", "P: " + myNode.Parent.Position.ToString()), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 15), Color.White);
 
                 }
 
@@ -99,12 +105,12 @@ namespace Vupa
 
             }
 
-            spriteBatch.DrawString(Game1.font, string.Format("{0}", myPos), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) ), MyColor);
+            spriteBatch.DrawString(Game1.font, string.Format("{0}", myPos), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize)), MyColor);
 
 
         }
 
-       public void LoadContent(ContentManager content)
+        public void LoadContent(ContentManager content)
         {
             sprite = Game1.content.Load<Texture2D>("ground");
             if (!walkAble)
@@ -126,14 +132,13 @@ namespace Vupa
             }
 
         }
-      
+
 
         //checks what type of click the player is using (start = put start point on clicked cell, goal = put goal point on clicked cell, wall = put wall on clicked cell)
         public void Click(ref CellType clickType, ContentManager content)
         {
             if (clickType == CellType.START)
             {
-                //sprite = Image.FromFile(@"Images\Start.png");
                 sprite = content.Load<Texture2D>("worker");
 
                 myType = clickType;
@@ -143,7 +148,6 @@ namespace Vupa
             }
             else if (clickType == CellType.GOAL && myType != CellType.START)
             {
-                //sprite = Image.FromFile(@"Images\Goal.png");
                 sprite = content.Load<Texture2D>("worker");
 
                 clickType = CellType.WALL;
@@ -153,12 +157,25 @@ namespace Vupa
             }
             else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
             {
-                //sprite = Image.FromFile(@"Images\Wall.png");
                 sprite = content.Load<Texture2D>("dirt");
                 myType = CellType.WALL;
                 WalkAble = false;
                 myColor = Color.White;
 
+                //    clickType = CellType.WALL;
+                //    myType = CellType.GOAL;
+                //    VisualManager.goal = MyPos;
+                //    myColor = Color.OrangeRed;
+                //}
+                //else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
+                //{
+                //    //sprite = Image.FromFile(@"Images\Wall.png");
+                //    sprite = content.Load<Texture2D>("dirt");
+                //    myType = CellType.WALL;
+                //    WalkAble = false;
+                //    myColor = Color.White;
+
+                //}
             }
         }
     }

@@ -5,11 +5,12 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Vupa
 {
-    class Player
+   public class Player
     {
         Texture2D sprite;
         private Texture2D fogSprite;
@@ -26,10 +27,19 @@ namespace Vupa
         bool correct;
         Point fogPosition;
 
+        public Keys currentKey;
+
+        public Keys oldKey;
+
+        bool correctPathCheck = false;
+
+        KeyboardState newState;
+
+        
+
         public Player(Point start)
         {
             this.position = new Point(start.X *100, start.Y*100);
-           // this.fogPosition = new Point(-1500, -1500);
             this.fogPosition = new Point(position.X -1500, position.Y -1500);
 
             this.size = new Point(100, 100);
@@ -41,7 +51,12 @@ namespace Vupa
         }
         public void Update()
         {
-            Move();
+
+            CheckState();
+
+
+            Move(currentKey);
+            currentKey = Keys.None;
             this.playerRectangle.X = position.X;
             this.playerRectangle.Y = position.Y;
             this.fogRectangle.X = position.X -1500;
@@ -49,102 +64,194 @@ namespace Vupa
 
         }
 
-        public void Move()
+        public void CheckState()
         {
+            newState = Keyboard.GetState();
 
-            KeyboardState newState = Keyboard.GetState();
-            if (playerRectangle.Top >= Game1.border.Top + 1)
+            Debug.WriteLine(currentKey);
+
+            //  currentKey = newState.
+
+            if (newState.IsKeyDown(Keys.NumPad1) && oldState.IsKeyUp(Keys.NumPad1))
             {
-                if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
+                if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
                 {
-                    position.Y -= 100;
+                    currentKey = Keys.NumPad1;
+                }
+            }
 
-                    fogPosition.Y -= 100;
-                    CorrectPath();
+            if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
+            {
+                if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
+                {
+                    currentKey = Keys.NumPad2;
+                }
+            }
 
+             if (newState.IsKeyDown(Keys.NumPad3) && oldState.IsKeyUp(Keys.NumPad3))
+            {
+                if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
+                {
+                    currentKey = Keys.NumPad3;
                 }
 
             }
-            if (playerRectangle.Bottom <= Game1.border.Bottom -1)
-            {
-                if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
-                {
-                    position.Y += 100;
-                    fogPosition.Y += 100;
-                    CorrectPath();
 
+            if (newState.IsKeyDown(Keys.NumPad4) && oldState.IsKeyUp(Keys.NumPad4))
+            {
+                if ((playerRectangle.Left >= Game1.border.Left + 1))
+                {
+                    currentKey = Keys.NumPad4;
+                }
+
+            }
+
+             if (newState.IsKeyDown(Keys.NumPad6) && oldState.IsKeyUp(Keys.NumPad6))
+            {
+                if ((playerRectangle.Right <= Game1.border.Right - 1))
+                {
+                    currentKey = Keys.NumPad6;
+                }
+
+            }
+
+            if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
+            {
+               if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Top >= Game1.border.Top + 1)
+                {
+                    currentKey = Keys.NumPad7;
+                }
+                
+
+            }
+
+             if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
+            {
+                if ((playerRectangle.Top >= Game1.border.Top + 1))
+                {
+                    currentKey = Keys.NumPad8;
                 }
             }
-            if (playerRectangle.Left >= Game1.border.Left + 1)
+
+             if (newState.IsKeyDown(Keys.NumPad9) && oldState.IsKeyUp(Keys.NumPad9))
             {
-                if (newState.IsKeyDown(Keys.NumPad4) && oldState.IsKeyUp(Keys.NumPad4))
+               if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Top >= Game1.border.Top + 1)
                 {
-                    position.X -= 100;
-                    fogPosition.X -= 100;
-                    CorrectPath();
-
-                }
+                    currentKey = Keys.NumPad9;
+                }  
             }
-            if (playerRectangle.Right <= Game1.border.Right - 1)
-            {
-                if (newState.IsKeyDown(Keys.NumPad6) && oldState.IsKeyUp(Keys.NumPad6))
-                {
-                    position.X += 100;
-                    fogPosition.X += 100;
-                    CorrectPath();
 
-                }
-            }
-            if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Top >= Game1.border.Top + 1)
-            {
-                if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
-                {
-                    position.X -= 100;
-                    position.Y -= 100;
-                    fogPosition.X -= 100;
-                    fogPosition.Y -= 100;
-                    CorrectPath();
-
-                }
-            }
-            if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
-            {
-                if (newState.IsKeyDown(Keys.NumPad3) && oldState.IsKeyUp(Keys.NumPad3))
-                {
-                    position.X += 100;
-                    position.Y += 100;
-                    fogPosition.X += 100;
-                    fogPosition.Y += 100;
-                    CorrectPath();
-
-                }
-            }
-            if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Top >= Game1.border.Top + 1)
-            {
-                if (newState.IsKeyDown(Keys.NumPad9) && oldState.IsKeyUp(Keys.NumPad9))
-                {
-                    position.X += 100;
-                    position.Y -= 100;
-                    fogPosition.X += 100;
-                    fogPosition.Y -= 100;
-                    CorrectPath();
-
-                }
-            }
-            if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
-            {
-                if (newState.IsKeyDown(Keys.NumPad1) && oldState.IsKeyUp(Keys.NumPad1))
-                {
-                    position.X -= 100;
-                    position.Y += 100;
-                    fogPosition.X -= 100;
-                    fogPosition.Y += 100;
-                    CorrectPath();
-
-
-                }
-            }
             oldState = newState;
+            //  oldKey = currentKey;
+
+
+            
+        }
+
+
+        
+        public Point Move(Keys pressedKey)
+        {
+            KeyboardState newState = Keyboard.GetState();
+
+            
+
+            if (pressedKey == Keys.NumPad1)
+            {
+                position.X -= 100;
+                position.Y += 100;
+                fogPosition.X -= 100;
+                fogPosition.Y += 100;
+                correctPathCheck = true;
+
+                return position;
+                    
+                
+            }
+
+            else if (pressedKey == Keys.NumPad2)
+            {
+                position.Y += 100;
+                fogPosition.Y += 100;
+                correctPathCheck = true;
+
+                return position;
+        }
+
+            else if (pressedKey == Keys.NumPad3)
+            {
+                    position.X += 100;
+                    position.Y += 100;
+                    fogPosition.X += 100;
+                    fogPosition.Y += 100;
+                    correctPathCheck = true;
+
+                    return position;
+            }
+
+            else if (pressedKey == Keys.NumPad4)
+            {
+                position.X -= 100;
+                fogPosition.X -= 100;
+                correctPathCheck = true;
+   
+                return position;
+            }
+
+            else if (pressedKey == Keys.NumPad6)
+            {
+
+                position.X += 100;
+                fogPosition.X += 100;
+                correctPathCheck = true;
+
+                return position;
+            }
+
+            else if (pressedKey == Keys.NumPad7)
+            {
+                position.X -= 100;
+                position.Y -= 100;
+                fogPosition.X -= 100;
+                fogPosition.Y -= 100;
+                correctPathCheck = true;
+
+                return position;
+            }
+
+
+
+            else if (pressedKey == Keys.NumPad8)
+            {
+                position.Y -= 100;
+                fogPosition.Y -= 100;
+                correctPathCheck = true;
+
+                return position;
+            }
+
+            else if (pressedKey == Keys.NumPad9)
+            {
+
+                position.X += 100;
+                position.Y -= 100;
+                fogPosition.X += 100;
+                fogPosition.Y -= 100;
+                correctPathCheck = true;
+
+                return position;
+            }
+
+            if (correctPathCheck)
+            {
+                CorrectPath();
+            }
+
+            
+            correctPathCheck = false;
+            oldState = newState;
+            return position;
+
         }
 
         public void CorrectPath()
