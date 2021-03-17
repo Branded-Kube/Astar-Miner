@@ -113,5 +113,25 @@ namespace TestLevel
 
         }
 
+        [TestMethod]
+        public void TestMoveRightWrongValue()
+        {
+
+            Point location = new Point(5, 5);
+
+            // Arrange
+            Player player = new Player(location);
+
+
+            Point expectedLocation = new Point(7 * 100, 5 * 100);
+
+            // Act
+            Point actualLocation = player.Move(Keys.NumPad6);
+
+            // Assert
+            Assert.AreNotEqual(expectedLocation, actualLocation);
+
+        }
+
     }
 }

@@ -65,9 +65,9 @@ namespace Vupa
 
         public void CheckState()
         {
-            // leState.IsKeyDown(currentKey);
-
             newState = Keyboard.GetState();
+
+            Debug.WriteLine(currentKey);
 
             //  currentKey = newState.
 
@@ -79,7 +79,7 @@ namespace Vupa
                 }
             }
 
-            else if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
+            if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
             {
                 if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
                 {
@@ -87,7 +87,7 @@ namespace Vupa
                 }
             }
 
-            else if (newState.IsKeyDown(Keys.NumPad3) && oldState.IsKeyUp(Keys.NumPad3))
+             if (newState.IsKeyDown(Keys.NumPad3) && oldState.IsKeyUp(Keys.NumPad3))
             {
                 if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
                 {
@@ -96,7 +96,7 @@ namespace Vupa
 
             }
 
-            else if (newState.IsKeyDown(Keys.NumPad4) && oldState.IsKeyUp(Keys.NumPad4))
+            if (newState.IsKeyDown(Keys.NumPad4) && oldState.IsKeyUp(Keys.NumPad4))
             {
                 if ((playerRectangle.Left >= Game1.border.Left + 1))
                 {
@@ -105,7 +105,7 @@ namespace Vupa
 
             }
 
-            else if (newState.IsKeyDown(Keys.NumPad6) && oldState.IsKeyUp(Keys.NumPad6))
+             if (newState.IsKeyDown(Keys.NumPad6) && oldState.IsKeyUp(Keys.NumPad6))
             {
                 if ((playerRectangle.Right <= Game1.border.Right - 1))
                 {
@@ -114,7 +114,7 @@ namespace Vupa
 
             }
 
-            else if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
+            if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
             {
                if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Top >= Game1.border.Top + 1)
                 {
@@ -124,7 +124,7 @@ namespace Vupa
 
             }
 
-            else if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
+             if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
             {
                 if ((playerRectangle.Top >= Game1.border.Top + 1))
                 {
@@ -132,7 +132,7 @@ namespace Vupa
                 }
             }
 
-            else if (newState.IsKeyDown(Keys.NumPad9) && oldState.IsKeyUp(Keys.NumPad9))
+             if (newState.IsKeyDown(Keys.NumPad9) && oldState.IsKeyUp(Keys.NumPad9))
             {
                if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Top >= Game1.border.Top + 1)
                 {
