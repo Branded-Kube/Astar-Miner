@@ -83,6 +83,7 @@ namespace Vupa
 
             ColorNodes();
 
+
         }
 
         //checks if the mouse is hovering over a cell, and if the left mouse button has been clicked
@@ -107,7 +108,7 @@ namespace Vupa
 
         //    }
         //}
-    
+
 
         public void CreateGrid()
         {

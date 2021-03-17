@@ -67,7 +67,7 @@ namespace Vupa
         {
             newState = Keyboard.GetState();
 
-            Debug.WriteLine(currentKey);
+            //Debug.WriteLine(currentKey);
 
             //  currentKey = newState.
 
@@ -245,7 +245,6 @@ namespace Vupa
             {
                 CorrectPath();
             }
-            //position = Game1.;
             VisualManager.start.X = position.X / 100;
             VisualManager.start.Y = position.Y / 100;
 

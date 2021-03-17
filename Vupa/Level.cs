@@ -11,10 +11,11 @@ namespace Vupa
     {
         //int LvlNumber;
         public int LvlNumber { get; set; }
+        public List<Cell> Notwalkables { get; set; }
         public Level(int lvlnumber)
         {
             this.LvlNumber = lvlnumber;
-            //SetWalls();
+            Notwalkables = new List<Cell>();
         }
 
         public Point SetStart()
@@ -46,18 +47,34 @@ namespace Vupa
         }
         public void SetWalls()
         {
+
+            foreach (Cell cell in Game1.visualManager.grid)
+            {
+                cell.WalkAble = true;
+            }
+
             if (LvlNumber == 1)
             {
-                Game1.visualManager.grid[11].WalkAble = false;
+                Notwalkables.Add(Game1.visualManager.grid[11]);
 
             }
             if (LvlNumber == 2)
             {
-                Game1.visualManager.grid[95].WalkAble = false;
-                Game1.visualManager.grid[94].WalkAble = false;
+                Notwalkables.Add(Game1.visualManager.grid[95]);
+                Notwalkables.Add(Game1.visualManager.grid[94]);
+
+
 
 
             }
+
+            foreach (Cell cell in Notwalkables)
+            {
+                cell.WalkAble = false;
+            }
+           
+            //Game1.visualManager.FindPath();
+
         }
 
 
