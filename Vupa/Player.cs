@@ -301,17 +301,17 @@ namespace Vupa
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
             spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
-            
+
+            if (Game1.level.LvlNumber == 2)
+            {
+                spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+            }
             if (isAlive == true)
             {
                 spriteBatch.Draw(healthBox, new Vector2(1098, 532), Color.White);
                 spriteBatch.DrawString(Game1.font, $"health: {health}", new Vector2(1100, 540), Color.LightGreen);
             }
-            if (Game1.level.LvlNumber == 2)
-            {
-                spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
-
-            }
+          
             
 
         }
