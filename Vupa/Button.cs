@@ -24,7 +24,7 @@ namespace Vupa
         public Button(int positionX, int positionY, string buttonDescription, Texture2D texture2D)
         {
             hoverColor = Color.Gray;
-            this.buttonRectangle = new Rectangle(positionX, positionY, buttonDescription.Length*8, 50);
+            this.buttonRectangle = new Rectangle(positionX, positionY, buttonDescription.Length*8 + 20, 50);
             this.buttonDescription = buttonDescription;
             this.sprite = texture2D;
         }
