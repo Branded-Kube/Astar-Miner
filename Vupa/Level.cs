@@ -9,7 +9,6 @@ namespace Vupa
 {
     public class Level
     {
-        //int LvlNumber;
         public int LvlNumber { get; set; }
         public List<Cell> Notwalkables { get; set; }
         public Level(int lvlnumber)
@@ -74,7 +73,6 @@ namespace Vupa
             {
                 cell.WalkAble = true;
             }
-            //Notwalkables.Clear();
 
             if (LvlNumber == 1)
             {
@@ -86,9 +84,6 @@ namespace Vupa
                 Notwalkables.Add(Game1.visualManager.grid[85]);
                 Notwalkables.Add(Game1.visualManager.grid[84]);
 
-
-
-
             }
 
             foreach (Cell cell in Notwalkables)
@@ -96,8 +91,6 @@ namespace Vupa
                 cell.WalkAble = false;
             }
            
-            //Game1.visualManager.FindPath();
-
         }
 
 

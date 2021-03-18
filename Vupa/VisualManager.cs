@@ -12,10 +12,6 @@ namespace Vupa
 {
    public class VisualManager
     {
-        //Handeling of graphics
-        //private BufferedGraphics backBuffer;
-        //private Graphics dc;
-     
         private Rectangle displayRectangle;
 
         //Handeling of nodes
@@ -46,13 +42,6 @@ namespace Vupa
 
         public VisualManager(SpriteBatch spriteBatch, Rectangle displayRectangle)
         {
-            //Create's (Allocates) a buffer in memory with the size of the display
-           // this.backBuffer = BufferedGraphicsManager.Current.Allocate(dc, displayRectangle);
-
-            //Sets the graphics context to the graphics in the buffer
-            //this.dc = backBuffer.Graphics;
-
-            //Sets the displayRectangle
             this.displayRectangle = displayRectangle;
 
             aStar = new AStar();
@@ -62,17 +51,14 @@ namespace Vupa
             CreateGrid();
         }
 
-        public void Render(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            //dc.Clear(Color.White);
 
             foreach (Cell cell in grid)
             {
                 cell.Draw(spriteBatch);
             }
 
-            //Renders the content of the buffered graphics context to the real context(Swap buffers)
-            //backBuffer.Render();
         }
 
       
@@ -83,31 +69,7 @@ namespace Vupa
 
             ColorNodes();
 
-
         }
-
-        //checks if the mouse is hovering over a cell, and if the left mouse button has been clicked
-        //public void Update()
-        //{
-        //    mouseLast = mouseCurrent;
-        //    mouseCurrent = Mouse.GetState();
-        //    mouseRectangle = new Rectangle(mouseCurrent.X, mouseCurrent.Y, 1, 1);
-
-        //    foreach (Cell cell in grid)
-        //    {
-        //        //if (cell.BoundingRectangle.IntersectsWith(new Rectangle(mousePos, new Size(1, 1))))
-        //        if (cell.BoundingRectangle.Intersects(mouseRectangle))
-        //        {
-        //            if (mouseLast.LeftButton == ButtonState.Pressed && mouseCurrent.LeftButton == ButtonState.Released)
-        //            {
-        //                cell.Click(ref clickType, Game1.content);
-
-        //            }
-        //        }
-
-
-        //    }
-        //}
 
 
         public void CreateGrid()

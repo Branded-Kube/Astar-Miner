@@ -17,7 +17,6 @@ namespace Vupa
         public static ContentManager content;
         public static VisualManager visualManager;
 
-        private Texture2D agentTexture;
         public static SpriteFont font;
         private Texture2D textBox;
 
@@ -224,27 +223,17 @@ namespace Vupa
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            mClick = Mouse.GetState();
-            //if (mClick.LeftButton == ButtonState.Pressed)
-            //{
-            //    startLoc.X = (int)mClick.X / 50;
-            //    startLoc.Y = (int)mClick.Y / 50;
-            //}
-            //if (mClick.RightButton == ButtonState.Pressed)
-            //{
-            //    endLoc.X = (int)mClick.X / 50;
-            //    endLoc.Y = (int)mClick.Y / 50;
-            //}
 
 
 
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                Exit(); 
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 visualManager.FindPath();
-            }
+            } 
              
 
 
@@ -316,7 +305,7 @@ namespace Vupa
             _spriteBatch.Begin();
             _spriteBatch.Draw(backgroundSprite, backgroundRectangle, Color.White);
 
-            visualManager.Render(_spriteBatch);
+            visualManager.Draw(_spriteBatch);
 
             player.Draw(_spriteBatch);
 
