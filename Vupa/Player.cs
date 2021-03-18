@@ -65,6 +65,8 @@ namespace Vupa
 
         }
 
+        // Brugt til at tjekke hvilken tast er trykket på,.
+
         public void CheckState()
         {
             newState = Keyboard.GetState();
@@ -111,7 +113,6 @@ namespace Vupa
                     {
                         currentKey = Keys.NumPad6;
                     }
-
                 }
 
                 if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
@@ -120,8 +121,6 @@ namespace Vupa
                     {
                         currentKey = Keys.NumPad7;
                     }
-
-
                 }
 
                 if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
@@ -141,10 +140,7 @@ namespace Vupa
                 }
 
                 oldState = newState;
-            }
-
-
-            
+            }      
         }
 
 
