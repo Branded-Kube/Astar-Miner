@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Vupa
 {
-   public class Player
+    public class Player
     {
         Texture2D sprite;
         private Texture2D fogSprite;
@@ -23,7 +23,7 @@ namespace Vupa
         KeyboardState oldState;
         public Point position;
         public Point tmpposition;
-
+        public int Health {get {return health;} set { health = value; } }
         int health = 5;
         public int score;
         bool correct;
