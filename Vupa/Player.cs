@@ -22,7 +22,7 @@ namespace Vupa
         Point fogSize;
         KeyboardState oldState;
         public Point position;
-        private Point tmpposition;
+        public Point tmpposition;
 
         int health = 5;
         public int score;
@@ -272,10 +272,11 @@ namespace Vupa
                 {
                     CorrectPath();
                 }
+                VisualManager.start.X = position.X / 100;
+                VisualManager.start.Y = position.Y / 100;
             }
             dontMove = false;
-            VisualManager.start.X = position.X / 100;
-            VisualManager.start.Y = position.Y / 100;
+            
 
 
 
@@ -285,7 +286,7 @@ namespace Vupa
 
             correctPathCheck = false;
             oldState = newState;
-            return position;
+            return tmpposition;
 
         }
 
