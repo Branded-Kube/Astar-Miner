@@ -23,15 +23,25 @@ namespace Vupa
             if (LvlNumber == 1)
             {
                 return new Point(1, 1);
-
-
             }
             if (LvlNumber == 2)
             {
                 return new Point(9, 7);
             }
+            if (LvlNumber == 3)
+            {
+                return new Point(9, 1);
+            }
+            if (LvlNumber == 4)
+            {
+                return new Point(2, 10);
+            }
+            else
+            {
+                return new Point();
 
-            return new Point();
+            }
+
         }
         public Point SetGoal()
         {
@@ -43,7 +53,19 @@ namespace Vupa
             {
                 return new Point(9, 1);
             }
-            return new Point(5, 5);
+            if (LvlNumber == 3)
+            {
+                return new Point(2, 10);
+            }
+            if (LvlNumber == 4)
+            {
+                return new Point(8, 3);
+            }
+            else
+            {
+                return new Point(5, 5);
+
+            }
         }
         public void SetWalls()
         {

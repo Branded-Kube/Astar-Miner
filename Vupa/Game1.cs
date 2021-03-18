@@ -268,7 +268,14 @@ namespace Vupa
             }
             if (player.position.X /100 == endLoc.X && player.position.Y / 100 == endLoc.Y)
             {
-                lvlnumber = 2;
+                if (lvlnumber < 4)
+                {
+                lvlnumber ++;
+                }
+                else
+                {
+                    Debug.WriteLine("WIN SCREEN");
+                }
                 GenerateLvl();
             }
             player.Update();
