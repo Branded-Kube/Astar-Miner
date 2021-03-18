@@ -22,11 +22,13 @@ namespace Vupa
         Point fogSize;
         KeyboardState oldState;
         public Point position;
+        private Point tmpposition;
+
         int health = 5;
         public int score;
         bool correct;
         Point fogPosition;
-        
+        bool dontMove;
 
         public Keys currentKey;
         public Keys oldKey;
@@ -41,7 +43,7 @@ namespace Vupa
 
         public Player(Point start)
         {
-            this.position = new Point(start.X *100, start.Y*100);
+            this.tmpposition = new Point(start.X *100, start.Y*100);
             this.fogPosition = new Point(position.X -1500, position.Y -1500);
             this.size = new Point(100, 100);
             this.playerRectangle = new Rectangle(position, size);
@@ -49,6 +51,8 @@ namespace Vupa
             this.fogRectangle = new Rectangle(fogPosition, fogSize);
 
 
+            //VisualManager.start.X = position.X / 100;
+            //VisualManager.start.Y = position.Y / 100;
         }
         public void Update()
         {
@@ -83,10 +87,25 @@ namespace Vupa
 
                 if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
                 {
+                    //foreach (Cell cell in Game1.level.Notwalkables)
+                    //{
+                    //    if (playerRectangle.Bottom == cell.BoundingRectangle.Top && playerRectangle.X == cell.BoundingRectangle.X && playerRectangle.Y +100== cell.BoundingRectangle.Y)
+                    //    {
+
+                    //    }
+                    //    else if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
+                    //    {
+                    //        currentKey = Keys.NumPad2;
+
+                    //    }
+
+                    //}
+
                     if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
                     {
                         currentKey = Keys.NumPad2;
                     }
+
                 }
 
                 if (newState.IsKeyDown(Keys.NumPad3) && oldState.IsKeyUp(Keys.NumPad3))
@@ -149,100 +168,116 @@ namespace Vupa
         {
             KeyboardState newState = Keyboard.GetState();
 
-            
+            //dontMove = false;
 
             if (pressedKey == Keys.NumPad1)
             {
-                position.X -= 100;
-                position.Y += 100;
+                tmpposition.X -= 100;
+                tmpposition.Y += 100;
                 fogPosition.X -= 100;
                 fogPosition.Y += 100;
                 correctPathCheck = true;
 
-                return position;
+                return tmpposition;
                     
                 
             }
 
             else if (pressedKey == Keys.NumPad2)
             {
-                position.Y += 100;
+                tmpposition.Y += 100;
                 fogPosition.Y += 100;
                 correctPathCheck = true;
 
-                return position;
+                return tmpposition;
         }
 
             else if (pressedKey == Keys.NumPad3)
             {
-                    position.X += 100;
-                    position.Y += 100;
+                tmpposition.X += 100;
+                tmpposition.Y += 100;
                     fogPosition.X += 100;
                     fogPosition.Y += 100;
                     correctPathCheck = true;
 
-                    return position;
+                    return tmpposition;
             }
 
             else if (pressedKey == Keys.NumPad4)
             {
-                position.X -= 100;
+                tmpposition.X -= 100;
                 fogPosition.X -= 100;
                 correctPathCheck = true;
    
-                return position;
+                return tmpposition;
             }
 
             else if (pressedKey == Keys.NumPad6)
             {
 
-                position.X += 100;
+                tmpposition.X += 100;
                 fogPosition.X += 100;
                 correctPathCheck = true;
 
-                return position;
+                return tmpposition;
             }
 
             else if (pressedKey == Keys.NumPad7)
             {
-                position.X -= 100;
-                position.Y -= 100;
+                tmpposition.X -= 100;
+                tmpposition.Y -= 100;
                 fogPosition.X -= 100;
                 fogPosition.Y -= 100;
                 correctPathCheck = true;
 
-                return position;
+                return tmpposition;
             }
 
 
 
             else if (pressedKey == Keys.NumPad8)
             {
-                position.Y -= 100;
+                tmpposition.Y -= 100;
                 fogPosition.Y -= 100;
                 correctPathCheck = true;
 
-                return position;
+                return tmpposition;
             }
 
             else if (pressedKey == Keys.NumPad9)
             {
 
-                position.X += 100;
-                position.Y -= 100;
+                tmpposition.X += 100;
+                tmpposition.Y -= 100;
                 fogPosition.X += 100;
                 fogPosition.Y -= 100;
                 correctPathCheck = true;
 
-                return position;
+                return tmpposition;
             }
 
-            if (correctPathCheck)
+            foreach (Cell cell in Game1.level.Notwalkables)
             {
-                CorrectPath();
+                if (tmpposition.X == cell.MyPos.X * 100 && tmpposition.Y == cell.MyPos.Y * 100)
+                {
+                    dontMove = true;
+                    tmpposition = position;
+                }
             }
+
+            if (dontMove == false)
+            {
+                position = tmpposition;
+                if (correctPathCheck)
+                {
+                    CorrectPath();
+                }
+            }
+            dontMove = false;
             VisualManager.start.X = position.X / 100;
             VisualManager.start.Y = position.Y / 100;
+
+
 
 
             Game1.visualManager.FindPath();
