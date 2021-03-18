@@ -74,6 +74,7 @@ namespace Vupa
             {
                 cell.WalkAble = true;
             }
+            //Notwalkables.Clear();
 
             if (LvlNumber == 1)
             {
