@@ -302,7 +302,6 @@ namespace Vupa
                     if (node.Position.X == position.X / 100 && node.Position.Y == position.Y / 100)
                     {
                         Debug.WriteLine("plus");
-                        health += 1;
                         score += 1;
                         correct = true;
                     }
