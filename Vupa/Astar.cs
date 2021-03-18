@@ -61,7 +61,7 @@ namespace Vupa
                     {
                         if (x != 0 || y != 0)
                         {
-                            neighbour = nodes.Find(node => node.Position.X == currentNode.Position.X - x && node.Position.Y == currentNode.Position.Y - y);
+                            neighbour = nodes.Find(node =>  node.Position.X == currentNode.Position.X - x && node.Position.Y == currentNode.Position.Y - y);
 
                             if (neighbour != null)
                             {
