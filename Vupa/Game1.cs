@@ -43,7 +43,7 @@ namespace Vupa
 
         //    Grid grid;
 
-        private int lvlnumber = 1;
+        public int lvlnumber = 1;
 
 
         private MouseState mClick;
@@ -84,7 +84,7 @@ namespace Vupa
              border = new Rectangle(borderPosition, bordersize);
             //_graphics.IsFullScreen = true;
             player = new Player(startLoc);
-
+            
             GenerateLvl();
 
             _graphics.ApplyChanges();
@@ -287,6 +287,7 @@ namespace Vupa
         public void GenerateLvl()
         {
             level = new Level(lvlnumber);
+
             startLoc = level.SetStart();
             endLoc = level.SetGoal();
             VisualManager.start = startLoc;
