@@ -272,12 +272,14 @@ namespace Vupa
                 if (lvlnumber < 4)
                 {
                 lvlnumber ++;
+
                 }
                 else
                 {
                     Debug.WriteLine("WIN SCREEN");
                 }
                 GenerateLvl();
+
             }
             player.Update();
 
@@ -296,7 +298,7 @@ namespace Vupa
 
             Debug.WriteLine(startLoc);
             Debug.WriteLine(endLoc);
-            player.position = new Point(startLoc.X *100, startLoc.Y *100);
+            player.tmpposition = new Point(startLoc.X *100, startLoc.Y *100);
             visualManager.LoadContent(Content);
             level.SetWalls();
             visualManager.FindPath();
