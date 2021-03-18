@@ -82,8 +82,8 @@ namespace Vupa
             }
             if (LvlNumber == 2)
             {
-                Notwalkables.Add(Game1.visualManager.grid[95]);
-                Notwalkables.Add(Game1.visualManager.grid[94]);
+                Notwalkables.Add(Game1.visualManager.grid[85]);
+                Notwalkables.Add(Game1.visualManager.grid[84]);
 
 
 

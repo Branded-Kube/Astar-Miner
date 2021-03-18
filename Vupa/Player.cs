@@ -22,6 +22,7 @@ namespace Vupa
         Point fogSize;
         KeyboardState oldState;
         public Point position;
+        public int Health { get { return health; } set { health = value; } }
         int health = 5;
         public int score;
         bool correct;
@@ -266,7 +267,6 @@ namespace Vupa
                     if (node.Position.X == position.X / 100 && node.Position.Y == position.Y / 100)
                     {
                         Debug.WriteLine("plus");
-                        health += 1;
                         score += 1;
                         correct = true;
                     }
