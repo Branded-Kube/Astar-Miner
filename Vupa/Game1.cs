@@ -83,6 +83,7 @@ namespace Vupa
             var borderPosition = new Point(100, 100);
              border = new Rectangle(borderPosition, bordersize);
             //_graphics.IsFullScreen = true;
+            startLoc = new Point(1,1);
             player = new Player(startLoc);
             
             GenerateLvl();
@@ -295,10 +296,10 @@ namespace Vupa
 
             Debug.WriteLine(startLoc);
             Debug.WriteLine(endLoc);
-            visualManager.FindPath();
             player.position = new Point(startLoc.X *100, startLoc.Y *100);
             visualManager.LoadContent(Content);
             level.SetWalls();
+            visualManager.FindPath();
 
         }
 
