@@ -49,18 +49,21 @@ namespace Vupa
             this.playerRectangle = new Rectangle(position, size);
             this.fogSize = new Point(3098, 3098);
             this.fogRectangle = new Rectangle(fogPosition, fogSize);
-
+            position = tmpposition;
 
             //VisualManager.start.X = position.X / 100;
             //VisualManager.start.Y = position.Y / 100;
         }
+
         public void Update()
         {
             DeathCheck();
             CheckState();
+            if (Keyboard.GetState().GetPressedKeys().Length > 0)
+            {
+                Move(currentKey);
+            }
 
-
-            Move(currentKey);
             currentKey = Keys.None;
             this.playerRectangle.X = position.X;
             this.playerRectangle.Y = position.Y;
@@ -268,7 +271,6 @@ namespace Vupa
             dontMove = false;
 
             Game1.visualManager.FindPath();
-            Game1.visualManager.LoadContent(Game1.content);
 
             correctPathCheck = false;
             oldState = newState;
