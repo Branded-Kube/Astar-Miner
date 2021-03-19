@@ -27,8 +27,11 @@ namespace Vupa
         private MouseState mouseLast;
         private Rectangle mouseRectangle;
 
-        private CellType clickType;
-
+        //private CellType clickType;
+        private Texture2D sprite;
+        private Texture2D wallSprite;
+        private Texture2D startSprite;
+        private Texture2D goalSprite;
         //Collections
         public List<Cell> grid;
 
@@ -88,18 +91,21 @@ namespace Vupa
                 }
             }
         }
-
-        //creates a node for each individual cell in the grid, excluding the cells marked unwalkable
-        public List<Node> CreateNodes()
+       
+    //creates a node for each individual cell in the grid, excluding the cells marked unwalkable
+    public List<Node> CreateNodes()
         {
             List<Node> allNodes = new List<Node>();
             foreach (Cell cell in grid)
             {
+                ChangeTexture(cell);
+
                 if (cell.WalkAble)
                 {
                     cell.MyNode = new Node(cell.MyPos);
                     allNodes.Add(cell.MyNode);
                 }
+
             }
 
             return allNodes;
@@ -133,12 +139,41 @@ namespace Vupa
                 
             }
         }
+
+        //public Texture2D ChangeTexture(Cell cell)
+        public void ChangeTexture(Cell cell)
+        {
+            cell.Sprite = sprite;
+
+            if (!cell.WalkAble)
+            {
+                cell.Sprite = wallSprite;
+
+            }
+            if (cell.MyPos == VisualManager.start)
+            {
+                cell.Sprite = startSprite;
+                cell.MyColor = Color.MediumSeaGreen;
+
+            }
+            else if (cell.MyPos == VisualManager.goal)
+            {
+                cell.Sprite = goalSprite;
+                cell.MyColor = Color.OrangeRed;
+
+            }
+            //return cell.Sprite;
+        }
         public void LoadContent(ContentManager content)
         {
-            foreach (Cell cell in grid)
-            {
-                cell.LoadContent(content);
-            }
+            
+            sprite = Game1.content.Load<Texture2D>("ground");
+
+            wallSprite = Game1.content.Load<Texture2D>("dirt");
+
+            startSprite = Game1.content.Load<Texture2D>("worker");
+
+            goalSprite = Game1.content.Load<Texture2D>("worker");
         }
     }
 }

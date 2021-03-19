@@ -10,19 +10,20 @@ using System.Threading.Tasks;
 
 namespace Vupa
 {
-    enum CellType { START, GOAL, WALL, EMPTY };
+    //enum CellType { START, GOAL, WALL, EMPTY };
 
     public class Cell
     {
         private Texture2D sprite;
-
+        public Texture2D Sprite { get { return sprite; } set { sprite = value; } }
+       
         private Point myPos;
 
         private int cellSize;
 
         private bool walkAble;
 
-        CellType myType = CellType.EMPTY;
+        //CellType myType = CellType.EMPTY;
 
         public bool WalkAble
         {
@@ -50,8 +51,6 @@ namespace Vupa
 
         public Point MyPos
         {
-           // get { return (myPos) + new Point(1, 1); }
-
             get { return myPos; }
             set { myPos = value; }
         }
@@ -68,24 +67,17 @@ namespace Vupa
         public Cell(Point pos, int size)
         {
             this.myPos = pos;
-            //this.myPos.X = pos.X +1;
-            //this.myPos.Y = pos.Y +1;
-
             
-
             this.cellSize = size;
 
             walkAble = true;
 
             myColor = Color.White;
 
-            LoadContent(Game1.content);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            // spriteBatch.FillRectangle(new SolidBrush(myColor), BoundingRectangle);
-            // spriteBatch.DrawRectangle(new Pen(Color.Black), BoundingRectangle);
             if (sprite != null)
             {
                 spriteBatch.Draw(sprite, BoundingRectangle, MyColor);
@@ -107,29 +99,6 @@ namespace Vupa
 
             spriteBatch.DrawString(Game1.font, string.Format("{0}", myPos), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize)), MyColor);
 
-
-        }
-
-        public void LoadContent(ContentManager content)
-        {
-            sprite = Game1.content.Load<Texture2D>("ground");
-            if (!walkAble)
-            {
-                sprite = Game1.content.Load<Texture2D>("dirt");
-
-            }
-            if (MyPos == VisualManager.start)
-            {
-                sprite = Game1.content.Load<Texture2D>("worker");
-                myColor = Color.MediumSeaGreen;
-
-            }
-            else if (MyPos == VisualManager.goal)
-            {
-                sprite = Game1.content.Load<Texture2D>("worker");
-                myColor = Color.OrangeRed;
-
-            }
 
         }
     }

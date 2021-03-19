@@ -19,7 +19,7 @@ namespace Vupa
 
         public static SpriteFont font;
         private Texture2D textBox;
-
+        
         private List<Button> buttonlist;
         private List<Button> buttonlistDel;
         private List<Button> buttonlistAdd;
@@ -43,7 +43,7 @@ namespace Vupa
         //    Grid grid;
 
         public int lvlnumber = 1;
-
+       //private Keyboard keys = Keyboard.GetState().GetPressedKeys();
 
         private MouseState mClick;
 
@@ -68,12 +68,6 @@ namespace Vupa
 
         protected override void Initialize()
         {
-            // Create the tile objects in the array
-
-          //  grid = new Grid[10, 10]; 
-
-           
-
             visualManager = new VisualManager(_spriteBatch  , new Rectangle(0, 0, sizeX, sizeY));
             _graphics.PreferredBackBufferWidth = 1300;
             _graphics.PreferredBackBufferHeight = 1200;
@@ -82,9 +76,28 @@ namespace Vupa
             var borderPosition = new Point(100, 100);
              border = new Rectangle(borderPosition, bordersize);
             //_graphics.IsFullScreen = true;
+
+            button = Content.Load<Texture2D>("Btn");
+            buttonSearchMethod = new Button(1050, 700, "How do ye wish to search?", button);
+            buttonDFS = new Button(1100, 300, "DFS", button);
+            buttonBFS = new Button(1100, 350, "BFS", button);
+            buttonStartSearch = new Button(1050, 50, "Start search", button);
+            buttonStartAstar = new Button(1050, 100, "Start A*", button);
+            buttonSaveHighScore = new Button(500, 600, "Save highscore", button);
+            buttonRestart = new Button(500, 650, "Restart game", button);
+
+            buttonDFS.Click += DFS_Click;
+            buttonBFS.Click += BFS_Click;
+            buttonSearchMethod.Click += ButtonSearchMethod_Click;
+            buttonStartSearch.Click += ButtonStartSearch_Click;
+            buttonStartAstar.Click += ButtonStartAStar_Click;
+            buttonSaveHighScore.Click += ButtonSaveHighScore_Click;
+            buttonRestart.Click += ButtonRestart_Click;
+            buttonlist.Add(buttonSearchMethod);
             startLoc = new Point(1,1);
             player = new Player(startLoc);
-            
+            level = new Level(lvlnumber);
+
             GenerateLvl();
 
             _graphics.ApplyChanges();
@@ -96,32 +109,17 @@ namespace Vupa
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            //cellImage = Content.Load<Texture2D>("dirt");
-            //agentTexture = Content.Load<Texture2D>("worker");
             font = Content.Load<SpriteFont>("font");
             textBox = Content.Load<Texture2D>("textbox");
             backgroundSprite = Content.Load<Texture2D>("background");
 
-            button = Content.Load<Texture2D>("Btn");
-            buttonSearchMethod = new Button(1050, 700, "How do ye wish to search?", button);
-            buttonDFS = new Button(1100, 300, "DFS", button);
-            buttonBFS = new Button(1100, 350, "BFS", button);
-            buttonStartSearch = new Button(1050, 50, "Start search", button);
-            buttonStartAstar = new Button(1050, 100, "Start A*", button);
-            buttonSaveHighScore = new Button(500,600, "Save highscore", button);
-            buttonRestart = new Button(500, 650, "Restart game", button);
-
-            buttonDFS.Click += DFS_Click;
-            buttonBFS.Click += BFS_Click;
-            buttonSearchMethod.Click += ButtonSearchMethod_Click;
-            buttonStartSearch.Click += ButtonStartSearch_Click;
-            buttonStartAstar.Click += ButtonStartAStar_Click;
-            buttonSaveHighScore.Click += ButtonSaveHighScore_Click;
-            buttonRestart.Click += ButtonRestart_Click;
-            buttonlist.Add(buttonSearchMethod);
-
             player.LoadContent(Content);
+            visualManager.LoadContent(Content);
+            visualManager.FindPath();
+
+
         }
+
 
         private void ButtonSaveHighScore_Click(object sender, EventArgs e)
         {
@@ -137,7 +135,6 @@ namespace Vupa
         {
             //TODO AStar starter
             Debug.WriteLine("A* starting");
-            visualManager.FindPath();
         }
         private void ButtonStartSearch_Click(object sender, EventArgs e)
         {
@@ -230,11 +227,7 @@ namespace Vupa
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit(); 
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                visualManager.FindPath();
-            } 
-             
+           
 
 
             // TODO: Add your update logic here
@@ -274,13 +267,11 @@ namespace Vupa
             player.Update();
 
             base.Update(gameTime);
-            //agent.Update(gameTime);
 
         }
         public void GenerateLvl()
         {
-            level = new Level(lvlnumber);
-
+            level.LvlNumber = lvlnumber;
             startLoc = level.SetStart();
             endLoc = level.SetGoal();
             VisualManager.start = startLoc;
@@ -288,10 +279,10 @@ namespace Vupa
 
             Debug.WriteLine(startLoc);
             Debug.WriteLine(endLoc);
-            player.tmpposition = new Point(startLoc.X *100, startLoc.Y *100);
-            visualManager.LoadContent(Content);
+            player.position = new Point(startLoc.X *100, startLoc.Y *100);
+
             level.SetWalls();
-            visualManager.FindPath();
+            
 
         }
 
