@@ -261,7 +261,7 @@ namespace Vupa
                 if (lvlnumber < 4)
                 {
                     lvlnumber ++;
-                    player.Health += 5;
+                    player.Health += 3;
 
                 }
                 else

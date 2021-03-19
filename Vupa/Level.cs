@@ -85,6 +85,28 @@ namespace Vupa
                 Notwalkables.Add(Game1.visualManager.grid[84]);
 
             }
+            if (LvlNumber == 3)
+            {
+                Notwalkables.Add(Game1.visualManager.grid[60]);
+                Notwalkables.Add(Game1.visualManager.grid[61]);
+                Notwalkables.Add(Game1.visualManager.grid[62]);
+                Notwalkables.Add(Game1.visualManager.grid[39]);
+                Notwalkables.Add(Game1.visualManager.grid[38]);
+                Notwalkables.Add(Game1.visualManager.grid[37]);
+            }
+            if (LvlNumber == 4)
+            {
+                Notwalkables.Add(Game1.visualManager.grid[61]);
+                Notwalkables.Add(Game1.visualManager.grid[62]);
+                Notwalkables.Add(Game1.visualManager.grid[63]);
+                Notwalkables.Add(Game1.visualManager.grid[64]);
+                Notwalkables.Add(Game1.visualManager.grid[74]);
+                Notwalkables.Add(Game1.visualManager.grid[30]);
+                Notwalkables.Add(Game1.visualManager.grid[29]);
+                Notwalkables.Add(Game1.visualManager.grid[28]);
+                Notwalkables.Add(Game1.visualManager.grid[27]);
+                Notwalkables.Add(Game1.visualManager.grid[17]);
+            }
 
             foreach (Cell cell in Notwalkables)
             {
