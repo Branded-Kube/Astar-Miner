@@ -12,6 +12,7 @@ namespace Vupa
 {
    public class VisualManager
     {
+        #region Fields & Properties
         private Rectangle displayRectangle;
 
         //Handeling of nodes
@@ -43,6 +44,9 @@ namespace Vupa
         //    set { grid = value; }
         //}
 
+        #endregion
+
+        #region Constructor
         public VisualManager(SpriteBatch spriteBatch, Rectangle displayRectangle)
         {
             this.displayRectangle = displayRectangle;
@@ -53,7 +57,9 @@ namespace Vupa
 
             CreateGrid();
         }
+        #endregion
 
+        #region Methods
         public void Draw(SpriteBatch spriteBatch)
         {
 
@@ -175,5 +181,6 @@ namespace Vupa
 
             goalSprite = Game1.content.Load<Texture2D>("worker");
         }
+        #endregion
     }
 }

@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace Vupa
 {
     //enum CellType { START, GOAL, WALL, EMPTY };
 
     public class Cell
     {
+        #region Fields & Properties
         private Texture2D sprite;
         public Texture2D Sprite { get { return sprite; } set { sprite = value; } }
        
@@ -63,7 +63,9 @@ namespace Vupa
                 return new Rectangle(myPos.X * cellSize, myPos.Y * cellSize, cellSize, cellSize);
             }
         }
+        #endregion
 
+        #region Constructor
         public Cell(Point pos, int size)
         {
             this.myPos = pos;
@@ -73,9 +75,10 @@ namespace Vupa
             walkAble = true;
 
             myColor = Color.White;
-
         }
+        #endregion
 
+        #region Methods
         public void Draw(SpriteBatch spriteBatch)
         {
             if (sprite != null)
@@ -87,19 +90,14 @@ namespace Vupa
                 if (myNode.Parent != null)
                 {
                     spriteBatch.DrawString(Game1.font, string.Format("{0}", "P: " + myNode.Parent.Position.ToString()), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 15), Color.White);
-
                 }
-
                 spriteBatch.DrawString(Game1.font, string.Format("{0}", "F:" + myNode.F), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 30), MyColor);
                 spriteBatch.DrawString(Game1.font, string.Format("{0}", "G:" + myNode.G), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 45), MyColor);
                 spriteBatch.DrawString(Game1.font, string.Format("{0}", "H:" + myNode.H), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 60), MyColor);
-
-
             }
 
             spriteBatch.DrawString(Game1.font, string.Format("{0}", myPos), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize)), MyColor);
-
-
         }
+        #endregion
     }
 }

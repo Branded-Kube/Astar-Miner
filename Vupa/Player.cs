@@ -12,6 +12,7 @@ namespace Vupa
 {
     public class Player
     {
+        #region Fields & Properties
         Texture2D sprite;
         private Texture2D fogSprite;
         private Texture2D healthBox;
@@ -38,9 +39,9 @@ namespace Vupa
         public bool isAlive = true;
 
         KeyboardState newState;
+        #endregion
 
-        
-
+        #region Constructor
         public Player(Point start)
         {
             this.tmpposition = new Point(start.X *100, start.Y*100);
@@ -54,7 +55,9 @@ namespace Vupa
             //VisualManager.start.X = position.X / 100;
             //VisualManager.start.Y = position.Y / 100;
         }
+        #endregion
 
+        #region Methods
         public void Update()
         {
             DeathCheck();
@@ -332,6 +335,6 @@ namespace Vupa
             }
           
         }
-
+        #endregion
     }
 }

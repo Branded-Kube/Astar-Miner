@@ -5,11 +5,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-
 namespace Vupa
 {
     class Button
     {
+        #region Fields
         private Color hoverColor;
         private Color currentColor;
         private MouseState mouseCurrent;
@@ -18,9 +18,13 @@ namespace Vupa
         private Rectangle buttonRectangle;
         private readonly string buttonDescription;
         private Texture2D sprite;
+        #endregion
+
+        #region Events
         public event EventHandler Click;
+        #endregion
 
-
+        #region Constructor
         public Button(int positionX, int positionY, string buttonDescription, Texture2D texture2D)
         {
             hoverColor = Color.Gray;
@@ -28,8 +32,9 @@ namespace Vupa
             this.buttonDescription = buttonDescription;
             this.sprite = texture2D;
         }
+        #endregion
 
-
+        #region Methods
         public void Update()
         {
             mouseLast = mouseCurrent;
@@ -57,5 +62,6 @@ namespace Vupa
             var y = (buttonRectangle.Y + (buttonRectangle.Height / 2)) - (Game1.font.MeasureString(buttonDescription).Y / 2);
             _spriteBatch.DrawString(Game1.font, buttonDescription, new Vector2(x, y), Color.Black);
         }
+        #endregion
     }
 }

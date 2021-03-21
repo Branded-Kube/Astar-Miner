@@ -9,6 +9,7 @@ namespace Vupa
 {
     public class Node : IComparable<Node>
     {
+        #region Fields & Properties
         private int f;
 
         public int F
@@ -49,11 +50,16 @@ namespace Vupa
             set { g = value; }
         }
 
+        #endregion
+
+        #region Constructor
         public Node(Point position)
         {
             this.position = position;
         }
+        #endregion
 
+        #region Methods
         //calculates the G, h, f values
         public void CalcValues(Node parentNode, Node goalNode, int cost)
         {
@@ -82,5 +88,6 @@ namespace Vupa
                 return 0;
             }
         }
+        #endregion
     }
 }

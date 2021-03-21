@@ -9,14 +9,21 @@ namespace Vupa
 {
     public class Level
     {
+        #region Fields & Properties
         public int LvlNumber { get; set; }
         public List<Cell> Notwalkables { get; set; }
+
+        #endregion
+
+        #region Constructor
         public Level(int lvlnumber)
         {
             this.LvlNumber = lvlnumber;
             Notwalkables = new List<Cell>();
         }
+        #endregion
 
+        #region Methods
         public Point SetStart()
         {
             if (LvlNumber == 1)
@@ -112,9 +119,7 @@ namespace Vupa
             {
                 cell.WalkAble = false;
             }
-           
         }
-
-
+        #endregion
     }
 }
