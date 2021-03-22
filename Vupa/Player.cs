@@ -12,6 +12,7 @@ namespace Vupa
 {
     public class Player
     {
+        #region Fields & Properties
         Texture2D sprite;
         private Texture2D fogSprite;
         private Texture2D healthBox;
@@ -38,9 +39,9 @@ namespace Vupa
         public bool isAlive = true;
 
         KeyboardState newState;
+        #endregion
 
-        
-
+        #region Constructor
         public Player(Point start)
         {
             this.tmpposition = new Point(start.X *100, start.Y*100);
@@ -49,18 +50,23 @@ namespace Vupa
             this.playerRectangle = new Rectangle(position, size);
             this.fogSize = new Point(3098, 3098);
             this.fogRectangle = new Rectangle(fogPosition, fogSize);
-
+            position = tmpposition;
 
             //VisualManager.start.X = position.X / 100;
             //VisualManager.start.Y = position.Y / 100;
         }
+        #endregion
+
+        #region Methods
         public void Update()
         {
             DeathCheck();
             CheckState();
+            if (Keyboard.GetState().GetPressedKeys().Length > 0)
+            {
+                Move(currentKey);
+            }
 
-
-            Move(currentKey);
             currentKey = Keys.None;
             this.playerRectangle.X = position.X;
             this.playerRectangle.Y = position.Y;
@@ -87,19 +93,6 @@ namespace Vupa
 
                 if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
                 {
-                    //foreach (Cell cell in Game1.level.Notwalkables)
-                    //{
-                    //    if (playerRectangle.Bottom == cell.BoundingRectangle.Top && playerRectangle.X == cell.BoundingRectangle.X && playerRectangle.Y +100== cell.BoundingRectangle.Y)
-                    //    {
-
-                    //    }
-                    //    else if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
-                    //    {
-                    //        currentKey = Keys.NumPad2;
-
-                    //    }
-
-                    //}
 
                     if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
                     {
@@ -163,12 +156,11 @@ namespace Vupa
         }
 
 
-        
+        //player movement (keybinds)
+        //checks is the tile is NotWalkable
         public Point Move(Keys pressedKey)
         {
             KeyboardState newState = Keyboard.GetState();
-
-            //dontMove = false;
 
             if (pressedKey == Keys.NumPad1)
             {
@@ -276,20 +268,17 @@ namespace Vupa
                 VisualManager.start.Y = position.Y / 100;
             }
             dontMove = false;
-            
-
-
-
 
             Game1.visualManager.FindPath();
-            Game1.visualManager.LoadContent(Game1.content);
 
             correctPathCheck = false;
             oldState = newState;
             return tmpposition;
 
         }
-
+        //checks is the player has moved to a square on the optimal path of the A*
+        //if they have, they get 1 point added to their score
+        //if not, they get 1 health subtracted from their total
         public void CorrectPath()
         {
            
@@ -304,14 +293,14 @@ namespace Vupa
                 }
                 if (correct == false)
                 {
-                    health -= 2;
+                    health -= 1;
                     Debug.WriteLine("minus");
                 }
 
             correct = false;
 
         }
-
+        //checks is the players health is below 0
         private void DeathCheck()
         {
             if (health <= 0)
@@ -331,7 +320,7 @@ namespace Vupa
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
 
-            if (Game1.level.LvlNumber == 2)
+            if (Game1.level.LvlNumber > 1)
             {
                spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
             }
@@ -341,9 +330,7 @@ namespace Vupa
                 spriteBatch.DrawString(Game1.font, $"health: {health}", new Vector2(1100, 540), Color.LightGreen);
             }
           
-            
-
         }
-
+        #endregion
     }
 }

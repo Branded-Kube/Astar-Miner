@@ -12,10 +12,7 @@ namespace Vupa
 {
    public class VisualManager
     {
-        //Handeling of graphics
-        //private BufferedGraphics backBuffer;
-        //private Graphics dc;
-     
+        #region Fields & Properties
         private Rectangle displayRectangle;
 
         //Handeling of nodes
@@ -31,8 +28,11 @@ namespace Vupa
         private MouseState mouseLast;
         private Rectangle mouseRectangle;
 
-        private CellType clickType;
-
+        //private CellType clickType;
+        private Texture2D sprite;
+        private Texture2D wallSprite;
+        private Texture2D startSprite;
+        private Texture2D goalSprite;
         //Collections
         public List<Cell> grid;
 
@@ -44,15 +44,11 @@ namespace Vupa
         //    set { grid = value; }
         //}
 
+        #endregion
+
+        #region Constructor
         public VisualManager(SpriteBatch spriteBatch, Rectangle displayRectangle)
         {
-            //Create's (Allocates) a buffer in memory with the size of the display
-           // this.backBuffer = BufferedGraphicsManager.Current.Allocate(dc, displayRectangle);
-
-            //Sets the graphics context to the graphics in the buffer
-            //this.dc = backBuffer.Graphics;
-
-            //Sets the displayRectangle
             this.displayRectangle = displayRectangle;
 
             aStar = new AStar();
@@ -61,18 +57,17 @@ namespace Vupa
 
             CreateGrid();
         }
+        #endregion
 
-        public void Render(SpriteBatch spriteBatch)
+        #region Methods
+        public void Draw(SpriteBatch spriteBatch)
         {
-            //dc.Clear(Color.White);
 
             foreach (Cell cell in grid)
             {
                 cell.Draw(spriteBatch);
             }
 
-            //Renders the content of the buffered graphics context to the real context(Swap buffers)
-            //backBuffer.Render();
         }
 
       
@@ -83,31 +78,7 @@ namespace Vupa
 
             ColorNodes();
 
-
         }
-
-        //checks if the mouse is hovering over a cell, and if the left mouse button has been clicked
-        //public void Update()
-        //{
-        //    mouseLast = mouseCurrent;
-        //    mouseCurrent = Mouse.GetState();
-        //    mouseRectangle = new Rectangle(mouseCurrent.X, mouseCurrent.Y, 1, 1);
-
-        //    foreach (Cell cell in grid)
-        //    {
-        //        //if (cell.BoundingRectangle.IntersectsWith(new Rectangle(mousePos, new Size(1, 1))))
-        //        if (cell.BoundingRectangle.Intersects(mouseRectangle))
-        //        {
-        //            if (mouseLast.LeftButton == ButtonState.Pressed && mouseCurrent.LeftButton == ButtonState.Released)
-        //            {
-        //                cell.Click(ref clickType, Game1.content);
-
-        //            }
-        //        }
-
-
-        //    }
-        //}
 
 
         public void CreateGrid()
@@ -126,18 +97,21 @@ namespace Vupa
                 }
             }
         }
-
-        //creates a node for each individual cell in the grid, excluding the cells marked unwalkable
-        public List<Node> CreateNodes()
+       
+    //creates a node for each individual cell in the grid, excluding the cells marked unwalkable
+    public List<Node> CreateNodes()
         {
             List<Node> allNodes = new List<Node>();
             foreach (Cell cell in grid)
             {
+                ChangeTexture(cell);
+
                 if (cell.WalkAble)
                 {
                     cell.MyNode = new Node(cell.MyPos);
                     allNodes.Add(cell.MyNode);
                 }
+
             }
 
             return allNodes;
@@ -171,12 +145,42 @@ namespace Vupa
                 
             }
         }
+
+        //public Texture2D ChangeTexture(Cell cell)
+        public void ChangeTexture(Cell cell)
+        {
+            cell.Sprite = sprite;
+
+            if (!cell.WalkAble)
+            {
+                cell.Sprite = wallSprite;
+
+            }
+            if (cell.MyPos == VisualManager.start)
+            {
+                cell.Sprite = startSprite;
+                cell.MyColor = Color.MediumSeaGreen;
+
+            }
+            else if (cell.MyPos == VisualManager.goal)
+            {
+                cell.Sprite = goalSprite;
+                cell.MyColor = Color.OrangeRed;
+
+            }
+            //return cell.Sprite;
+        }
         public void LoadContent(ContentManager content)
         {
-            foreach (Cell cell in grid)
-            {
-                cell.LoadContent(content);
-            }
+            
+            sprite = Game1.content.Load<Texture2D>("ground");
+
+            wallSprite = Game1.content.Load<Texture2D>("dirt");
+
+            startSprite = Game1.content.Load<Texture2D>("worker");
+
+            goalSprite = Game1.content.Load<Texture2D>("worker");
         }
+        #endregion
     }
 }

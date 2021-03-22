@@ -9,15 +9,21 @@ namespace Vupa
 {
     public class Level
     {
-        //int LvlNumber;
+        #region Fields & Properties
         public int LvlNumber { get; set; }
         public List<Cell> Notwalkables { get; set; }
+
+        #endregion
+
+        #region Constructor
         public Level(int lvlnumber)
         {
             this.LvlNumber = lvlnumber;
             Notwalkables = new List<Cell>();
         }
+        #endregion
 
+        #region Methods
         public Point SetStart()
         {
             if (LvlNumber == 1)
@@ -74,7 +80,6 @@ namespace Vupa
             {
                 cell.WalkAble = true;
             }
-            //Notwalkables.Clear();
 
             if (LvlNumber == 1)
             {
@@ -86,20 +91,35 @@ namespace Vupa
                 Notwalkables.Add(Game1.visualManager.grid[85]);
                 Notwalkables.Add(Game1.visualManager.grid[84]);
 
-
-
-
+            }
+            if (LvlNumber == 3)
+            {
+                Notwalkables.Add(Game1.visualManager.grid[60]);
+                Notwalkables.Add(Game1.visualManager.grid[61]);
+                Notwalkables.Add(Game1.visualManager.grid[62]);
+                Notwalkables.Add(Game1.visualManager.grid[39]);
+                Notwalkables.Add(Game1.visualManager.grid[38]);
+                Notwalkables.Add(Game1.visualManager.grid[37]);
+            }
+            if (LvlNumber == 4)
+            {
+                Notwalkables.Add(Game1.visualManager.grid[61]);
+                Notwalkables.Add(Game1.visualManager.grid[62]);
+                Notwalkables.Add(Game1.visualManager.grid[63]);
+                Notwalkables.Add(Game1.visualManager.grid[64]);
+                Notwalkables.Add(Game1.visualManager.grid[74]);
+                Notwalkables.Add(Game1.visualManager.grid[30]);
+                Notwalkables.Add(Game1.visualManager.grid[29]);
+                Notwalkables.Add(Game1.visualManager.grid[28]);
+                Notwalkables.Add(Game1.visualManager.grid[27]);
+                Notwalkables.Add(Game1.visualManager.grid[17]);
             }
 
             foreach (Cell cell in Notwalkables)
             {
                 cell.WalkAble = false;
             }
-           
-            //Game1.visualManager.FindPath();
-
         }
-
-
+        #endregion
     }
 }

@@ -9,6 +9,7 @@ namespace Vupa
 {
     public class AStar
     {
+        #region Fields & Properties
         public List<Node> closed;
 
         public List<Node> open;
@@ -26,13 +27,17 @@ namespace Vupa
             get { return open; }
             set { open = value; }
         }
+        #endregion
 
+        #region Constructor
         public AStar()
         {
             closed = new List<Node>();
             open = new List<Node>();
         }
+        #endregion
 
+        #region Methods
 
         //creates a list of nodes to put into the final path.
         //sets the starting node as current node to have a position to evaluate other nodes from. 
@@ -175,5 +180,6 @@ namespace Vupa
 
             return finalPath;
         }
+        #endregion
     }
 }

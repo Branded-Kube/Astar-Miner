@@ -7,22 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace Vupa
 {
-    enum CellType { START, GOAL, WALL, EMPTY };
+    //enum CellType { START, GOAL, WALL, EMPTY };
 
     public class Cell
     {
+        #region Fields & Properties
         private Texture2D sprite;
-
+        public Texture2D Sprite { get { return sprite; } set { sprite = value; } }
+       
         private Point myPos;
 
         private int cellSize;
 
         private bool walkAble;
 
-        CellType myType = CellType.EMPTY;
+        //CellType myType = CellType.EMPTY;
 
         public bool WalkAble
         {
@@ -50,8 +51,6 @@ namespace Vupa
 
         public Point MyPos
         {
-           // get { return (myPos) + new Point(1, 1); }
-
             get { return myPos; }
             set { myPos = value; }
         }
@@ -64,28 +63,24 @@ namespace Vupa
                 return new Rectangle(myPos.X * cellSize, myPos.Y * cellSize, cellSize, cellSize);
             }
         }
+        #endregion
 
+        #region Constructor
         public Cell(Point pos, int size)
         {
             this.myPos = pos;
-            //this.myPos.X = pos.X +1;
-            //this.myPos.Y = pos.Y +1;
-
             
-
             this.cellSize = size;
 
             walkAble = true;
 
             myColor = Color.White;
-
-            LoadContent(Game1.content);
         }
+        #endregion
 
+        #region Methods
         public void Draw(SpriteBatch spriteBatch)
         {
-            // spriteBatch.FillRectangle(new SolidBrush(myColor), BoundingRectangle);
-            // spriteBatch.DrawRectangle(new Pen(Color.Black), BoundingRectangle);
             if (sprite != null)
             {
                 spriteBatch.Draw(sprite, BoundingRectangle, MyColor);
@@ -95,88 +90,14 @@ namespace Vupa
                 if (myNode.Parent != null)
                 {
                     spriteBatch.DrawString(Game1.font, string.Format("{0}", "P: " + myNode.Parent.Position.ToString()), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 15), Color.White);
-
                 }
-
                 spriteBatch.DrawString(Game1.font, string.Format("{0}", "F:" + myNode.F), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 30), MyColor);
                 spriteBatch.DrawString(Game1.font, string.Format("{0}", "G:" + myNode.G), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 45), MyColor);
                 spriteBatch.DrawString(Game1.font, string.Format("{0}", "H:" + myNode.H), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize) + 60), MyColor);
-
-
             }
 
             spriteBatch.DrawString(Game1.font, string.Format("{0}", myPos), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize)), MyColor);
-
-
         }
-
-        public void LoadContent(ContentManager content)
-        {
-            sprite = Game1.content.Load<Texture2D>("ground");
-            if (!walkAble)
-            {
-                sprite = Game1.content.Load<Texture2D>("dirt");
-
-            }
-            if (MyPos == VisualManager.start)
-            {
-                sprite = Game1.content.Load<Texture2D>("worker");
-                myColor = Color.MediumSeaGreen;
-
-            }
-            else if (MyPos == VisualManager.goal)
-            {
-                sprite = Game1.content.Load<Texture2D>("worker");
-                myColor = Color.OrangeRed;
-
-            }
-
-        }
-
-
-        //checks what type of click the player is using (start = put start point on clicked cell, goal = put goal point on clicked cell, wall = put wall on clicked cell)
-        //public void Click(ref CellType clickType, ContentManager content)
-        //{
-        //    if (clickType == CellType.START)
-        //    {
-        //        sprite = content.Load<Texture2D>("worker");
-
-        //        myType = clickType;
-        //        clickType = CellType.GOAL;
-        //        VisualManager.start = MyPos;
-        //        myColor = Color.MediumSeaGreen;
-        //    }
-        //    else if (clickType == CellType.GOAL && myType != CellType.START)
-        //    {
-        //        sprite = content.Load<Texture2D>("worker");
-
-        //        clickType = CellType.WALL;
-        //        myType = CellType.GOAL;
-        //        VisualManager.goal = MyPos;
-        //        myColor = Color.OrangeRed;
-        //    }
-        //    else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
-        //    {
-        //        sprite = content.Load<Texture2D>("dirt");
-        //        myType = CellType.WALL;
-        //        WalkAble = false;
-        //        myColor = Color.White;
-
-        //        //    clickType = CellType.WALL;
-        //        //    myType = CellType.GOAL;
-        //        //    VisualManager.goal = MyPos;
-        //        //    myColor = Color.OrangeRed;
-        //        //}
-        //        //else if (clickType == CellType.WALL && myType != CellType.START && myType != CellType.GOAL)
-        //        //{
-        //        //    //sprite = Image.FromFile(@"Images\Wall.png");
-        //        //    sprite = content.Load<Texture2D>("dirt");
-        //        //    myType = CellType.WALL;
-        //        //    WalkAble = false;
-        //        //    myColor = Color.White;
-
-        //        //}
-        //    }
-        //}
+        #endregion
     }
 }
