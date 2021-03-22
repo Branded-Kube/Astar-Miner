@@ -47,6 +47,11 @@ namespace Vupa
         private Player player;
         public static Rectangle border;
         private Texture2D backgroundSprite;
+        private Texture2D lvl1box;
+        private Texture2D lvl2box;
+        private Texture2D lvl3box;
+        private Texture2D lvl4box;
+        private Texture2D controlsinfo;
         private Rectangle backgroundRectangle;
         public static Level level;
 
@@ -92,7 +97,7 @@ namespace Vupa
         {
 
             visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
-            _graphics.PreferredBackBufferWidth = 1500;
+            _graphics.PreferredBackBufferWidth = 1400;
             _graphics.PreferredBackBufferHeight = 1200;
             backgroundRectangle = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             var bordersize = new Point(_graphics.PreferredBackBufferWidth - 300, _graphics.PreferredBackBufferHeight - 200);
@@ -142,6 +147,12 @@ namespace Vupa
             font = Content.Load<SpriteFont>("Fonts/font");
             textBox = Content.Load<Texture2D>("GameTextures/textbox");
             backgroundSprite = Content.Load<Texture2D>("GameTextures/background");
+            lvl1box = Content.Load<Texture2D>("GameTextures/lvl1info");
+            lvl2box = Content.Load<Texture2D>("GameTextures/lvl2info");
+            lvl3box = Content.Load<Texture2D>("GameTextures/lvl3info");
+            lvl4box = Content.Load<Texture2D>("GameTextures/lvl4info");
+            controlsinfo = Content.Load<Texture2D>("GameTextures/controls");
+
 
             player.LoadContent(Content);
             visualManager.LoadContent(Content);
@@ -393,6 +404,7 @@ namespace Vupa
                     {
 
                         _spriteBatch.Draw(backgroundSprite, backgroundRectangle, Color.White);
+                        _spriteBatch.Draw(controlsinfo, new Vector2(1180, 850), Color.White);
 
                         visualManager.Draw(_spriteBatch);
 
@@ -404,6 +416,23 @@ namespace Vupa
                         foreach (var item in buttonlist)
                         {
                             item.Draw(_spriteBatch);
+                        }
+
+                        if (lvlnumber == 1)
+                        {
+                            _spriteBatch.Draw(lvl1box, new Vector2(1125, 80), Color.White);
+                        }
+                        if (lvlnumber == 2)
+                        {
+                            _spriteBatch.Draw(lvl2box, new Vector2(1125, 80), Color.White);
+                        }
+                        if (lvlnumber == 3)
+                        {
+                            _spriteBatch.Draw(lvl3box, new Vector2(1125, 80), Color.White);
+                        }
+                        if (lvlnumber == 4)
+                        {
+                            _spriteBatch.Draw(lvl4box, new Vector2(1125, 80), Color.White);
                         }
 
                         if (player.isAlive == true)
@@ -418,6 +447,8 @@ namespace Vupa
                             _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(500, 500), Color.Red);
                         }
                         break;
+
+                        
                     }
 
                 // Drawing MENU state
