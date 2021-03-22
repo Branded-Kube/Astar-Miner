@@ -100,7 +100,7 @@ namespace Vupa
             border = new Rectangle(borderPosition, bordersize);
             //_graphics.IsFullScreen = true;
 
-            button = Content.Load<Texture2D>("Btn");
+            button = Content.Load<Texture2D>("GameTextures/Btn");
             buttonSearchMethod = new Button(1050, 700, "How do ye wish to search?", button);
             buttonDFS = new Button(1100, 300, "DFS", button);
             buttonBFS = new Button(1100, 350, "BFS", button);
