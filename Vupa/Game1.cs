@@ -139,9 +139,9 @@ namespace Vupa
             gameOverTexture = Content.Load<Texture2D>("MenuTextures/GameOver");
 
             //Game
-            font = Content.Load<SpriteFont>("font");
-            textBox = Content.Load<Texture2D>("textbox");
-            backgroundSprite = Content.Load<Texture2D>("background");
+            font = Content.Load<SpriteFont>("Fonts/font");
+            textBox = Content.Load<Texture2D>("GameTextures/textbox");
+            backgroundSprite = Content.Load<Texture2D>("GameTextures/background");
 
             player.LoadContent(Content);
             visualManager.LoadContent(Content);
