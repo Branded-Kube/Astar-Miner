@@ -324,10 +324,10 @@ namespace Vupa
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
 
-            if (Game1.level.LvlNumber > 1)
-            {
-               spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
-            }
+            //if (Game1.level.LvlNumber > 1)
+            //{
+            //   spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+            //}
             if (isAlive == true)
             {
                 spriteBatch.Draw(healthBox, new Vector2(1098, 532), Color.White);

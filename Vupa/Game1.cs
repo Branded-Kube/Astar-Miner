@@ -292,6 +292,7 @@ namespace Vupa
                                 Debug.WriteLine("WIN SCREEN");
                             }
                             GenerateLvl();
+                            //visualManager.FindPath();
 
                         }
                         player.Update();

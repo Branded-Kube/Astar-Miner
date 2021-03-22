@@ -75,7 +75,7 @@ namespace Vupa
         }
         public void SetWalls()
         {
-
+            Notwalkables.Clear();
             foreach (Cell cell in Game1.visualManager.grid)
             {
                 cell.WalkAble = true;
