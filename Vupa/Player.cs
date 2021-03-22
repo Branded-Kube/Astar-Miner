@@ -326,7 +326,8 @@ namespace Vupa
 
             if (Game1.level.LvlNumber > 1)
             {
-               spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+                spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+
             }
             if (isAlive == true)
             {

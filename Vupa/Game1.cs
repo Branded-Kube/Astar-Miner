@@ -292,6 +292,7 @@ namespace Vupa
                                 Debug.WriteLine("WIN SCREEN");
                             }
                             GenerateLvl();
+                            //visualManager.FindPath();
 
                         }
                         player.Update();
@@ -390,13 +391,15 @@ namespace Vupa
                 //Drawing PLAYGAME state
                 case State.PLAYGAME:
                     {
+
                         _spriteBatch.Draw(backgroundSprite, backgroundRectangle, Color.White);
 
                         visualManager.Draw(_spriteBatch);
 
                         player.Draw(_spriteBatch);
 
-
+                        // draws goal ontop of fog of war
+                        visualManager.grid.Find(cell => cell.MyPos == endLoc).Draw(_spriteBatch);
 
                         foreach (var item in buttonlist)
                         {

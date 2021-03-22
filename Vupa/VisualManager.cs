@@ -69,8 +69,8 @@ namespace Vupa
             }
 
         }
-
       
+
         //colors in the nodes of the final path so the player can see the optimal route
         public void FindPath()
         {
