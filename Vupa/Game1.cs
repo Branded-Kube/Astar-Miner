@@ -92,7 +92,7 @@ namespace Vupa
         {
 
             visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
-            _graphics.PreferredBackBufferWidth = 1300;
+            _graphics.PreferredBackBufferWidth = 1500;
             _graphics.PreferredBackBufferHeight = 1200;
             backgroundRectangle = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             var bordersize = new Point(_graphics.PreferredBackBufferWidth - 300, _graphics.PreferredBackBufferHeight - 200);
