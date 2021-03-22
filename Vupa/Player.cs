@@ -311,9 +311,9 @@ namespace Vupa
 
         public void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>("worker");
-            fogSprite = content.Load<Texture2D>("fogwar2");
-            healthBox = content.Load<Texture2D>("textbox2");
+            sprite = content.Load<Texture2D>("GameTextures/worker");
+            fogSprite = content.Load<Texture2D>("GameTextures/fogwar2");
+            healthBox = content.Load<Texture2D>("GameTextures/textbox2");
         }
 
         public void Draw(SpriteBatch spriteBatch)

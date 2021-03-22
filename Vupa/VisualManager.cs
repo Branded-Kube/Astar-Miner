@@ -173,13 +173,13 @@ namespace Vupa
         public void LoadContent(ContentManager content)
         {
             
-            sprite = Game1.content.Load<Texture2D>("ground");
+            sprite = Game1.content.Load<Texture2D>("GameTextures/tile");
 
-            wallSprite = Game1.content.Load<Texture2D>("dirt");
+            wallSprite = Game1.content.Load<Texture2D>("GameTextures/stone");
 
-            startSprite = Game1.content.Load<Texture2D>("worker");
+            startSprite = Game1.content.Load<Texture2D>("GameTextures/worker");
 
-            goalSprite = Game1.content.Load<Texture2D>("worker");
+            goalSprite = Game1.content.Load<Texture2D>("GameTextures/worker");
         }
         #endregion
     }
