@@ -71,7 +71,6 @@ namespace Vupa
 
         // Set 1st state
        public State state = State.MENU;
-        public Enum state2 { get; set; }
 
         #endregion
 
@@ -443,7 +442,7 @@ namespace Vupa
                             _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
                         }
 
-
+                        break;
                         
                         
 

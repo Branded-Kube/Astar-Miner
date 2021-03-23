@@ -368,7 +368,6 @@ namespace Vupa
             if (health <= 0)
             {
                 isAlive = false;
-                Game1.state2 = State.GAMEOVER;
             }
         }
 
