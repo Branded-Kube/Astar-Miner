@@ -57,11 +57,6 @@ namespace Vupa
         //    Grid grid;
 
         public int lvlnumber = 1;
-        //private Keyboard keys = Keyboard.GetState().GetPressedKeys();
-
-        private MouseState mClick;
-
-
         public Point startLoc;
         public Point endLoc;
         int sizeX = 1000;
@@ -235,8 +230,6 @@ namespace Vupa
 
         public void GameOver()
         {
-            // Debug.WriteLine("GameOver");
-
             buttonlistDel.Add(buttonSearchMethod);
             buttonlistDel.Add(buttonDFS);
             buttonlistDel.Add(buttonBFS);
