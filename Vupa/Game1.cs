@@ -79,6 +79,7 @@ namespace Vupa
             content = Content;
             IsMouseVisible = true;
 
+
             //Menu
             menuTexture = null;
 
@@ -438,11 +439,8 @@ namespace Vupa
                         }
 
 
-                        if (player.isAlive == false)
-                        {
-                            _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(500, 500), Color.Red);
-                        }
-                        break;
+                        
+                        
 
                         
                     }
@@ -465,6 +463,8 @@ namespace Vupa
                 case State.GAMEOVER:
                     {
                         _spriteBatch.Draw(gameOverTexture, new Vector2(0, 0), Color.White);
+                        
+                        _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(500, 500), Color.Red);
                         break;
                     }
             }
