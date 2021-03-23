@@ -54,7 +54,6 @@ namespace Vupa
         private Texture2D controlsinfo;
         private Rectangle backgroundRectangle;
         public static Level level;
-
         //    Grid grid;
 
         public int lvlnumber = 1;
@@ -64,14 +63,12 @@ namespace Vupa
 
 
         public Point startLoc;
-        //public Point StartLoc { get; set; }
         public Point endLoc;
         int sizeX = 1000;
         int sizeY = 1000;
 
         // Set 1st state
-       public State state = State.MENU;
-
+        public static State state = State.MENU;
         #endregion
 
         #region Constructor
@@ -96,15 +93,14 @@ namespace Vupa
         #region Methods
         protected override void Initialize()
         {
-
+           
             visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
             _graphics.PreferredBackBufferWidth = 1400;
             _graphics.PreferredBackBufferHeight = 1200;
             backgroundRectangle = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
-            var bordersize = new Point(_graphics.PreferredBackBufferWidth - 300, _graphics.PreferredBackBufferHeight - 200);
+            var bordersize = new Point(_graphics.PreferredBackBufferWidth - 400, _graphics.PreferredBackBufferHeight - 200);
             var borderPosition = new Point(100, 100);
             border = new Rectangle(borderPosition, bordersize);
-            //_graphics.IsFullScreen = true;
 
             button = Content.Load<Texture2D>("GameTextures/Btn");
             buttonSearchMethod = new Button(1050, 700, "How do ye wish to search?", button);
@@ -441,12 +437,7 @@ namespace Vupa
                             _spriteBatch.Draw(textBox, new Vector2(522, 0), Color.White);
                             _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
                         }
-
                         break;
-                        
-                        
-
-                        
                     }
 
                 // Drawing MENU state

@@ -60,13 +60,6 @@ namespace TestLevel
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void TestZero()
-        {
-            //Arrange
-            Level level = new Level(1);
-            level.SetStart();
-        }
+     
     }
 }
