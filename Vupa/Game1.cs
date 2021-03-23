@@ -383,7 +383,7 @@ namespace Vupa
 
             Debug.WriteLine(startLoc);
             Debug.WriteLine(endLoc);
-            player.position = new Point(startLoc.X * 100, startLoc.Y * 100);
+            player.tmpposition = new Point(startLoc.X * 100, startLoc.Y * 100);
 
             level.SetWalls();
         }
