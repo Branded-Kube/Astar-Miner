@@ -27,6 +27,7 @@ namespace Vupa
         public int Health {get {return health;} set { health = value; } }
         int health = 5;
         public int score;
+        public string name = "PlaceHolder69";
         bool correct;
         Point fogPosition;
         bool dontMove;
