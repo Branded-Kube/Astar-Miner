@@ -5,8 +5,9 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
-
+using System.Xml.Serialization;
 
 namespace Vupa
 {
@@ -54,6 +55,9 @@ namespace Vupa
         private Texture2D controlsinfo;
         private Rectangle backgroundRectangle;
         public static Level level;
+
+        Highscore highScore = new Highscore();
+
         //    Grid grid;
 
         public int lvlnumber = 1;
@@ -122,6 +126,19 @@ namespace Vupa
 
             _graphics.ApplyChanges();
 
+
+            if (File.Exists("highscores.xml"))
+            {
+                var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
+                object obj;
+                using (var reader = new StreamReader("highscores.xml"))
+                {
+                    obj = serializer.Deserialize(reader.BaseStream);
+                }
+                highScore.highScores = (List<Highscore>)obj;
+
+            }
+
             base.Initialize();
         }
 
@@ -155,8 +172,19 @@ namespace Vupa
 
         #region Button Methods
         private void ButtonSaveHighScore_Click(object sender, EventArgs e)
-        {
-            // Save Highscore stuff her
+        {         
+            var score = new Highscore() { Score = player.score, Name = player.name };
+            highScore.highScores.Add(score);
+         
+
+            var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
+            Debug.WriteLine("Saving highscore");
+            using (var writer = new StreamWriter("highscores.xml", false))
+            {
+                serializer.Serialize(writer.BaseStream, highScore.highScores);
+                Debug.WriteLine("highscore saved");
+            }
+
         }
 
         private void ButtonRestart_Click(object sender, EventArgs e)
@@ -444,6 +472,27 @@ namespace Vupa
                 case State.HIGHSCORE:
                     {
                         _spriteBatch.Draw(highscoreTexture, new Vector2(0, 0), Color.White);
+
+
+                        // Loading highscores
+                        if (File.Exists("highscore.xml"))
+                        {
+                            var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
+                            object obj;
+                            using (var reader = new StreamReader("highscores.xml"))
+                            {
+                                obj = serializer.Deserialize(reader.BaseStream);
+                            }
+                            highScore.highScores = (List<Highscore>)obj;
+
+                        }
+
+                        int i = 0;
+                        foreach (Highscore h in highScore.highScores)
+                        {
+                            _spriteBatch.DrawString(font, $"Name:  {h.Name}         Score: {h.Score}", new Vector2(500, 400 + 50 * i), Color.White);
+                            i++;
+                        }
                         break;
                     }
 

@@ -27,6 +27,7 @@ namespace Vupa
         public int Health {get {return health;} set { health = value; } }
         int health = 5;
         public int score;
+        public string name = "PlaceHolder69";
         bool correct;
         Point fogPosition;
         bool dontMove;
@@ -75,6 +76,8 @@ namespace Vupa
             this.fogRectangle.Y = position.Y - 1500;
 
         }
+
+        // Brugt til at tjekke hvilken tast er trykket på,.
 
         public void CheckState()
         {
@@ -150,7 +153,6 @@ namespace Vupa
                     {
                         currentKey = Keys.NumPad6;
                     }
-
                 }
 
                 else if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
@@ -203,10 +205,7 @@ namespace Vupa
                 }
 
                 oldState = newState;
-            }
-
-
-            
+            }      
         }
 
 
