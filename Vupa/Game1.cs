@@ -100,7 +100,7 @@ namespace Vupa
             _graphics.PreferredBackBufferWidth = 1400;
             _graphics.PreferredBackBufferHeight = 1200;
             backgroundRectangle = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
-            var bordersize = new Point(_graphics.PreferredBackBufferWidth - 500, _graphics.PreferredBackBufferHeight - 200);
+            var bordersize = new Point(_graphics.PreferredBackBufferWidth - 400, _graphics.PreferredBackBufferHeight - 200);
             var borderPosition = new Point(100, 100);
             border = new Rectangle(borderPosition, bordersize);
             //_graphics.IsFullScreen = true;
