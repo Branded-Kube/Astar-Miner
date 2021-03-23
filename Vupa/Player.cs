@@ -355,7 +355,7 @@ namespace Vupa
                 {
                     health -= 1;
                     Debug.WriteLine("minus");
-                DeathCheck();
+                    DeathCheck();
 
             }
 
