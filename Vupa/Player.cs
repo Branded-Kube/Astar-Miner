@@ -54,8 +54,6 @@ namespace Vupa
             this.fogRectangle = new Rectangle(fogPosition, fogSize);
             position = tmpposition;
 
-            //VisualManager.start.X = position.X / 100;
-            //VisualManager.start.Y = position.Y / 100;
         }
         #endregion
 
@@ -308,12 +306,8 @@ namespace Vupa
             {
                 if (tmpposition.X == cell.MyPos.X * 100 && tmpposition.Y == cell.MyPos.Y * 100) 
                 {
-                 
                         dontMove = true;
                         tmpposition = position;
-                  
-
-
                 }
             }
 
@@ -356,7 +350,6 @@ namespace Vupa
                     health -= 1;
                     Debug.WriteLine("minus");
                     DeathCheck();
-
             }
 
             correct = false;
@@ -368,6 +361,7 @@ namespace Vupa
             if (health <= 0)
             {
                 isAlive = false;
+                Game1.state = State.GAMEOVER;
             }
         }
 
