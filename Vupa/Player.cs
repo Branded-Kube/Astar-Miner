@@ -31,6 +31,8 @@ namespace Vupa
         bool correct;
         Point fogPosition;
         bool dontMove;
+        bool dontMove1 = false;
+
 
         public Keys currentKey;
         public Keys oldKey;
@@ -53,18 +55,17 @@ namespace Vupa
             this.fogRectangle = new Rectangle(fogPosition, fogSize);
             position = tmpposition;
 
-            //VisualManager.start.X = position.X / 100;
-            //VisualManager.start.Y = position.Y / 100;
         }
         #endregion
 
         #region Methods
         public void Update()
         {
-            DeathCheck();
             CheckState();
+
             if (Keyboard.GetState().GetPressedKeys().Length > 0)
             {
+
                 Move(currentKey);
             }
 
@@ -81,18 +82,33 @@ namespace Vupa
         public void CheckState()
         {
             newState = Keyboard.GetState();
+            dontMove1 = false;
 
             if (isAlive == true)
             {
                 if (newState.IsKeyDown(Keys.NumPad1) && oldState.IsKeyUp(Keys.NumPad1))
                 {
+                   
                     if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
                     {
-                        currentKey = Keys.NumPad1;
+
+                        foreach (Cell cell in Game1.level.Notwalkables)
+                        {
+                            if (playerRectangle.Y == cell.BoundingRectangle.Y - 100 && playerRectangle.X == cell.BoundingRectangle.X || playerRectangle.Y == cell.BoundingRectangle.Y && playerRectangle.X == cell.BoundingRectangle.X + 100)
+                            {
+                                dontMove1 = true;
+                            }
+                        }
+                        if (dontMove1 == false)
+                        {
+                            currentKey = Keys.NumPad1;
+
+                        }
                     }
+
                 }
 
-                if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
+                else if (newState.IsKeyDown(Keys.NumPad2) && oldState.IsKeyUp(Keys.NumPad2))
                 {
 
                     if (playerRectangle.Bottom <= Game1.border.Bottom - 1)
@@ -102,16 +118,27 @@ namespace Vupa
 
                 }
 
-                if (newState.IsKeyDown(Keys.NumPad3) && oldState.IsKeyUp(Keys.NumPad3))
+                else if (newState.IsKeyDown(Keys.NumPad3) && oldState.IsKeyUp(Keys.NumPad3))
                 {
                     if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Bottom <= Game1.border.Bottom - 1)
                     {
-                        currentKey = Keys.NumPad3;
+                        foreach (Cell cell in Game1.level.Notwalkables)
+                        {
+                            if (playerRectangle.Y == cell.BoundingRectangle.Y - 100 && playerRectangle.X == cell.BoundingRectangle.X || playerRectangle.Y == cell.BoundingRectangle.Y && playerRectangle.X == cell.BoundingRectangle.X - 100)
+                            {
+                                dontMove1 = true;
+                            }
+                        }
+                        if (dontMove1 == false)
+                        {
+                            currentKey = Keys.NumPad3;
+                        }
+
                     }
 
                 }
 
-                if (newState.IsKeyDown(Keys.NumPad4) && oldState.IsKeyUp(Keys.NumPad4))
+                else if (newState.IsKeyDown(Keys.NumPad4) && oldState.IsKeyUp(Keys.NumPad4))
                 {
                     if ((playerRectangle.Left >= Game1.border.Left + 1))
                     {
@@ -120,7 +147,7 @@ namespace Vupa
 
                 }
 
-                if (newState.IsKeyDown(Keys.NumPad6) && oldState.IsKeyUp(Keys.NumPad6))
+                else if (newState.IsKeyDown(Keys.NumPad6) && oldState.IsKeyUp(Keys.NumPad6))
                 {
                     if ((playerRectangle.Right <= Game1.border.Right - 1))
                     {
@@ -128,15 +155,29 @@ namespace Vupa
                     }
                 }
 
-                if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
+                else if (newState.IsKeyDown(Keys.NumPad7) && oldState.IsKeyUp(Keys.NumPad7))
                 {
                     if (playerRectangle.Left >= Game1.border.Left + 1 && playerRectangle.Top >= Game1.border.Top + 1)
                     {
-                        currentKey = Keys.NumPad7;
+                        foreach (Cell cell in Game1.level.Notwalkables)
+                        {
+                            if (playerRectangle.Y == cell.BoundingRectangle.Y + 100 && playerRectangle.X == cell.BoundingRectangle.X || playerRectangle.Y == cell.BoundingRectangle.Y && playerRectangle.X == cell.BoundingRectangle.X + 100)
+                            {
+                                dontMove1 = true;
+                            }
+                        }
+                        if (dontMove1 == false)
+                        {
+                            currentKey = Keys.NumPad7;
+
+                        }
+
+
                     }
+
                 }
 
-                if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
+                else if (newState.IsKeyDown(Keys.NumPad8) && oldState.IsKeyUp(Keys.NumPad8))
                 {
                     if ((playerRectangle.Top >= Game1.border.Top + 1))
                     {
@@ -144,11 +185,22 @@ namespace Vupa
                     }
                 }
 
-                if (newState.IsKeyDown(Keys.NumPad9) && oldState.IsKeyUp(Keys.NumPad9))
+                else if (newState.IsKeyDown(Keys.NumPad9) && oldState.IsKeyUp(Keys.NumPad9))
                 {
                     if (playerRectangle.Right <= Game1.border.Right - 1 && playerRectangle.Top >= Game1.border.Top + 1)
                     {
-                        currentKey = Keys.NumPad9;
+                        foreach (Cell cell in Game1.level.Notwalkables)
+                        {
+                            if (playerRectangle.Y == cell.BoundingRectangle.Y + 100 && playerRectangle.X == cell.BoundingRectangle.X || playerRectangle.Y == cell.BoundingRectangle.Y && playerRectangle.X == cell.BoundingRectangle.X - 100)
+                            {
+                                dontMove1 = true;
+
+                            }
+                        }
+                        if (dontMove1 == false)
+                        {
+                            currentKey = Keys.NumPad9;
+                        }
                     }
                 }
 
@@ -251,10 +303,10 @@ namespace Vupa
 
             foreach (Cell cell in Game1.level.Notwalkables)
             {
-                if (tmpposition.X == cell.MyPos.X * 100 && tmpposition.Y == cell.MyPos.Y * 100)
+                if (tmpposition.X == cell.MyPos.X * 100 && tmpposition.Y == cell.MyPos.Y * 100) 
                 {
-                    dontMove = true;
-                    tmpposition = position;
+                        dontMove = true;
+                        tmpposition = position;
                 }
             }
 
@@ -296,7 +348,8 @@ namespace Vupa
                 {
                     health -= 1;
                     Debug.WriteLine("minus");
-                }
+                    DeathCheck();
+            }
 
             correct = false;
 
@@ -307,6 +360,7 @@ namespace Vupa
             if (health <= 0)
             {
                 isAlive = false;
+                Game1.state = State.GAMEOVER;
             }
         }
 
@@ -323,7 +377,8 @@ namespace Vupa
 
             if (Game1.level.LvlNumber > 1)
             {
-               spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+                spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
+
             }
             if (isAlive == true)
             {

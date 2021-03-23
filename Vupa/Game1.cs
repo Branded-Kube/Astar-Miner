@@ -48,6 +48,11 @@ namespace Vupa
         private Player player;
         public static Rectangle border;
         private Texture2D backgroundSprite;
+        private Texture2D lvl1box;
+        private Texture2D lvl2box;
+        private Texture2D lvl3box;
+        private Texture2D lvl4box;
+        private Texture2D controlsinfo;
         private Rectangle backgroundRectangle;
         public static Level level;
 
@@ -62,14 +67,12 @@ namespace Vupa
 
 
         public Point startLoc;
-        //public Point StartLoc { get; set; }
         public Point endLoc;
         int sizeX = 1000;
         int sizeY = 1000;
 
         // Set 1st state
-        State state = State.MENU;
-
+        public static State state = State.MENU;
         #endregion
 
         #region Constructor
@@ -79,6 +82,7 @@ namespace Vupa
             Content.RootDirectory = "Content";
             content = Content;
             IsMouseVisible = true;
+
 
             //Menu
             menuTexture = null;
@@ -93,15 +97,14 @@ namespace Vupa
         #region Methods
         protected override void Initialize()
         {
-
+           
             visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
-            _graphics.PreferredBackBufferWidth = 1300;
+            _graphics.PreferredBackBufferWidth = 1400;
             _graphics.PreferredBackBufferHeight = 1200;
             backgroundRectangle = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
-            var bordersize = new Point(_graphics.PreferredBackBufferWidth - 300, _graphics.PreferredBackBufferHeight - 200);
+            var bordersize = new Point(_graphics.PreferredBackBufferWidth - 400, _graphics.PreferredBackBufferHeight - 200);
             var borderPosition = new Point(100, 100);
             border = new Rectangle(borderPosition, bordersize);
-            //_graphics.IsFullScreen = true;
 
             button = Content.Load<Texture2D>("GameTextures/Btn");
             buttonSearchMethod = new Button(1050, 700, "How do ye wish to search?", button);
@@ -158,6 +161,12 @@ namespace Vupa
             font = Content.Load<SpriteFont>("Fonts/font");
             textBox = Content.Load<Texture2D>("GameTextures/textbox");
             backgroundSprite = Content.Load<Texture2D>("GameTextures/background");
+            lvl1box = Content.Load<Texture2D>("GameTextures/lvl1info");
+            lvl2box = Content.Load<Texture2D>("GameTextures/lvl2info");
+            lvl3box = Content.Load<Texture2D>("GameTextures/lvl3info");
+            lvl4box = Content.Load<Texture2D>("GameTextures/lvl4info");
+            controlsinfo = Content.Load<Texture2D>("GameTextures/controls");
+
 
             player.LoadContent(Content);
             visualManager.LoadContent(Content);
@@ -319,6 +328,7 @@ namespace Vupa
                                 Debug.WriteLine("WIN SCREEN");
                             }
                             GenerateLvl();
+                            //visualManager.FindPath();
 
                         }
                         player.Update();
@@ -401,7 +411,7 @@ namespace Vupa
 
             Debug.WriteLine(startLoc);
             Debug.WriteLine(endLoc);
-            player.position = new Point(startLoc.X * 100, startLoc.Y * 100);
+            player.tmpposition = new Point(startLoc.X * 100, startLoc.Y * 100);
 
             level.SetWalls();
         }
@@ -417,29 +427,43 @@ namespace Vupa
                 //Drawing PLAYGAME state
                 case State.PLAYGAME:
                     {
+
                         _spriteBatch.Draw(backgroundSprite, backgroundRectangle, Color.White);
+                        _spriteBatch.Draw(controlsinfo, new Vector2(1180, 850), Color.White);
 
                         visualManager.Draw(_spriteBatch);
 
                         player.Draw(_spriteBatch);
 
-
+                        // draws goal ontop of fog of war
+                        visualManager.grid.Find(cell => cell.MyPos == endLoc).Draw(_spriteBatch);
 
                         foreach (var item in buttonlist)
                         {
                             item.Draw(_spriteBatch);
                         }
 
+                        if (lvlnumber == 1)
+                        {
+                            _spriteBatch.Draw(lvl1box, new Vector2(1125, 80), Color.White);
+                        }
+                        if (lvlnumber == 2)
+                        {
+                            _spriteBatch.Draw(lvl2box, new Vector2(1125, 80), Color.White);
+                        }
+                        if (lvlnumber == 3)
+                        {
+                            _spriteBatch.Draw(lvl3box, new Vector2(1125, 80), Color.White);
+                        }
+                        if (lvlnumber == 4)
+                        {
+                            _spriteBatch.Draw(lvl4box, new Vector2(1125, 80), Color.White);
+                        }
+
                         if (player.isAlive == true)
                         {
                             _spriteBatch.Draw(textBox, new Vector2(522, 0), Color.White);
                             _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
-                        }
-
-
-                        if (player.isAlive == false)
-                        {
-                            _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(500, 500), Color.Red);
                         }
                         break;
                     }
@@ -483,6 +507,8 @@ namespace Vupa
                 case State.GAMEOVER:
                     {
                         _spriteBatch.Draw(gameOverTexture, new Vector2(0, 0), Color.White);
+                        
+                        _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(500, 500), Color.Red);
                         break;
                     }
             }
