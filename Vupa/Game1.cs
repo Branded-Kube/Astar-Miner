@@ -70,7 +70,8 @@ namespace Vupa
         int sizeY = 1000;
 
         // Set 1st state
-        State state = State.MENU;
+       public State state = State.MENU;
+        public Enum state2 { get; set; }
 
         #endregion
 
@@ -81,6 +82,7 @@ namespace Vupa
             Content.RootDirectory = "Content";
             content = Content;
             IsMouseVisible = true;
+
 
             //Menu
             menuTexture = null;
