@@ -437,12 +437,7 @@ namespace Vupa
                             _spriteBatch.Draw(textBox, new Vector2(522, 0), Color.White);
                             _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
                         }
-
-
-                        
-                        
-
-                        
+                        break;
                     }
 
                 // Drawing MENU state
