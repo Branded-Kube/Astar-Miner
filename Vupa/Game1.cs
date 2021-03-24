@@ -137,6 +137,7 @@ namespace Vupa
                     obj = serializer.Deserialize(reader.BaseStream);
                 }
                 highScore.highScores = (List<Highscore>)obj;
+                highScore.highScores.Sort();
 
             }
 
@@ -162,9 +163,6 @@ namespace Vupa
 
             }
             player.Name = PlayerNameInput.ToString();
-
-            Debug.WriteLine(PlayerNameInput);
-
         }
 
 
