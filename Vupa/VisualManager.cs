@@ -160,13 +160,13 @@ namespace Vupa
             if (cell.MyPos == VisualManager.start)
             {
                 cell.Sprite = startSprite;
-                cell.MyColor = Color.Gray;
+                cell.MyColor = Color.White;
 
             }
             if (cell.MyPos == VisualManager.goal)
             {
                 cell.Sprite = goalSprite;
-                cell.MyColor = Color.OrangeRed;
+                cell.MyColor = Color.White;
 
             }
         }
@@ -175,11 +175,11 @@ namespace Vupa
             
             sprite = Game1.content.Load<Texture2D>("GameTextures/tile");
 
-            wallSprite = Game1.content.Load<Texture2D>("GameTextures/stone");
+            wallSprite = Game1.content.Load<Texture2D>("GameTextures/wall");
 
             startSprite = Game1.content.Load<Texture2D>("GameTextures/worker");
 
-            goalSprite = Game1.content.Load<Texture2D>("GameTextures/worker");
+            goalSprite = Game1.content.Load<Texture2D>("GameTextures/goal");
         }
         #endregion
     }
