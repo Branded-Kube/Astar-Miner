@@ -14,7 +14,10 @@ namespace Vupa
     {
         #region Fields & Properties
         Texture2D sprite;
-        private Texture2D fogSprite;
+        private Texture2D fogSprite1;
+        private Texture2D fogSprite2;
+        private Texture2D fogSprite3;
+        private Texture2D fogSprite4;
         //private Texture2D healthBox;
         Color color = Color.White;
         Rectangle playerRectangle;
@@ -370,7 +373,10 @@ namespace Vupa
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("GameTextures/player");
-            fogSprite = content.Load<Texture2D>("GameTextures/fow4");
+            fogSprite1 = content.Load<Texture2D>("GameTextures/fow1");
+            fogSprite2 = content.Load<Texture2D>("GameTextures/fow2");
+            fogSprite3 = content.Load<Texture2D>("GameTextures/fow3");
+            fogSprite4 = content.Load<Texture2D>("GameTextures/fow4");
            /////////7 healthBox = content.Load<Texture2D>("GameTextures/textbox2");
         }
 
@@ -378,13 +384,20 @@ namespace Vupa
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
 
-            if (Game1.level.LvlNumber > 1)
+            if (Game1.level.LvlNumber > 1 && Game1.level.LvlNumber < 4)
             {
-                spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
-
+                spriteBatch.Draw(fogSprite4, fogRectangle, Color.White);
             }
-           
-          
+            if (Game1.level.LvlNumber > 3 && Game1.level.LvlNumber < 7)
+            {
+                spriteBatch.Draw(fogSprite3, fogRectangle, Color.White);
+            }
+            if (Game1.level.LvlNumber == 7)
+            {
+                spriteBatch.Draw(fogSprite2, fogRectangle, Color.White);
+            }
+
+
         }
         #endregion
     }

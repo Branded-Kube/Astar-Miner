@@ -318,7 +318,10 @@ namespace Vupa
                             _spriteBatch.Draw(controlsinfo, new Vector2(1180, 430), Color.White);
 
                             // draws goal ontop of fog of war
-                            visualManager.grid.Find(cell => cell.MyPos == aStarGoalPos).Draw(_spriteBatch);
+                            if (lvlnumber < 5)
+                            {
+                                visualManager.grid.Find(cell => cell.MyPos == aStarGoalPos).Draw(_spriteBatch);
+                            }
 
                             // Draws infobox depending on lvlnumber
                             if (lvlnumber == 1)
