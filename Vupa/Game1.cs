@@ -222,7 +222,6 @@ namespace Vupa
                                 Debug.WriteLine("WIN SCREEN");
                             }
                             GenerateLvl();
-
                         }
                         player.Update();
                         break;
@@ -303,6 +302,10 @@ namespace Vupa
 
         public void GenerateLvl()
         {
+            foreach (Cell cell in visualManager.grid)
+            {
+                cell.MyColor = Color.White;
+            }
             level.LvlNumber = lvlnumber;
             startLoc = level.SetStart();
             endLoc = level.SetGoal();
@@ -314,6 +317,8 @@ namespace Vupa
             player.tmpposition = new Point(startLoc.X * 100, startLoc.Y * 100);
 
             level.SetWalls();
+
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -410,7 +415,7 @@ namespace Vupa
                     {
                         _spriteBatch.Draw(gameOverTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
                         
-                        _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(500, 500), Color.Red);
+                        _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(590, 550), Color.Red);
                         break;
                     }
             }

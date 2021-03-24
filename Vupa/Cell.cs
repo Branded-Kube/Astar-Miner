@@ -22,6 +22,8 @@ namespace Vupa
         private int cellSize;
 
         private bool walkAble;
+        public bool walked;
+
 
         //CellType myType = CellType.EMPTY;
 
@@ -73,6 +75,8 @@ namespace Vupa
             this.cellSize = size;
 
             walkAble = true;
+
+            //myColor = Color.Black;
 
         }
         #endregion
