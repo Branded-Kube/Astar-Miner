@@ -25,7 +25,7 @@ namespace Vupa
         public Point position;
         public Point tmpposition;
         public int Health {get {return health;} set { health = value; } }
-        int health = 5;
+        int health;
         public int score;
         public string name;
         public string Name { get { return name; } set { name = value; } }
@@ -40,7 +40,7 @@ namespace Vupa
 
         bool correctPathCheck = false;
 
-        public bool isAlive = true;
+        public bool isAlive;
 
         KeyboardState newState;
         #endregion
@@ -381,11 +381,7 @@ namespace Vupa
                 spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
 
             }
-            if (isAlive == true)
-            {
-                spriteBatch.Draw(healthBox, new Vector2(1098, 532), Color.White);
-                spriteBatch.DrawString(Game1.font, $"health: {health}", new Vector2(1100, 540), Color.LightGreen);
-            }
+           
           
         }
         #endregion

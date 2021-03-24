@@ -31,20 +31,6 @@ namespace Vupa
         public static SpriteFont font;
         private Texture2D textBox;
 
-        private List<Button> buttonlist;
-        private List<Button> buttonlistDel;
-        private List<Button> buttonlistAdd;
-        private Button buttonDFS;
-        private Button buttonBFS;
-        private Button buttonSearchMethod;
-        private Button buttonStartSearch;
-        private Button buttonStartAstar;
-        private Button buttonSaveHighScore;
-        private Button buttonRestart;
-
-        private string chosenOption;
-        private bool options = true;
-        private Texture2D button;
         private Player player;
         public static Rectangle border;
         private Texture2D backgroundSprite;
@@ -57,10 +43,11 @@ namespace Vupa
         public static Level level;
         StringBuilder PlayerNameInput = new StringBuilder("Player");
         Highscore highScore = new Highscore();
+        KeyboardState oldstate;
 
         //    Grid grid;
 
-        public int lvlnumber = 1;
+        public int lvlnumber;
         public Point startLoc;
         public Point endLoc;
         int sizeX = 1000;
@@ -82,10 +69,7 @@ namespace Vupa
             //Menu
             menuTexture = null;
 
-            //Game
-            buttonlist = new List<Button>();
-            buttonlistDel = new List<Button>();
-            buttonlistAdd = new List<Button>();
+           
         }
         #endregion
 
@@ -101,29 +85,15 @@ namespace Vupa
             var borderPosition = new Point(100, 100);
             border = new Rectangle(borderPosition, bordersize);
 
-            button = Content.Load<Texture2D>("GameTextures/Btn");
-            buttonSearchMethod = new Button(1050, 700, "How do ye wish to search?", button);
-            buttonDFS = new Button(1100, 300, "DFS", button);
-            buttonBFS = new Button(1100, 350, "BFS", button);
-            buttonStartSearch = new Button(1050, 50, "Start search", button);
-            buttonStartAstar = new Button(1050, 100, "Start A*", button);
-            buttonSaveHighScore = new Button(500, 600, "Save highscore", button);
-            buttonRestart = new Button(500, 650, "Restart game", button);
-
-            buttonDFS.Click += DFS_Click;
-            buttonBFS.Click += BFS_Click;
-            buttonSearchMethod.Click += ButtonSearchMethod_Click;
-            buttonStartSearch.Click += ButtonStartSearch_Click;
-            buttonStartAstar.Click += ButtonStartAStar_Click;
-            buttonSaveHighScore.Click += ButtonSaveHighScore_Click;
-            buttonRestart.Click += ButtonRestart_Click;
-            buttonlist.Add(buttonSearchMethod);
+         
+          
             startLoc = new Point(1, 1);
             player = new Player(startLoc);
             level = new Level(lvlnumber);
-            Window.TextInput += NameInput;
+            StartGame();
 
             GenerateLvl();
+            Window.TextInput += NameInput;
 
             _graphics.ApplyChanges();
 
@@ -137,11 +107,19 @@ namespace Vupa
                     obj = serializer.Deserialize(reader.BaseStream);
                 }
                 highScore.highScores = (List<Highscore>)obj;
-                highScore.highScores.Sort();
+
 
             }
 
             base.Initialize();
+        }
+
+        private void StartGame()
+        {
+            lvlnumber = 1;
+            player.Health = 5;
+            player.isAlive = true;
+
         }
 
         private void NameInput(object sender, TextInputEventArgs e)
@@ -193,12 +171,13 @@ namespace Vupa
 
         }
 
-        #region Button Methods
-        private void ButtonSaveHighScore_Click(object sender, EventArgs e)
-        {         
+       
+
+        private void SaveHighScore()
+        {
             var score = new Highscore() { Score = player.score, Name = player.name };
             highScore.highScores.Add(score);
-         
+
 
             var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
             Debug.WriteLine("Saving highscore");
@@ -207,90 +186,8 @@ namespace Vupa
                 serializer.Serialize(writer.BaseStream, highScore.highScores);
                 Debug.WriteLine("highscore saved");
             }
+            highScore.highScores.Sort();
 
-        }
-
-        private void ButtonRestart_Click(object sender, EventArgs e)
-        {
-            // Restart spil her
-        }
-
-        private void ButtonStartAStar_Click(object sender, EventArgs e)
-        {
-            //TODO AStar starter
-            Debug.WriteLine("A* starting");
-        }
-        private void ButtonStartSearch_Click(object sender, EventArgs e)
-        {
-            if (chosenOption == "DFS")
-            {
-                //TODO DFS stuff
-                Debug.WriteLine("Starting DFS search");
-                buttonlistAdd.Add(buttonStartAstar);
-            }
-            else if (chosenOption == "BFS")
-            {
-                //TODO BFS stuff
-                Debug.WriteLine("Starting BFS search");
-                buttonlistAdd.Add(buttonStartAstar);
-            }
-            else
-            {
-            }
-            Debug.WriteLine("No searching method chosen");
-        }
-
-        private void ButtonSearchMethod_Click(object sender, EventArgs e)
-        {
-            if (options == true)
-            {
-                buttonlistAdd.Add(buttonDFS);
-                buttonlistAdd.Add(buttonBFS);
-                Debug.WriteLine("Options unlocked");
-
-                options = false;
-            }
-
-            else if (options == false)
-            {
-                buttonlistDel.Add(buttonDFS);
-                buttonlistDel.Add(buttonBFS);
-
-                buttonlistDel.Add(buttonStartSearch);
-
-                buttonlistAdd.Clear();
-                options = true;
-            }
-
-
-        }
-        private void DFS_Click(object sender, EventArgs e)
-        {
-            Debug.WriteLine("Using DFS");
-            chosenOption = "DFS";
-            buttonlistAdd.Add(buttonStartSearch);
-        }
-        private void BFS_Click(object sender, EventArgs e)
-        {
-            Debug.WriteLine("Using BFS");
-            chosenOption = "BFS";
-            buttonlistAdd.Add(buttonStartSearch);
-        }
-
-        #endregion
-
-        public void GameOver()
-        {
-            buttonlistDel.Add(buttonSearchMethod);
-            buttonlistDel.Add(buttonDFS);
-            buttonlistDel.Add(buttonBFS);
-            buttonlistDel.Add(buttonStartSearch);
-            buttonlistDel.Add(buttonStartAstar);
-
-            buttonlistAdd.Clear();
-
-            buttonlistAdd.Add(buttonSaveHighScore);
-            buttonlistAdd.Add(buttonRestart);
         }
 
 
@@ -310,27 +207,7 @@ namespace Vupa
                             Exit();
                         }
 
-                        if (player.isAlive == false)
-                        {
-                            GameOver();
-                        }
-
-                        foreach (var item in buttonlistDel)
-                        {
-                            buttonlist.Remove(item);
-                        }
-
-                        foreach (var item in buttonlistAdd)
-                        {
-                            buttonlist.Add(item);
-
-                        }
-
-                        foreach (var item in buttonlist)
-                        {
-                            item.Update();
-
-                        }
+                 
                         if (player.position.X / 100 == endLoc.X && player.position.Y / 100 == endLoc.Y)
                         {
                             if (lvlnumber < 4)
@@ -344,7 +221,6 @@ namespace Vupa
                                 Debug.WriteLine("WIN SCREEN");
                             }
                             GenerateLvl();
-                            //visualManager.FindPath();
 
                         }
                         player.Update();
@@ -355,12 +231,12 @@ namespace Vupa
                 case State.MENU:
                     {
                         KeyboardState keyState = Keyboard.GetState();
-
                         //If enter or space in down = start the game
-                        if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space))
+                        if (keyState.IsKeyDown(Keys.Enter) && oldstate.IsKeyUp(Keys.Enter))
                         {
-                            state = State.PLAYGAME;
                             Window.TextInput -= NameInput;
+
+                            state = State.PLAYGAME;
 
                             // Put media/music for the PLAYGAME here (if its a long soundtrack because it will only be played once, once you hit play game)
                         }
@@ -368,7 +244,10 @@ namespace Vupa
                         //If S is down, look at highscore
                         if (keyState.IsKeyDown(Keys.S))
                         {
+                            Window.TextInput -= NameInput;
+
                             state = State.HIGHSCORE;
+
                         }
 
                         //If Escape is down close game
@@ -382,7 +261,7 @@ namespace Vupa
                         {
                             state = State.GAMEOVER;
                         }
-
+                        oldstate = keyState;
                         break;
                     }
 
@@ -390,10 +269,11 @@ namespace Vupa
                 case State.HIGHSCORE:
                     {
                         KeyboardState keyState = Keyboard.GetState();
-
                         if (keyState.IsKeyDown(Keys.B))
                         {
+                            Window.TextInput += NameInput;
                             state = State.MENU;
+
                         }
                         break;
                     }
@@ -405,7 +285,9 @@ namespace Vupa
 
                         if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space))
                         {
-                            state = State.MENU;
+                            SaveHighScore();
+                            state = State.HIGHSCORE;
+
                         }
                         if (keyState.IsKeyDown(Keys.Escape))
                         {
@@ -455,11 +337,7 @@ namespace Vupa
                         // draws goal ontop of fog of war
                         visualManager.grid.Find(cell => cell.MyPos == endLoc).Draw(_spriteBatch);
 
-                        foreach (var item in buttonlist)
-                        {
-                            item.Draw(_spriteBatch);
-                        }
-
+                    
                         if (lvlnumber == 1)
                         {
                             _spriteBatch.Draw(lvl1box, new Vector2(1125, 80), Color.White);
@@ -480,7 +358,9 @@ namespace Vupa
                         if (player.isAlive == true)
                         {
                             _spriteBatch.Draw(textBox, new Vector2(522, 0), Color.White);
-                            _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
+                            _spriteBatch.DrawString(font, $"Score: {player.score.ToString()} ", new Vector2(530, 10), Color.White);
+                            _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(650, 10), Color.White);
+
                         }
                         break;
                     }
@@ -501,17 +381,17 @@ namespace Vupa
 
 
                         // Loading highscores
-                        if (File.Exists("highscore.xml"))
-                        {
-                            var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
-                            object obj;
-                            using (var reader = new StreamReader("highscores.xml"))
-                            {
-                                obj = serializer.Deserialize(reader.BaseStream);
-                            }
-                            highScore.highScores = (List<Highscore>)obj;
+                        //if (File.Exists("highscore.xml"))
+                        //{
+                        //    var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
+                        //    object obj;
+                        //    using (var reader = new StreamReader("highscores.xml"))
+                        //    {
+                        //        obj = serializer.Deserialize(reader.BaseStream);
+                        //    }
+                        //    highScore.highScores = (List<Highscore>)obj;
 
-                        }
+                        //}
 
                         int i = 0;
                         foreach (Highscore h in highScore.highScores)
@@ -532,8 +412,6 @@ namespace Vupa
                     }
             }
             _spriteBatch.End();
-
-            //agent.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }
