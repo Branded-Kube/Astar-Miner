@@ -347,8 +347,9 @@ namespace Vupa
                 if (correct == false)
                 {
                     health -= 1;
+                score -= 2;
                     DeathCheck();
-            }
+                }
 
             correct = false;
 

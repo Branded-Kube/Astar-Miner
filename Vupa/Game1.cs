@@ -216,14 +216,15 @@ namespace Vupa
                         // If player reaches goal, advance to next lvl number and increase health. if no more lvls, show win screen
                         if (player.position.X / 100 == aStarGoalPos.X && player.position.Y / 100 == aStarGoalPos.Y)
                         {
-                            if (lvlnumber < 4)
+                            if (lvlnumber < 7)
                             {
                                 lvlnumber++;
                                 player.Health += 3;
                             }
                             else
                             {
-                                Debug.WriteLine("WIN SCREEN");
+                                Debug.WriteLine("WIN SCREEN"); 
+                                state = State.GAMEOVER;
                             }
                             GenerateLvl();
                         }
