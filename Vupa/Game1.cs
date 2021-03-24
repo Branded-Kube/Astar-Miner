@@ -387,24 +387,24 @@ namespace Vupa
                     {
                         _spriteBatch.Draw(highscoreTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
 
+                        KeyboardState keyState = Keyboard.GetState();
 
-                        // Loading highscores
-                        //if (File.Exists("highscore.xml"))
-                        //{
-                        //    var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
-                        //    object obj;
-                        //    using (var reader = new StreamReader("highscores.xml"))
-                        //    {
-                        //        obj = serializer.Deserialize(reader.BaseStream);
-                        //    }
-                        //    highScore.highScores = (List<Highscore>)obj;
+                        if (keyState.IsKeyDown(Keys.X))
+                        {
+                            Debug.WriteLine("Deleting data");
 
-                        //}
+
+                                highScore.highScores.Clear();
+                                SaveHighScore();
+
+                             Debug.WriteLine("Data deleted");
+                        }
+
 
                         int i = 0;
                         foreach (Highscore h in highScore.highScores)
                         {
-                            _spriteBatch.DrawString(font, $"Name:  {h.Name}         Score: {h.Score}", new Vector2(500, 400 + 50 * i), Color.White);
+                            _spriteBatch.DrawString(font, $"Name:  {h.Name}     Score: {h.Score}", new Vector2(500, 400 + 50 * i), Color.White);
                             i++;
                         }
                         break;
