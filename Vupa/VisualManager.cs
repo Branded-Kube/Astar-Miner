@@ -24,9 +24,6 @@ namespace Vupa
 
         AStar aStar;
 
-        private MouseState mouseCurrent;
-        private MouseState mouseLast;
-        private Rectangle mouseRectangle;
 
         //private CellType clickType;
         private Texture2D sprite;
@@ -75,8 +72,12 @@ namespace Vupa
         public void FindPath()
         {
             finalPath = aStar.FindPath(start, goal, CreateNodes());
+            if (Game1.level.LvlNumber == 1)
+            {
+                ColorNodes();
 
-            ColorNodes();
+            }
+
 
         }
 
@@ -104,13 +105,13 @@ namespace Vupa
             List<Node> allNodes = new List<Node>();
             foreach (Cell cell in grid)
             {
-                ChangeTexture(cell);
-
+                
                 if (cell.WalkAble)
                 {
                     cell.MyNode = new Node(cell.MyPos);
                     allNodes.Add(cell.MyNode);
                 }
+                ChangeTexture(cell);
 
             }
 
@@ -120,28 +121,26 @@ namespace Vupa
         //colors in the nodes with  different colors to represent the open nodes, and the closed nodes that were evaluated, and the final path
         public void ColorNodes()
         {
-
             foreach (Cell cell in grid)
             {
-                if (cell.MyPos!= start && cell.MyPos != goal)
+
+                if (cell.MyPos != start && cell.MyPos != goal)
                 {
                     cell.MyColor = Color.White;
                 }
-                if (Game1.level.LvlNumber == 1)
-                {
-                    if (aStar.Open.Exists(x => x.Position == cell.MyPos) && cell.MyPos != start && cell.MyPos != goal)
+                if (aStar.Open.Exists(x => x.Position == cell.MyPos) && cell.MyPos != start && cell.MyPos != goal)
                     {
                         cell.MyColor = Color.CornflowerBlue;
                     }
                     if (aStar.Closed.Exists(x => x.Position == cell.MyPos) && cell.MyPos != start && cell.MyPos != goal)
                     {
-                        cell.MyColor = Color.Orange;
+                        cell.MyColor = Color.BlueViolet;
                     }
                     if (finalPath.Exists(x => x.Position == cell.MyPos) && cell.MyPos != start && cell.MyPos != goal)
                     {
                         cell.MyColor = Color.Green;
                     }
-                }
+                
                 
             }
         }
@@ -150,7 +149,6 @@ namespace Vupa
         public void ChangeTexture(Cell cell)
         {
             cell.Sprite = sprite;
-
             if (!cell.WalkAble)
             {
                 cell.Sprite = wallSprite;
@@ -159,27 +157,30 @@ namespace Vupa
             if (cell.MyPos == VisualManager.start)
             {
                 cell.Sprite = startSprite;
-                cell.MyColor = Color.MediumSeaGreen;
+                cell.MyColor = Color.Gray;
 
             }
-            else if (cell.MyPos == VisualManager.goal)
+            if (cell.MyPos == VisualManager.goal)
             {
                 cell.Sprite = goalSprite;
-                cell.MyColor = Color.OrangeRed;
+                cell.MyColor = Color.White;
 
             }
-            //return cell.Sprite;
         }
+        /// <summary>
+        /// Loads / sets cell textures
+        /// </summary>
+        /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
             
             sprite = Game1.content.Load<Texture2D>("GameTextures/tile");
 
-            wallSprite = Game1.content.Load<Texture2D>("GameTextures/stone");
+            wallSprite = Game1.content.Load<Texture2D>("GameTextures/wall");
 
             startSprite = Game1.content.Load<Texture2D>("GameTextures/worker");
 
-            goalSprite = Game1.content.Load<Texture2D>("GameTextures/worker");
+            goalSprite = Game1.content.Load<Texture2D>("GameTextures/goal");
         }
         #endregion
     }

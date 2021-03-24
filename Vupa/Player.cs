@@ -15,7 +15,7 @@ namespace Vupa
         #region Fields & Properties
         Texture2D sprite;
         private Texture2D fogSprite;
-        private Texture2D healthBox;
+        //private Texture2D healthBox;
         Color color = Color.Black;
         Rectangle playerRectangle;
         Rectangle fogRectangle;
@@ -25,9 +25,10 @@ namespace Vupa
         public Point position;
         public Point tmpposition;
         public int Health {get {return health;} set { health = value; } }
-        int health = 5;
+        int health;
         public int score;
-        public string name = "PlaceHolder69";
+        public string name;
+        public string Name { get { return name; } set { name = value; } }
         bool correct;
         Point fogPosition;
         bool dontMove;
@@ -39,7 +40,7 @@ namespace Vupa
 
         bool correctPathCheck = false;
 
-        public bool isAlive = true;
+        public bool isAlive;
 
         KeyboardState newState;
         #endregion
@@ -339,7 +340,6 @@ namespace Vupa
                 {
                     if (node.Position.X == position.X / 100 && node.Position.Y == position.Y / 100)
                     {
-                        Debug.WriteLine("plus");
                         score += 1;
                         correct = true;
                     }
@@ -347,7 +347,6 @@ namespace Vupa
                 if (correct == false)
                 {
                     health -= 1;
-                    Debug.WriteLine("minus");
                     DeathCheck();
             }
 
@@ -363,12 +362,15 @@ namespace Vupa
                 Game1.state = State.GAMEOVER;
             }
         }
-
+        /// <summary>
+        /// Loads / sets player and fog of war textures
+        /// </summary>
+        /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("GameTextures/worker");
-            fogSprite = content.Load<Texture2D>("GameTextures/fogwar2");
-            healthBox = content.Load<Texture2D>("GameTextures/textbox2");
+            fogSprite = content.Load<Texture2D>("GameTextures/fow4");
+           /////////7 healthBox = content.Load<Texture2D>("GameTextures/textbox2");
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -380,11 +382,7 @@ namespace Vupa
                 spriteBatch.Draw(fogSprite, fogRectangle, Color.White);
 
             }
-            if (isAlive == true)
-            {
-                spriteBatch.Draw(healthBox, new Vector2(1098, 532), Color.White);
-                spriteBatch.DrawString(Game1.font, $"health: {health}", new Vector2(1100, 540), Color.LightGreen);
-            }
+           
           
         }
         #endregion
