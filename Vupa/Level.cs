@@ -42,6 +42,10 @@ namespace Vupa
             {
                 return new Point(2, 10);
             }
+            if (LvlNumber == 5)
+            {
+                return new Point(8, 3);
+            }
             else
             {
                 return new Point();
@@ -66,6 +70,10 @@ namespace Vupa
             if (LvlNumber == 4)
             {
                 return new Point(8, 3);
+            }
+            if (LvlNumber == 5)
+            {
+                return new Point(7, 9);
             }
             else
             {
@@ -101,6 +109,19 @@ namespace Vupa
                 Notwalkables.Add(Game1.visualManager.grid[39]);
                 Notwalkables.Add(Game1.visualManager.grid[38]);
                 Notwalkables.Add(Game1.visualManager.grid[37]);
+            }
+            if (LvlNumber == 4)
+            {
+                Notwalkables.Add(Game1.visualManager.grid[61]);
+                Notwalkables.Add(Game1.visualManager.grid[62]);
+                Notwalkables.Add(Game1.visualManager.grid[63]);
+                Notwalkables.Add(Game1.visualManager.grid[64]);
+                Notwalkables.Add(Game1.visualManager.grid[74]);
+                Notwalkables.Add(Game1.visualManager.grid[30]);
+                Notwalkables.Add(Game1.visualManager.grid[29]);
+                Notwalkables.Add(Game1.visualManager.grid[28]);
+                Notwalkables.Add(Game1.visualManager.grid[27]);
+                Notwalkables.Add(Game1.visualManager.grid[17]);
             }
             if (LvlNumber == 4)
             {

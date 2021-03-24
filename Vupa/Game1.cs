@@ -68,6 +68,7 @@ namespace Vupa
 
         // Set 1st state
         public static State state = State.MENU;
+        private KeyboardState oldState;
         #endregion
 
         #region Constructor
@@ -110,13 +111,6 @@ namespace Vupa
             buttonSaveHighScore = new Button(500, 600, "Save highscore", button);
             buttonRestart = new Button(500, 650, "Restart game", button);
 
-            buttonDFS.Click += DFS_Click;
-            buttonBFS.Click += BFS_Click;
-            buttonSearchMethod.Click += ButtonSearchMethod_Click;
-            buttonStartSearch.Click += ButtonStartSearch_Click;
-            buttonStartAstar.Click += ButtonStartAStar_Click;
-            buttonSaveHighScore.Click += ButtonSaveHighScore_Click;
-            buttonRestart.Click += ButtonRestart_Click;
             buttonlist.Add(buttonSearchMethod);
             startLoc = new Point(1, 1);
             player = new Player(startLoc);
@@ -140,6 +134,21 @@ namespace Vupa
             }
 
             base.Initialize();
+        }
+
+        private void SaveHighscore()
+        {
+            var score = new Highscore() { Score = player.score, Name = player.name };
+            highScore.highScores.Add(score);
+
+
+            var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
+            Debug.WriteLine("Saving highscore");
+            using (var writer = new StreamWriter("highscores.xml", false))
+            {
+                serializer.Serialize(writer.BaseStream, highScore.highScores);
+                Debug.WriteLine("highscore saved");
+            }
         }
 
 
@@ -171,21 +180,7 @@ namespace Vupa
         }
 
         #region Button Methods
-        private void ButtonSaveHighScore_Click(object sender, EventArgs e)
-        {         
-            var score = new Highscore() { Score = player.score, Name = player.name };
-            highScore.highScores.Add(score);
-         
 
-            var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
-            Debug.WriteLine("Saving highscore");
-            using (var writer = new StreamWriter("highscores.xml", false))
-            {
-                serializer.Serialize(writer.BaseStream, highScore.highScores);
-                Debug.WriteLine("highscore saved");
-            }
-
-        }
 
         private void ButtonRestart_Click(object sender, EventArgs e)
         {
@@ -336,6 +331,10 @@ namespace Vupa
                         //If enter or space in down = start the game
                         if (keyState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
                         {
+                            player.isAlive = true;
+                            lvlnumber = 1;
+                            GenerateLvl();
+                            player.Health = 5;
                             state = State.PLAYGAME;
 
                             // Put media/music for the PLAYGAME here (if its a long soundtrack because it will only be played once, once you hit play game)
@@ -352,14 +351,7 @@ namespace Vupa
                         {
                             Exit();
                         }
-
-                        //FOR TESTING - game over screen
-                        if (keyState.IsKeyDown(Keys.Q))
-                        {
-                            state = State.GAMEOVER;
-                        }
                         oldState = keyState;
-
                         break;
                     }
 
@@ -380,14 +372,18 @@ namespace Vupa
                     {
                         KeyboardState keyState = Keyboard.GetState();
 
-                        if (keyState.IsKeyDown(Keys.Enter))
+                        if (keyState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
+                            
                         {
+                            SaveHighscore();
                             state = State.MENU;
+
                         }
                         if (keyState.IsKeyDown(Keys.Escape))
                         {
                             Exit();
                         }
+                        oldState = keyState;
                         break;
                     }
             }
@@ -405,7 +401,7 @@ namespace Vupa
 
             Debug.WriteLine(startLoc);
             Debug.WriteLine(endLoc);
-            player.position = new Point(startLoc.X * 100, startLoc.Y * 100);
+            player.tmpposition = new Point(startLoc.X * 100, startLoc.Y * 100);
 
             level.SetWalls();
         }
@@ -460,11 +456,13 @@ namespace Vupa
                             _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
                         }
 
+                        _spriteBatch.DrawString(font, $"level: {lvlnumber}", new Vector2(1120, 500), Color.Red);
+                         
                         break;
                         
-                        
 
-                        
+
+
                     }
 
                 // Drawing MENU state
