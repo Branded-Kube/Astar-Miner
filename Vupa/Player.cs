@@ -383,8 +383,8 @@ namespace Vupa
             }
             if (isAlive == true)
             {
-                spriteBatch.Draw(healthBox, new Vector2(1098, 532), Color.White);
-                spriteBatch.DrawString(Game1.font, $"health: {health}", new Vector2(1100, 540), Color.LightGreen);
+                spriteBatch.Draw(healthBox, new Vector2(1244, 152), Color.White);
+                spriteBatch.DrawString(Game1.font, $"Sanity: {health}", new Vector2(1250, 160), Color.LightGreen);
             }
           
         }
