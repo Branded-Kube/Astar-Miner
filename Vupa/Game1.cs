@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace Vupa
 {
-    //MenuState, GameState, GameOverState
     public enum State { MENU, PLAYGAME, HIGHSCORE, GAMEOVER }
 
     public class Game1 : Game
@@ -55,7 +55,7 @@ namespace Vupa
         private Texture2D controlsinfo;
         private Rectangle backgroundRectangle;
         public static Level level;
-
+        StringBuilder PlayerNameInput = new StringBuilder("Player");
         Highscore highScore = new Highscore();
 
         //    Grid grid;
@@ -121,6 +121,7 @@ namespace Vupa
             startLoc = new Point(1, 1);
             player = new Player(startLoc);
             level = new Level(lvlnumber);
+            Window.TextInput += NameInput;
 
             GenerateLvl();
 
@@ -140,6 +141,30 @@ namespace Vupa
             }
 
             base.Initialize();
+        }
+
+        private void NameInput(object sender, TextInputEventArgs e)
+        {
+            var pressedKey = e.Key;
+            int length = PlayerNameInput.Length;
+            if (pressedKey == Keys.Back)
+            {
+                if (length > 0)
+                {
+                    PlayerNameInput.Remove(length -1, 1);
+                }
+
+            }
+            else
+            {
+                var character = e.Character;
+                PlayerNameInput.Append(character);
+
+            }
+            player.Name = PlayerNameInput.ToString();
+
+            Debug.WriteLine(PlayerNameInput);
+
         }
 
 
@@ -337,10 +362,11 @@ namespace Vupa
                         if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space))
                         {
                             state = State.PLAYGAME;
+                            Window.TextInput -= NameInput;
 
                             // Put media/music for the PLAYGAME here (if its a long soundtrack because it will only be played once, once you hit play game)
                         }
-                        
+
                         //If S is down, look at highscore
                         if (keyState.IsKeyDown(Keys.S))
                         {
@@ -464,7 +490,9 @@ namespace Vupa
                 // Drawing MENU state
                 case State.MENU:
                     {
-                        _spriteBatch.Draw(menuTexture, new Vector2(0, 0), Color.White);
+                        _spriteBatch.Draw(menuTexture, new Rectangle(0,0,_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
+                        _spriteBatch.DrawString(font, "Enter your name : ", new Vector2((_graphics.PreferredBackBufferWidth / 2)-100, 750), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                        _spriteBatch.DrawString(font, PlayerNameInput, new Vector2((_graphics.PreferredBackBufferWidth / 2)-100, 800) , Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
                         break;
                     }
 
