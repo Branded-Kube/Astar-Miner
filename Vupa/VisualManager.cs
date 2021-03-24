@@ -24,9 +24,6 @@ namespace Vupa
 
         AStar aStar;
 
-        private MouseState mouseCurrent;
-        private MouseState mouseLast;
-        private Rectangle mouseRectangle;
 
         //private CellType clickType;
         private Texture2D sprite;
@@ -160,7 +157,7 @@ namespace Vupa
             if (cell.MyPos == VisualManager.start)
             {
                 cell.Sprite = startSprite;
-                cell.MyColor = Color.White;
+                cell.MyColor = Color.Gray;
 
             }
             if (cell.MyPos == VisualManager.goal)
@@ -170,6 +167,10 @@ namespace Vupa
 
             }
         }
+        /// <summary>
+        /// Loads / sets cell textures
+        /// </summary>
+        /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
             

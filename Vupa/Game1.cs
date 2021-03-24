@@ -17,47 +17,50 @@ namespace Vupa
     public class Game1 : Game
     {
         #region Fields & Properties
-        public static GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         public static ContentManager content;
-        public static VisualManager visualManager;
-
-        //Menu
-        public Texture2D menuTexture;
-        public Texture2D gameOverTexture;
-        public Texture2D highscoreTexture;
-
-        //Game
         public static SpriteFont font;
-        private Texture2D textBox;
+        private SpriteBatch _spriteBatch;
+        private GraphicsDeviceManager _graphics;
 
-        private Player player;
-        public static Rectangle border;
+        //Textures
+        private Texture2D menuTexture;
+        private Texture2D gameOverTexture;
+        private Texture2D highscoreTexture;
+        private Texture2D textBox;
         private Texture2D backgroundSprite;
         private Texture2D lvl1box;
         private Texture2D lvl2box;
         private Texture2D lvl3box;
         private Texture2D lvl4box;
         private Texture2D controlsinfo;
-        private Rectangle backgroundRectangle;
+
+        // Custom classes/objects
+        public static VisualManager visualManager;
         public static Level level;
-        StringBuilder PlayerNameInput = new StringBuilder("Player");
-        Highscore highScore = new Highscore();
-        KeyboardState oldstate;
+        public static State state = State.MENU;
+        private Player player;
+        private Highscore highScore = new Highscore();
 
-        private bool writingName = false;
-        
+        // Rectangles
+        public static Rectangle border;
+        private Rectangle backgroundRectangle;
 
-        //    Grid grid;
-
+        // Strings / bool
         public int lvlnumber;
-        public Point startLoc;
-        public Point endLoc;
-        int sizeX = 1000;
-        int sizeY = 1000;
+        private StringBuilder PlayerNameInput = new StringBuilder("Player");
+        private bool writingName = false;
+
+
+        // Ints /points
+        private int sizeX = 1000;
+        private int sizeY = 1000;
+        private Point aStarStartPos;
+        private Point aStarGoalPos;
 
         // Set 1st state
-        public static State state = State.MENU;
+        private KeyboardState oldstate;
+        private KeyboardState keyState;
+
         #endregion
 
         #region Constructor
@@ -66,11 +69,11 @@ namespace Vupa
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             content = Content;
-            IsMouseVisible = true;
+           // IsMouseVisible = true;
 
 
             //Menu
-            menuTexture = null;
+            //menuTexture = null;
 
            
         }
@@ -79,28 +82,29 @@ namespace Vupa
         #region Methods
         protected override void Initialize()
         {
-           
-            visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
+            // Sets window size
             _graphics.PreferredBackBufferWidth = 1400;
             _graphics.PreferredBackBufferHeight = 1080;
-            backgroundRectangle = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
-            var bordersize = new Point(_graphics.PreferredBackBufferWidth - 400, _graphics.PreferredBackBufferHeight - 80);
-            var borderPosition = new Point(100, 100);
-            border = new Rectangle(borderPosition, bordersize);
 
-         
-          
-            startLoc = new Point(1, 1);
-            player = new Player(startLoc);
+            // Instantiate objects
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            backgroundRectangle = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            border = new Rectangle(100,100, _graphics.PreferredBackBufferWidth - 400, _graphics.PreferredBackBufferHeight - 80);
+            visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
+            player = new Player(aStarStartPos);
             level = new Level(lvlnumber);
 
             //Window.TextInput += NameInput;
 
-            
-
+            CheckXML();
             _graphics.ApplyChanges();
-
-
+            base.Initialize();
+        }
+        /// <summary>
+        /// Checks if an XML exits, otherwise creates one
+        /// </summary>
+        private void CheckXML()
+        {
             if (File.Exists("highscores.xml"))
             {
                 var serializer = new XmlSerializer(highScore.highScores.GetType(), "HighScores.Scores");
@@ -110,36 +114,34 @@ namespace Vupa
                     obj = serializer.Deserialize(reader.BaseStream);
                 }
                 highScore.highScores = (List<Highscore>)obj;
-
-
             }
-
-            base.Initialize();
         }
 
+        /// <summary>
+        /// Starts the game, sets default values for player / lvl at level 1
+        /// </summary>
         private void StartGame()
         {
             lvlnumber = 1;
             player.Health = 5;
             player.isAlive = true;
             player.score = 0;
-            GenerateLvl();
-
-
         }
-
+        /// <summary>
+        /// Enables/Disables playerinput 
+        /// </summary>
         private void ChoseName()
         {
-            if (writingName == false)
-            {
-                writingName = true;
-            }
+            //if (writingName == false)
+            //{
+            //    writingName = true;
+            //}
 
-            else
-            {
-                writingName = false;
-            }
-
+            //else
+            //{
+            //    writingName = false;
+            //}
+            writingName = !writingName;
 
             if (writingName == true)
             {
@@ -152,6 +154,11 @@ namespace Vupa
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NameInput(object sender, TextInputEventArgs e)
         {
             var pressedKey = e.Key;
@@ -182,8 +189,6 @@ namespace Vupa
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
             //Menues
             menuTexture = Content.Load<Texture2D>("MenuTextures/menu");
             highscoreTexture = Content.Load<Texture2D>("MenuTextures/scorebox");
@@ -199,16 +204,15 @@ namespace Vupa
             lvl4box = Content.Load<Texture2D>("GameTextures/lvl4info");
             controlsinfo = Content.Load<Texture2D>("GameTextures/controls");
 
-
             player.LoadContent(Content);
             visualManager.LoadContent(Content);
-            //visualManager.FindPath();
-
-
         }
 
        
-
+        /// <summary>
+        /// Sorts and saves highscore from xlm 
+        /// ?
+        /// </summary>
         private void SaveHighScore()
         {
             var score = new Highscore() { Score = player.score, Name = player.name };
@@ -229,30 +233,26 @@ namespace Vupa
 
         protected override void Update(GameTime gameTime)
         {
-            
-
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // Updating PLAYGAME state
+            // Listens for keyboard input
+             keyState = Keyboard.GetState();
+
+            // Updates current state
             switch (state)
             {
+                // Updating PLAYGAME state
                 case State.PLAYGAME:
                     {
-                        if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                        {
-                            Exit();
-                        }
-
-                 
-                        if (player.position.X / 100 == endLoc.X && player.position.Y / 100 == endLoc.Y)
+                        // If player reaches goal, advance to next lvl number and increase health. if no more lvls, show win screen
+                        if (player.position.X / 100 == aStarGoalPos.X && player.position.Y / 100 == aStarGoalPos.Y)
                         {
                             if (lvlnumber < 4)
                             {
                                 lvlnumber++;
                                 player.Health += 3;
-
                             }
                             else
                             {
@@ -267,48 +267,35 @@ namespace Vupa
                 // Updating MENU state
                 case State.MENU:
                     {
-                        KeyboardState keyState = Keyboard.GetState();
-                        //If enter or space in down = start the game
+                        //////////// ChoseName();
 
-                       // ChoseName();
+                        //If enter or space in down = setup game and change state to PlayGame
                         if (keyState.IsKeyDown(Keys.Enter) && oldstate.IsKeyUp(Keys.Enter))
                         {
                             Window.TextInput -= NameInput;
                             StartGame();
+                            GenerateLvl();
                             state = State.PLAYGAME;
 
-                            // Put media/music for the PLAYGAME here (if its a long soundtrack because it will only be played once, once you hit play game)
+                            /////////// Put media/music for the PLAYGAME here (if its a long soundtrack because it will only be played once, once you hit play game)
                         }
 
                         //If S is down, look at highscore
                         if (keyState.IsKeyDown(Keys.S) && writingName == false)
                         {
                             Window.TextInput -= NameInput;
-
                             state = State.HIGHSCORE;
-
                         }
-
-                        //If Escape is down close game
-                        if (keyState.IsKeyDown(Keys.Escape))
-                        {
-                            Exit();
-                        }
-
                         if (keyState.IsKeyDown(Keys.Tab) && oldstate.IsKeyUp(Keys.Tab))
                         {
-    
                             ChoseName();
-
                         }
-
-
-
-                        //FOR TESTING - game over screen
-                        if (keyState.IsKeyDown(Keys.Q))
-                        {
-                            state = State.GAMEOVER;
-                        }
+                        
+                        ////FOR TESTING - game over screen
+                        //if (keyState.IsKeyDown(Keys.Q))
+                        //{
+                        //    state = State.GAMEOVER;
+                        //}
                         oldstate = keyState;
                         break;
                     }
@@ -316,12 +303,10 @@ namespace Vupa
                 // Updating HIGHSCORE state
                 case State.HIGHSCORE:
                     {
-                        KeyboardState keyState = Keyboard.GetState();
                         if (keyState.IsKeyDown(Keys.B))
                         {
                             Window.TextInput -= NameInput;
                             state = State.MENU;
-
                         }
                         break;
                     }
@@ -329,25 +314,21 @@ namespace Vupa
                 // Updating GAMEOVER State
                 case State.GAMEOVER:
                     {
-                        KeyboardState keyState = Keyboard.GetState();
-
+                        // If Enter/ space is pressed, save highscore and change state to Highscore
                         if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space))
                         {
                             SaveHighScore();
                             state = State.HIGHSCORE;
-
-                        }
-                        if (keyState.IsKeyDown(Keys.Escape))
-                        {
-                            Exit();
                         }
                         break;
                     }
             }
-
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Resets cell colors, and sets astar start/goal positions, walls and player position depending on lvlnumber
+        /// </summary>
         public void GenerateLvl()
         {
             foreach (Cell cell in visualManager.grid)
@@ -355,68 +336,57 @@ namespace Vupa
                 cell.MyColor = Color.White;
             }
             level.LvlNumber = lvlnumber;
-            startLoc = level.SetStart();
-            endLoc = level.SetGoal();
-            VisualManager.start = startLoc;
-            VisualManager.goal = endLoc;
-
-            Debug.WriteLine(startLoc);
-            Debug.WriteLine(endLoc);
-            player.tmpposition = new Point(startLoc.X * 100, startLoc.Y * 100);
-
+            aStarStartPos = level.SetStart();
+            aStarGoalPos = level.SetGoal();
             level.SetWalls();
 
-
+            VisualManager.start = aStarStartPos;
+            VisualManager.goal = aStarGoalPos;
+            player.tmpposition = new Point(aStarStartPos.X * 100, aStarStartPos.Y * 100);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-
-            GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
 
+            // Draws state depending on state
             switch (state)
             {
                 //Drawing PLAYGAME state
                 case State.PLAYGAME:
                     {
-
-                        _spriteBatch.Draw(backgroundSprite, backgroundRectangle, Color.White);
-                        _spriteBatch.Draw(controlsinfo, new Vector2(1180, 430), Color.White);
-
-                        visualManager.Draw(_spriteBatch);
-
-                        player.Draw(_spriteBatch);
-
-                        // draws goal ontop of fog of war
-                        visualManager.grid.Find(cell => cell.MyPos == endLoc).Draw(_spriteBatch);
-
-                    
-                        if (lvlnumber == 1)
-                        {
-                            _spriteBatch.Draw(lvl1box, new Vector2(1125, 650), Color.White);
-                        }
-                        if (lvlnumber == 2)
-                        {
-                            _spriteBatch.Draw(lvl2box, new Vector2(1125, 650), Color.White);
-                        }
-                        if (lvlnumber == 3)
-                        {
-                            _spriteBatch.Draw(lvl3box, new Vector2(1125, 650), Color.White);
-                        }
-                        if (lvlnumber == 4)
-                        {
-                            _spriteBatch.Draw(lvl4box, new Vector2(1125, 650), Color.White);
-                        }
-
                         if (player.isAlive == true)
                         {
+                            _spriteBatch.Draw(backgroundSprite, backgroundRectangle, Color.White);
+                            visualManager.Draw(_spriteBatch);
+                            player.Draw(_spriteBatch);
+                            _spriteBatch.Draw(controlsinfo, new Vector2(1180, 430), Color.White);
+
+                            // draws goal ontop of fog of war
+                            visualManager.grid.Find(cell => cell.MyPos == aStarGoalPos).Draw(_spriteBatch);
+
+                            // Draws infobox depending on lvlnumber
+                            if (lvlnumber == 1)
+                            {
+                                _spriteBatch.Draw(lvl1box, new Vector2(1125, 650), Color.White);
+                            }
+                            if (lvlnumber == 2)
+                            {
+                                _spriteBatch.Draw(lvl2box, new Vector2(1125, 650), Color.White);
+                            }
+                            if (lvlnumber == 3)
+                            {
+                                _spriteBatch.Draw(lvl3box, new Vector2(1125, 650), Color.White);
+                            }
+                            if (lvlnumber == 4)
+                            {
+                                _spriteBatch.Draw(lvl4box, new Vector2(1125, 650), Color.White);
+                            }
+
                             _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,40), Color.White);
-                            _spriteBatch.DrawString(font, $"Score: {player.score.ToString()} ", new Vector2(800, 10), Color.White);
+                            _spriteBatch.DrawString(font, $"Score: {player.score} ", new Vector2(800, 10), Color.White);
                             _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(700, 10), Color.White);
                             _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 10), Color.White);
-
-
                         }
                         break;
                     }
@@ -447,20 +417,16 @@ namespace Vupa
                     {
                         _spriteBatch.Draw(highscoreTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
 
-                        KeyboardState keyState = Keyboard.GetState();
-
+                        // Deletes all highscores
                         if (keyState.IsKeyDown(Keys.X))
                         {
-                            Debug.WriteLine("Deleting data");
-
-
+                            ///////////Debug.WriteLine("Deleting data");
                                 highScore.highScores.Clear();
                                 SaveHighScore();
-
-                             Debug.WriteLine("Data deleted");
+                            /////////// Debug.WriteLine("Data deleted");
                         }
 
-
+                        // Draws each Highscore
                         int i = 0;
                         foreach (Highscore h in highScore.highScores)
                         {

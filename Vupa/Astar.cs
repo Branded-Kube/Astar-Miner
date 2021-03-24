@@ -14,7 +14,7 @@ namespace Vupa
 
         public List<Node> open;
         //public static Node neighbour;
-        public Node neighbour { get; set; }
+        public Node Neighbour { get; set; }
 
         public List<Node> Closed
         {
@@ -66,9 +66,9 @@ namespace Vupa
                     {
                         if (x != 0 || y != 0)
                         {
-                            neighbour = nodes.Find(node =>  node.Position.X == currentNode.Position.X - x && node.Position.Y == currentNode.Position.Y - y);
+                            Neighbour = nodes.Find(node =>  node.Position.X == currentNode.Position.X - x && node.Position.Y == currentNode.Position.Y - y);
 
-                            if (neighbour != null)
+                            if (Neighbour != null)
                             {
                                 int gCost = 0;
 
@@ -81,66 +81,66 @@ namespace Vupa
                                     gCost = 14;
                                 }
 
-                                if (open.Exists(n => n == neighbour))
+                                if (open.Exists(n => n == Neighbour))
                                 {
-                                    if (currentNode.G + gCost < neighbour.G)
+                                    if (currentNode.G + gCost < Neighbour.G)
                                     {
-                                        neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
+                                        Neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
                                     }
 
                                 }
-                                else if (!closed.Exists(n => n == neighbour))
+                                else if (!closed.Exists(n => n == Neighbour))
                                 {
 
                                     if (gCost == 14)
                                     {
-                                        if (currentNode.Position.X < neighbour.Position.X && currentNode.Position.Y > neighbour.Position.Y) //Topright
+                                        if (currentNode.Position.X < Neighbour.Position.X && currentNode.Position.Y > Neighbour.Position.Y) //Topright
                                         {
                                             if (nodes.Exists(node => node.Position == new Point(currentNode.Position.X, currentNode.Position.Y - 1) && nodes.Exists(node2 => node2.Position == new Point(currentNode.Position.X + 1, currentNode.Position.Y))))
                                             {
-                                                open.Add(neighbour);
+                                                open.Add(Neighbour);
                                                 open.Remove(currentNode);
                                                 closed.Add(currentNode);
-                                                neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
+                                                Neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
                                             }
                                         }
-                                        else if (currentNode.Position.X > neighbour.Position.X && currentNode.Position.Y < neighbour.Position.Y) //Bottomleft
+                                        else if (currentNode.Position.X > Neighbour.Position.X && currentNode.Position.Y < Neighbour.Position.Y) //Bottomleft
                                         {
                                             if (nodes.Exists(node => node.Position == new Point(currentNode.Position.X, currentNode.Position.Y + 1) && nodes.Exists(node2 => node2.Position == new Point(currentNode.Position.X - 1, currentNode.Position.Y))))
                                             {
-                                                open.Add(neighbour);
+                                                open.Add(Neighbour);
                                                 open.Remove(currentNode);
                                                 closed.Add(currentNode);
-                                                neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
+                                                Neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
                                             }
                                         }
-                                        else if (currentNode.Position.X > neighbour.Position.X && currentNode.Position.Y > neighbour.Position.Y) //Topleft
+                                        else if (currentNode.Position.X > Neighbour.Position.X && currentNode.Position.Y > Neighbour.Position.Y) //Topleft
                                         {
                                             if (nodes.Exists(node => node.Position == new Point(currentNode.Position.X, currentNode.Position.Y - 1) && nodes.Exists(node2 => node2.Position == new Point(currentNode.Position.X - 1, currentNode.Position.Y))))
                                             {
-                                                open.Add(neighbour);
+                                                open.Add(Neighbour);
                                                 open.Remove(currentNode);
                                                 closed.Add(currentNode);
-                                                neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
+                                                Neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
                                             }
                                         }
-                                        else if (currentNode.Position.X < neighbour.Position.X && currentNode.Position.Y < neighbour.Position.Y) //Bottomright
+                                        else if (currentNode.Position.X < Neighbour.Position.X && currentNode.Position.Y < Neighbour.Position.Y) //Bottomright
                                         {
                                             if (nodes.Exists(node => node.Position == new Point(currentNode.Position.X + 1, currentNode.Position.Y) && nodes.Exists(node2 => node2.Position == new Point(currentNode.Position.X, currentNode.Position.Y + 1))))
                                             {
-                                                open.Add(neighbour);
+                                                open.Add(Neighbour);
                                                 open.Remove(currentNode);
                                                 closed.Add(currentNode);
-                                                neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
+                                                Neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
                                             }
                                         }
                                     }
                                     else
                                     {
-                                        open.Add(neighbour);
+                                        open.Add(Neighbour);
                                         open.Remove(currentNode);
                                         closed.Add(currentNode);
-                                        neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
+                                        Neighbour.CalcValues(currentNode, nodes.Find(node => node.Position == goal), gCost);
                                     }
                                 }
                             }

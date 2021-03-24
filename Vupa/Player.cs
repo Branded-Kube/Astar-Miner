@@ -362,12 +362,15 @@ namespace Vupa
                 Game1.state = State.GAMEOVER;
             }
         }
-
+        /// <summary>
+        /// Loads / sets player and fog of war textures
+        /// </summary>
+        /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("GameTextures/worker");
             fogSprite = content.Load<Texture2D>("GameTextures/fow4");
-           // healthBox = content.Load<Texture2D>("GameTextures/textbox2");
+           /////////7 healthBox = content.Load<Texture2D>("GameTextures/textbox2");
         }
 
         public void Draw(SpriteBatch spriteBatch)
