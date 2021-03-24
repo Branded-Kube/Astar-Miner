@@ -48,7 +48,6 @@ namespace Vupa
         // Strings / bool
         public int lvlnumber;
         private StringBuilder PlayerNameInput = new StringBuilder("Player");
-        private bool writingName = false;
 
 
         // Ints /points
@@ -122,7 +121,7 @@ namespace Vupa
         /// </summary>
         private void StartGame()
         {
-            lvlnumber = 6;
+            lvlnumber = 1;
             player.Health = 5;
             player.isAlive = true;
             player.score = 0;
@@ -217,14 +216,14 @@ namespace Vupa
                         // If player reaches goal, advance to next lvl number and increase health. if no more lvls, show win screen
                         if (player.position.X / 100 == aStarGoalPos.X && player.position.Y / 100 == aStarGoalPos.Y)
                         {
-                            if (lvlnumber < 7)
+                            if (lvlnumber < 4)
                             {
                                 lvlnumber++;
                                 player.Health += 3;
                             }
                             else
                             {
-                                state = State.GAMEOVER;
+                                Debug.WriteLine("WIN SCREEN");
                             }
                             GenerateLvl();
                         }
@@ -256,23 +255,25 @@ namespace Vupa
                 // Updating HIGHSCORE state
                 case State.HIGHSCORE:
                     {
-                        if (keyState.IsKeyDown(Keys.B))
+                        if (keyState.IsKeyDown(Keys.Tab) && oldstate.IsKeyUp(Keys.Tab))
                         {
                             Window.TextInput += NameInput;
                             state = State.MENU;
                         }
                         break;
+                        oldstate = keyState;
                     }
 
                 // Updating GAMEOVER State
                 case State.GAMEOVER:
                     {
                         // If Enter/ space is pressed, save highscore and change state to Highscore
-                        if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space))
+                        if (keyState.IsKeyDown(Keys.Enter) && oldstate.IsKeyUp(Keys.Enter))
                         {
                             SaveHighScore();
                             state = State.HIGHSCORE;
                         }
+                        oldstate = keyState;
                         break;
                     }
             }
@@ -316,10 +317,7 @@ namespace Vupa
                             _spriteBatch.Draw(controlsinfo, new Vector2(1180, 430), Color.White);
 
                             // draws goal ontop of fog of war
-                           if (lvlnumber < 6)
-                           {
-                               visualManager.grid.Find(cell => cell.MyPos == aStarGoalPos).Draw(_spriteBatch);
-                           }
+                            visualManager.grid.Find(cell => cell.MyPos == aStarGoalPos).Draw(_spriteBatch);
 
                             // Draws infobox depending on lvlnumber
                             if (lvlnumber == 1)
@@ -339,10 +337,10 @@ namespace Vupa
                                 _spriteBatch.Draw(lvl4box, new Vector2(1125, 650), Color.White);
                             }
 
-                            _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,40), Color.White);
-                            _spriteBatch.DrawString(font, $"Score: {player.score} ", new Vector2(800, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(700, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 10), Color.White);
+                            _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,60), Color.White);
+                            _spriteBatch.DrawString(font, $"Score: {player.score} ", new Vector2(750, 5), Color.White,0.0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0.0f);
+                            _spriteBatch.DrawString(font, $"Sanity: {player.Health} ", new Vector2(530, 5), Color.White, 0.0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0.0f);
+                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 30), Color.White, 0.0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0.0f);
                         }
                         break;
                     }
@@ -377,7 +375,7 @@ namespace Vupa
                         int i = 0;
                         foreach (Highscore h in highScore.highScores)
                         {
-                            _spriteBatch.DrawString(font, $"Name:  {h.Name}     Score: {h.Score}", new Vector2(500, 400 + 50 * i), Color.White);
+                            _spriteBatch.DrawString(font, $"Name:  {h.Name}     Score: {h.Score}", new Vector2(500, 400 + 50 * i), Color.White, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None,0.0f );
                             i++;
                         }
                         break;
@@ -388,7 +386,7 @@ namespace Vupa
                     {
                         _spriteBatch.Draw(gameOverTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
                         
-                        _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(590, 550), Color.White );
+                        _spriteBatch.DrawString(font, $"Your final score is: {player.score} ", new Vector2(570, 540), Color.Red, 0.0f , Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
                         break;
                     }
             }
