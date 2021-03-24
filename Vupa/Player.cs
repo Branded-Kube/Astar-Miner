@@ -366,7 +366,7 @@ namespace Vupa
         public void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("GameTextures/worker");
-            fogSprite = content.Load<Texture2D>("GameTextures/fogwar2");
+            fogSprite = content.Load<Texture2D>("GameTextures/fow4");
            // healthBox = content.Load<Texture2D>("GameTextures/textbox2");
         }
 
