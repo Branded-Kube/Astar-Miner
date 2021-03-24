@@ -48,7 +48,6 @@ namespace Vupa
         // Strings / bool
         public int lvlnumber;
         private StringBuilder PlayerNameInput = new StringBuilder("Player");
-        private bool writingName = false;
 
 
         // Ints /points
@@ -256,12 +255,13 @@ namespace Vupa
                 // Updating HIGHSCORE state
                 case State.HIGHSCORE:
                     {
-                        if (keyState.IsKeyDown(Keys.B))
+                        if (keyState.IsKeyDown(Keys.Tab) && oldstate.IsKeyUp(Keys.Tab))
                         {
                             Window.TextInput += NameInput;
                             state = State.MENU;
                         }
                         break;
+                        oldstate = keyState;
                     }
 
                 // Updating GAMEOVER State
@@ -338,11 +338,9 @@ namespace Vupa
                             }
 
                             _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,60), Color.White);
-                            _spriteBatch.DrawString(font, $"Score: {player.score} ", new Vector2(800, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Sanity: {player.Health.ToString()} ", new Vector2(700, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(530, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 30), Color.White);
+                            _spriteBatch.DrawString(font, $"Score: {player.score} ", new Vector2(750, 5), Color.White,0.0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0.0f);
+                            _spriteBatch.DrawString(font, $"Sanity: {player.Health} ", new Vector2(530, 5), Color.White, 0.0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0.0f);
+                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 30), Color.White, 0.0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0.0f);
                         }
                         break;
                     }
