@@ -339,6 +339,8 @@ namespace Vupa
 
                             _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,60), Color.White);
                             _spriteBatch.DrawString(font, $"Score: {player.score} ", new Vector2(800, 10), Color.White);
+                            _spriteBatch.DrawString(font, $"Sanity: {player.Health.ToString()} ", new Vector2(700, 10), Color.White);
+                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 10), Color.White);
                             _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(530, 10), Color.White);
                             _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 30), Color.White);
                         }
