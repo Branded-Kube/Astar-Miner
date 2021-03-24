@@ -122,7 +122,7 @@ namespace Vupa
         /// </summary>
         private void StartGame()
         {
-            lvlnumber = 1;
+            lvlnumber = 6;
             player.Health = 5;
             player.isAlive = true;
             player.score = 0;
@@ -217,14 +217,14 @@ namespace Vupa
                         // If player reaches goal, advance to next lvl number and increase health. if no more lvls, show win screen
                         if (player.position.X / 100 == aStarGoalPos.X && player.position.Y / 100 == aStarGoalPos.Y)
                         {
-                            if (lvlnumber < 4)
+                            if (lvlnumber < 7)
                             {
                                 lvlnumber++;
                                 player.Health += 3;
                             }
                             else
                             {
-                                Debug.WriteLine("WIN SCREEN");
+                                state = State.GAMEOVER;
                             }
                             GenerateLvl();
                         }
@@ -316,7 +316,10 @@ namespace Vupa
                             _spriteBatch.Draw(controlsinfo, new Vector2(1180, 430), Color.White);
 
                             // draws goal ontop of fog of war
-                            visualManager.grid.Find(cell => cell.MyPos == aStarGoalPos).Draw(_spriteBatch);
+                           if (lvlnumber < 6)
+                           {
+                               visualManager.grid.Find(cell => cell.MyPos == aStarGoalPos).Draw(_spriteBatch);
+                           }
 
                             // Draws infobox depending on lvlnumber
                             if (lvlnumber == 1)
@@ -385,7 +388,7 @@ namespace Vupa
                     {
                         _spriteBatch.Draw(gameOverTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
                         
-                        _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(590, 550), Color.Red);
+                        _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(590, 550), Color.White );
                         break;
                     }
             }
