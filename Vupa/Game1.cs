@@ -94,7 +94,7 @@ namespace Vupa
             player = new Player(aStarStartPos);
             level = new Level(lvlnumber);
 
-            //Window.TextInput += NameInput;
+            Window.TextInput += NameInput;
 
             CheckXML();
             _graphics.ApplyChanges();
@@ -127,32 +127,7 @@ namespace Vupa
             player.isAlive = true;
             player.score = 0;
         }
-        /// <summary>
-        /// Enables/Disables playerinput 
-        /// </summary>
-        private void ChoseName()
-        {
-            //if (writingName == false)
-            //{
-            //    writingName = true;
-            //}
-
-            //else
-            //{
-            //    writingName = false;
-            //}
-            writingName = !writingName;
-
-            if (writingName == true)
-            {
-                Window.TextInput += NameInput;
-            }
-
-            else
-            {
-                Window.TextInput -= NameInput;
-            }
-        }
+    
 
         /// <summary>
         /// 
@@ -171,17 +146,10 @@ namespace Vupa
                 }
 
             }
-
-            else if (pressedKey == Keys.Tab)
-            {
-                // Så den ikke crasher når man trykker TAB igen.
-            }
-
-            else
+            else if (pressedKey != Keys.Tab)
             {
                 var character = e.Character;
                 PlayerNameInput.Append(character);
-
             }
             player.Name = PlayerNameInput.ToString();
         }
@@ -267,8 +235,6 @@ namespace Vupa
                 // Updating MENU state
                 case State.MENU:
                     {
-                        //////////// ChoseName();
-
                         //If enter or space in down = setup game and change state to PlayGame
                         if (keyState.IsKeyDown(Keys.Enter) && oldstate.IsKeyUp(Keys.Enter))
                         {
@@ -276,26 +242,13 @@ namespace Vupa
                             StartGame();
                             GenerateLvl();
                             state = State.PLAYGAME;
-
-                            /////////// Put media/music for the PLAYGAME here (if its a long soundtrack because it will only be played once, once you hit play game)
                         }
-
                         //If S is down, look at highscore
-                        if (keyState.IsKeyDown(Keys.S) && writingName == false)
+                        if (keyState.IsKeyDown(Keys.Tab))
                         {
                             Window.TextInput -= NameInput;
                             state = State.HIGHSCORE;
                         }
-                        if (keyState.IsKeyDown(Keys.Tab) && oldstate.IsKeyUp(Keys.Tab))
-                        {
-                            ChoseName();
-                        }
-                        
-                        ////FOR TESTING - game over screen
-                        //if (keyState.IsKeyDown(Keys.Q))
-                        //{
-                        //    state = State.GAMEOVER;
-                        //}
                         oldstate = keyState;
                         break;
                     }
@@ -305,7 +258,7 @@ namespace Vupa
                     {
                         if (keyState.IsKeyDown(Keys.B))
                         {
-                            Window.TextInput -= NameInput;
+                            Window.TextInput += NameInput;
                             state = State.MENU;
                         }
                         break;
@@ -396,19 +349,12 @@ namespace Vupa
                     {
                         _spriteBatch.Draw(menuTexture, new Rectangle(0,0,_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
 
-                        if (writingName == false)
-                        {
-                            _spriteBatch.DrawString(font, "Press TAB to be able to write your name", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 700), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-                        }
+                      
 
                         _spriteBatch.DrawString(font, "Enter your name : ", new Vector2((_graphics.PreferredBackBufferWidth / 2)-100, 750), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
                         _spriteBatch.DrawString(font, PlayerNameInput, new Vector2((_graphics.PreferredBackBufferWidth / 2)-100, 800) , Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
 
-                        if (writingName == true)
-                        {
-                            _spriteBatch.DrawString(font, "You are writing your name. Press TAB again to be able to open the highscore", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 200), Color.Red);
-                        }
-
+                      
                         break;
                     }
 
@@ -420,10 +366,8 @@ namespace Vupa
                         // Deletes all highscores
                         if (keyState.IsKeyDown(Keys.X))
                         {
-                            ///////////Debug.WriteLine("Deleting data");
                                 highScore.highScores.Clear();
                                 SaveHighScore();
-                            /////////// Debug.WriteLine("Data deleted");
                         }
 
                         // Draws each Highscore

@@ -27,7 +27,7 @@ namespace Vupa
         public int Health {get {return health;} set { health = value; } }
         int health;
         public int score;
-        public string name;
+        public string name = "player";
         public string Name { get { return name; } set { name = value; } }
         bool correct;
         Point fogPosition;
