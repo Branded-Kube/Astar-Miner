@@ -74,7 +74,6 @@ namespace Vupa
 
             walkAble = true;
 
-            myColor = Color.White;
         }
         #endregion
 

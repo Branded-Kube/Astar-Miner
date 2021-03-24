@@ -90,9 +90,7 @@ namespace Vupa
             startLoc = new Point(1, 1);
             player = new Player(startLoc);
             level = new Level(lvlnumber);
-            StartGame();
 
-            GenerateLvl();
             Window.TextInput += NameInput;
 
             _graphics.ApplyChanges();
@@ -119,6 +117,9 @@ namespace Vupa
             lvlnumber = 1;
             player.Health = 5;
             player.isAlive = true;
+            player.score = 0;
+            GenerateLvl();
+
 
         }
 
@@ -166,7 +167,7 @@ namespace Vupa
 
             player.LoadContent(Content);
             visualManager.LoadContent(Content);
-            visualManager.FindPath();
+            //visualManager.FindPath();
 
 
         }
@@ -235,7 +236,7 @@ namespace Vupa
                         if (keyState.IsKeyDown(Keys.Enter) && oldstate.IsKeyUp(Keys.Enter))
                         {
                             Window.TextInput -= NameInput;
-
+                            StartGame();
                             state = State.PLAYGAME;
 
                             // Put media/music for the PLAYGAME here (if its a long soundtrack because it will only be played once, once you hit play game)
@@ -357,9 +358,11 @@ namespace Vupa
 
                         if (player.isAlive == true)
                         {
-                            _spriteBatch.Draw(textBox, new Vector2(522, 0), Color.White);
-                            _spriteBatch.DrawString(font, $"Score: {player.score.ToString()} ", new Vector2(530, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(650, 10), Color.White);
+                            _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,40), Color.White);
+                            _spriteBatch.DrawString(font, $"Score: {player.score.ToString()} ", new Vector2(800, 10), Color.White);
+                            _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(700, 10), Color.White);
+                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 10), Color.White);
+
 
                         }
                         break;
@@ -377,7 +380,7 @@ namespace Vupa
                 //Drawing HIGHSCORE state
                 case State.HIGHSCORE:
                     {
-                        _spriteBatch.Draw(highscoreTexture, new Vector2(0, 0), Color.White);
+                        _spriteBatch.Draw(highscoreTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
 
 
                         // Loading highscores
@@ -405,7 +408,7 @@ namespace Vupa
                 // Drawing GAMEOVER state
                 case State.GAMEOVER:
                     {
-                        _spriteBatch.Draw(gameOverTexture, new Vector2(0, 0), Color.White);
+                        _spriteBatch.Draw(gameOverTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
                         
                         _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(500, 500), Color.Red);
                         break;
