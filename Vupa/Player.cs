@@ -16,7 +16,7 @@ namespace Vupa
         Texture2D sprite;
         private Texture2D fogSprite;
         //private Texture2D healthBox;
-        Color color = Color.Black;
+        Color color = Color.White;
         Rectangle playerRectangle;
         Rectangle fogRectangle;
         Point size;
@@ -369,7 +369,7 @@ namespace Vupa
         /// <param name="content"></param>
         public void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>("GameTextures/worker");
+            sprite = content.Load<Texture2D>("GameTextures/player");
             fogSprite = content.Load<Texture2D>("GameTextures/fow4");
            /////////7 healthBox = content.Load<Texture2D>("GameTextures/textbox2");
         }

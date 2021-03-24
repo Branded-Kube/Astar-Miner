@@ -178,7 +178,7 @@ namespace Vupa
 
             wallSprite = Game1.content.Load<Texture2D>("GameTextures/wall");
 
-            startSprite = Game1.content.Load<Texture2D>("GameTextures/worker");
+            startSprite = Game1.content.Load<Texture2D>("GameTextures/player");
 
             goalSprite = Game1.content.Load<Texture2D>("GameTextures/goal");
         }
