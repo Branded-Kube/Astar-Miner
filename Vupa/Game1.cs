@@ -328,7 +328,7 @@ namespace Vupa
                     {
 
                         _spriteBatch.Draw(backgroundSprite, backgroundRectangle, Color.White);
-                        _spriteBatch.Draw(controlsinfo, new Vector2(1180, 850), Color.White);
+                        _spriteBatch.Draw(controlsinfo, new Vector2(1180, 430), Color.White);
 
                         visualManager.Draw(_spriteBatch);
 
@@ -340,19 +340,19 @@ namespace Vupa
                     
                         if (lvlnumber == 1)
                         {
-                            _spriteBatch.Draw(lvl1box, new Vector2(1125, 80), Color.White);
+                            _spriteBatch.Draw(lvl1box, new Vector2(1125, 650), Color.White);
                         }
                         if (lvlnumber == 2)
                         {
-                            _spriteBatch.Draw(lvl2box, new Vector2(1125, 80), Color.White);
+                            _spriteBatch.Draw(lvl2box, new Vector2(1125, 650), Color.White);
                         }
                         if (lvlnumber == 3)
                         {
-                            _spriteBatch.Draw(lvl3box, new Vector2(1125, 80), Color.White);
+                            _spriteBatch.Draw(lvl3box, new Vector2(1125, 650), Color.White);
                         }
                         if (lvlnumber == 4)
                         {
-                            _spriteBatch.Draw(lvl4box, new Vector2(1125, 80), Color.White);
+                            _spriteBatch.Draw(lvl4box, new Vector2(1125, 650), Color.White);
                         }
 
                         if (player.isAlive == true)
