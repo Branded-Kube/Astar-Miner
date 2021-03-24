@@ -45,6 +45,9 @@ namespace Vupa
         Highscore highScore = new Highscore();
         KeyboardState oldstate;
 
+        private bool writingName = false;
+        
+
         //    Grid grid;
 
         public int lvlnumber;
@@ -91,7 +94,9 @@ namespace Vupa
             player = new Player(startLoc);
             level = new Level(lvlnumber);
 
-            Window.TextInput += NameInput;
+            //Window.TextInput += NameInput;
+
+            
 
             _graphics.ApplyChanges();
 
@@ -123,6 +128,30 @@ namespace Vupa
 
         }
 
+        private void ChoseName()
+        {
+            if (writingName == false)
+            {
+                writingName = true;
+            }
+
+            else
+            {
+                writingName = false;
+            }
+
+
+            if (writingName == true)
+            {
+                Window.TextInput += NameInput;
+            }
+
+            else
+            {
+                Window.TextInput -= NameInput;
+            }
+        }
+
         private void NameInput(object sender, TextInputEventArgs e)
         {
             var pressedKey = e.Key;
@@ -135,6 +164,12 @@ namespace Vupa
                 }
 
             }
+
+            else if (pressedKey == Keys.Tab)
+            {
+                // Så den ikke crasher når man trykker TAB igen.
+            }
+
             else
             {
                 var character = e.Character;
@@ -194,6 +229,8 @@ namespace Vupa
 
         protected override void Update(GameTime gameTime)
         {
+            
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -232,6 +269,8 @@ namespace Vupa
                     {
                         KeyboardState keyState = Keyboard.GetState();
                         //If enter or space in down = start the game
+
+                       // ChoseName();
                         if (keyState.IsKeyDown(Keys.Enter) && oldstate.IsKeyUp(Keys.Enter))
                         {
                             Window.TextInput -= NameInput;
@@ -242,7 +281,7 @@ namespace Vupa
                         }
 
                         //If S is down, look at highscore
-                        if (keyState.IsKeyDown(Keys.S))
+                        if (keyState.IsKeyDown(Keys.S) && writingName == false)
                         {
                             Window.TextInput -= NameInput;
 
@@ -255,6 +294,15 @@ namespace Vupa
                         {
                             Exit();
                         }
+
+                        if (keyState.IsKeyDown(Keys.Tab) && oldstate.IsKeyUp(Keys.Tab))
+                        {
+    
+                            ChoseName();
+
+                        }
+
+
 
                         //FOR TESTING - game over screen
                         if (keyState.IsKeyDown(Keys.Q))
@@ -271,7 +319,7 @@ namespace Vupa
                         KeyboardState keyState = Keyboard.GetState();
                         if (keyState.IsKeyDown(Keys.B))
                         {
-                            Window.TextInput += NameInput;
+                            Window.TextInput -= NameInput;
                             state = State.MENU;
 
                         }
@@ -377,8 +425,20 @@ namespace Vupa
                 case State.MENU:
                     {
                         _spriteBatch.Draw(menuTexture, new Rectangle(0,0,_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
+
+                        if (writingName == false)
+                        {
+                            _spriteBatch.DrawString(font, "Press TAB to be able to write your name", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 700), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                        }
+
                         _spriteBatch.DrawString(font, "Enter your name : ", new Vector2((_graphics.PreferredBackBufferWidth / 2)-100, 750), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
                         _spriteBatch.DrawString(font, PlayerNameInput, new Vector2((_graphics.PreferredBackBufferWidth / 2)-100, 800) , Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+
+                        if (writingName == true)
+                        {
+                            _spriteBatch.DrawString(font, "You are writing your name. Press TAB again to be able to open the highscore", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 200), Color.Red);
+                        }
+
                         break;
                     }
 
