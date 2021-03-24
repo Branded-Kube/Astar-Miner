@@ -268,11 +268,12 @@ namespace Vupa
                 case State.GAMEOVER:
                     {
                         // If Enter/ space is pressed, save highscore and change state to Highscore
-                        if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space))
+                        if (keyState.IsKeyDown(Keys.Enter) && oldstate.IsKeyUp(Keys.Enter))
                         {
                             SaveHighScore();
                             state = State.HIGHSCORE;
                         }
+                        oldstate = keyState;
                         break;
                     }
             }
@@ -336,10 +337,10 @@ namespace Vupa
                                 _spriteBatch.Draw(lvl4box, new Vector2(1125, 650), Color.White);
                             }
 
-                            _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,40), Color.White);
+                            _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,60), Color.White);
                             _spriteBatch.DrawString(font, $"Score: {player.score} ", new Vector2(800, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(700, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 10), Color.White);
+                            _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(530, 10), Color.White);
+                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 30), Color.White);
                         }
                         break;
                     }
@@ -374,7 +375,7 @@ namespace Vupa
                         int i = 0;
                         foreach (Highscore h in highScore.highScores)
                         {
-                            _spriteBatch.DrawString(font, $"Name:  {h.Name}     Score: {h.Score}", new Vector2(500, 400 + 50 * i), Color.White);
+                            _spriteBatch.DrawString(font, $"Name:  {h.Name}     Score: {h.Score}", new Vector2(500, 400 + 50 * i), Color.White, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None,0.0f );
                             i++;
                         }
                         break;
@@ -385,7 +386,7 @@ namespace Vupa
                     {
                         _spriteBatch.Draw(gameOverTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
                         
-                        _spriteBatch.DrawString(font, $"Gameover your final score is: {player.score} ", new Vector2(590, 550), Color.Red);
+                        _spriteBatch.DrawString(font, $"Your final score is: {player.score} ", new Vector2(570, 540), Color.Red, 0.0f , Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
                         break;
                     }
             }
