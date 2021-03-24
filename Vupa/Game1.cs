@@ -334,7 +334,7 @@ namespace Vupa
                         KeyboardState keyState = Keyboard.GetState();
 
                         //If enter or space in down = start the game
-                        if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space))
+                        if (keyState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
                         {
                             state = State.PLAYGAME;
 
@@ -358,6 +358,7 @@ namespace Vupa
                         {
                             state = State.GAMEOVER;
                         }
+                        oldState = keyState;
 
                         break;
                     }
@@ -379,7 +380,7 @@ namespace Vupa
                     {
                         KeyboardState keyState = Keyboard.GetState();
 
-                        if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space))
+                        if (keyState.IsKeyDown(Keys.Enter))
                         {
                             state = State.MENU;
                         }
@@ -404,7 +405,7 @@ namespace Vupa
 
             Debug.WriteLine(startLoc);
             Debug.WriteLine(endLoc);
-            player.tmpposition = new Point(startLoc.X * 100, startLoc.Y * 100);
+            player.position = new Point(startLoc.X * 100, startLoc.Y * 100);
 
             level.SetWalls();
         }
@@ -458,7 +459,12 @@ namespace Vupa
                             _spriteBatch.Draw(textBox, new Vector2(522, 0), Color.White);
                             _spriteBatch.DrawString(font, $"Selected search method: {chosenOption}", new Vector2(530, 7), Color.White);
                         }
+
                         break;
+                        
+                        
+
+                        
                     }
 
                 // Drawing MENU state
