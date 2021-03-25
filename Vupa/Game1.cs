@@ -252,6 +252,12 @@ namespace Vupa
                 // Updating HIGHSCORE state
                 case State.HIGHSCORE:
                     {
+                        // Deletes highscores stored (excluding the new player and score)
+                        if (keyState.IsKeyDown(Keys.X) && oldstate.IsKeyUp(Keys.X))
+                        {
+                            highScore.highScores.Clear();
+                            SaveHighScore();
+                        }
                         if (keyState.IsKeyDown(Keys.Tab) && oldstate.IsKeyUp(Keys.Tab))
                         {
                             Window.TextInput += NameInput;
@@ -365,12 +371,7 @@ namespace Vupa
                     {
                         _spriteBatch.Draw(highscoreTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
 
-                        // Deletes all highscores
-                        if (keyState.IsKeyDown(Keys.X))
-                        {
-                                highScore.highScores.Clear();
-                                SaveHighScore();
-                        }
+                      
 
                         // Draws each Highscore
                         int i = 0;
