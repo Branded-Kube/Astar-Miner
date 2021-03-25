@@ -272,7 +272,7 @@
 /processorParam:TextureFormat=Color
 /build:GameTextures/worker.png
 
-#begin MenuTextures/gameover.png
+#begin MenuTextures/GameOver.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -282,7 +282,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:MenuTextures/gameover.png
+/build:MenuTextures/GameOver.png
 
 #begin MenuTextures/highscore.png
 /importer:TextureImporter
