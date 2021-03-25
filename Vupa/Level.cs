@@ -24,6 +24,10 @@ namespace Vupa
         #endregion
 
         #region Methods
+        /// <summary>
+        /// sets the starting position of the player for every level
+        /// </summary>
+        /// <returns></returns>
         public Point SetStart()
         {
             if (LvlNumber == 1)
@@ -61,6 +65,11 @@ namespace Vupa
             }
 
         }
+
+        /// <summary>
+        /// sets the goal position for every level
+        /// </summary>
+        /// <returns></returns>
         public Point SetGoal()
         {
             if (LvlNumber == 1)
@@ -97,6 +106,11 @@ namespace Vupa
 
             }
         }
+        /// <summary>
+        /// makes all cells in the new level walkable
+        /// clears all walls from previous level
+        /// sets all walls for individual levels
+        /// </summary>
         public void SetWalls()
         {
             foreach (Cell cell in Game1.visualManager.grid)
@@ -198,7 +212,7 @@ namespace Vupa
                 Notwalkables.Add(Game1.visualManager.grid[77]);
                 Notwalkables.Add(Game1.visualManager.grid[96]);
             }
-
+            
             foreach (Cell cell in Notwalkables)
             {
                 cell.WalkAble = false;

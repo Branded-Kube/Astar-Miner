@@ -155,7 +155,7 @@ namespace Vupa
         {
             //Menues
             menuTexture = Content.Load<Texture2D>("MenuTextures/menu");
-            highscoreTexture = Content.Load<Texture2D>("MenuTextures/scorebox");
+            highscoreTexture = Content.Load<Texture2D>("MenuTextures/highscore");
             gameOverTexture = Content.Load<Texture2D>("MenuTextures/GameOver");
 
             //Game
