@@ -72,7 +72,7 @@ namespace Vupa
         public void FindPath()
         {
             finalPath = aStar.FindPath(start, goal, CreateNodes());
-            if (Game1.level.LvlNumber == 7)
+            if (Game1.level.LvlNumber == 1)
             {
                 ColorNodes();
 
@@ -178,7 +178,7 @@ namespace Vupa
 
             wallSprite = Game1.content.Load<Texture2D>("GameTextures/wall");
 
-            startSprite = Game1.content.Load<Texture2D>("GameTextures/worker");
+            startSprite = Game1.content.Load<Texture2D>("GameTextures/player");
 
             goalSprite = Game1.content.Load<Texture2D>("GameTextures/goal");
         }
