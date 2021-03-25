@@ -40,18 +40,14 @@ namespace Vupa
         public static State state = State.MENU;
         private Player player;
         private Highscore highScore = new Highscore();
+        private StringBuilder PlayerNameInput = new StringBuilder();
 
         // Rectangles
         public static Rectangle border;
         private Rectangle backgroundRectangle;
 
-        // Strings / bool
-        public int lvlnumber;
-        private StringBuilder PlayerNameInput = new StringBuilder("Player");
-        private bool writingName = false;
-
-
         // Ints /points
+        public int lvlnumber;
         private int sizeX = 1000;
         private int sizeY = 1000;
         private Point aStarStartPos;
@@ -127,10 +123,10 @@ namespace Vupa
             player.isAlive = true;
             player.score = 0;
         }
-    
+
 
         /// <summary>
-        /// 
+        /// Deletes or adds a character to the stringbuilder and then sets the player name = PlayerNameInput.ToString()
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -179,11 +175,10 @@ namespace Vupa
        
         /// <summary>
         /// Sorts and saves highscore from xlm 
-        /// ?
         /// </summary>
         private void SaveHighScore()
         {
-            var score = new Highscore() { Score = player.score, Name = player.name };
+            var score = new Highscore() { Score = player.score, Name = player.Name };
             highScore.highScores.Add(score);
 
 
@@ -215,7 +210,7 @@ namespace Vupa
                 case State.PLAYGAME:
                     {
                         // If player reaches goal, advance to next lvl number and increase health. if no more lvls, show win screen
-                        if (player.position.X / 100 == aStarGoalPos.X && player.position.Y / 100 == aStarGoalPos.Y)
+                        if (player.tmpposition.X / 100 == aStarGoalPos.X && player.tmpposition.Y / 100 == aStarGoalPos.Y)
                         {
                             if (lvlnumber < 7)
                             {
@@ -245,7 +240,7 @@ namespace Vupa
                             state = State.PLAYGAME;
                         }
                         //If S is down, look at highscore
-                        if (keyState.IsKeyDown(Keys.Tab))
+                        if (keyState.IsKeyDown(Keys.Tab) && oldstate.IsKeyUp(Keys.Tab))
                         {
                             Window.TextInput -= NameInput;
                             state = State.HIGHSCORE;
@@ -257,11 +252,13 @@ namespace Vupa
                 // Updating HIGHSCORE state
                 case State.HIGHSCORE:
                     {
-                        if (keyState.IsKeyDown(Keys.B))
+                        if (keyState.IsKeyDown(Keys.Tab) && oldstate.IsKeyUp(Keys.Tab))
                         {
                             Window.TextInput += NameInput;
                             state = State.MENU;
                         }
+                        oldstate = keyState;
+
                         break;
                     }
 
@@ -343,9 +340,7 @@ namespace Vupa
 
                             _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,60), Color.White);
                             _spriteBatch.DrawString(font, $"Score: {player.score} ", new Vector2(800, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Sanity: {player.Health.ToString()} ", new Vector2(700, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Health: {player.Health.ToString()} ", new Vector2(530, 10), Color.White);
+                            _spriteBatch.DrawString(font, $"Sanity: {player.Health} ", new Vector2(530, 10), Color.White);
                             _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 30), Color.White);
                         }
                         break;
