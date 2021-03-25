@@ -60,7 +60,12 @@ namespace Vupa
         #endregion
 
         #region Methods
-        //calculates the G, h, f values
+        /// <summary>
+        /// calculates the G, h, f values
+        /// </summary>
+        /// <param name="parentNode"></param>
+        /// <param name="goalNode"></param>
+        /// <param name="cost"></param>
         public void CalcValues(Node parentNode, Node goalNode, int cost)
         {
             parent = parentNode;
@@ -72,7 +77,11 @@ namespace Vupa
             f = h + g;
         }
 
-        //compares the nodes by checking if the values of the nodes around the currentnode is higher, lower, equal
+        /// <summary>
+        /// compares the nodes by checking if the values of the nodes around the currentnode is higher, lower, equal
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(Node other)
         {
             if (f > other.f)

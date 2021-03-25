@@ -15,6 +15,11 @@ namespace Vupa
 
 
         public List<Highscore> highScores = new List<Highscore>();
+        /// <summary>
+        /// sorts the higscore list (highest to lowest)
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(Highscore other)
         {
             if (other.Score > Score)

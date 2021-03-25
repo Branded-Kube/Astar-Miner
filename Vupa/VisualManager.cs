@@ -81,7 +81,9 @@ namespace Vupa
 
         }
 
-
+        /// <summary>
+        /// creates a grid from the ammount of cells we have
+        /// </summary>
         public void CreateGrid()
         {
             grid = new List<Cell>();
@@ -145,7 +147,10 @@ namespace Vupa
             }
         }
 
-        //public Texture2D ChangeTexture(Cell cell)
+        /// <summary>
+        /// put the correct textures on the walls, start cell, goal cell
+        /// </summary>
+        /// <param name="cell"></param>
         public void ChangeTexture(Cell cell)
         {
             cell.Sprite = sprite;
