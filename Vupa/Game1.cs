@@ -40,7 +40,7 @@ namespace Vupa
         public static State state = State.MENU;
         private Player player;
         private Highscore highScore = new Highscore();
-        private StringBuilder PlayerNameInput = new StringBuilder();
+        private StringBuilder PlayerNameInput = new StringBuilder("Player");
 
         // Rectangles
         public static Rectangle border;
@@ -376,7 +376,7 @@ namespace Vupa
                         int i = 0;
                         foreach (Highscore h in highScore.highScores)
                         {
-                            _spriteBatch.DrawString(font, $"Name:  {h.Name}     Score: {h.Score}", new Vector2(500, 400 + 50 * i), Color.White, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None,0.0f );
+                            _spriteBatch.DrawString(font, $"Name:  {h.Name}     Score: {h.Score}", new Vector2(500, 400 + 50 * i), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None,0.0f );
                             i++;
                         }
                         break;
@@ -387,7 +387,7 @@ namespace Vupa
                     {
                         _spriteBatch.Draw(gameOverTexture, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), Color.White);
                         
-                        _spriteBatch.DrawString(font, $"Your final score is: {player.score} ", new Vector2(570, 540), Color.Red, 0.0f , Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                        _spriteBatch.DrawString(font, $"Your final score is: {player.score} ", new Vector2(570, 540), Color.Black, 0.0f , Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
                         break;
                     }
             }

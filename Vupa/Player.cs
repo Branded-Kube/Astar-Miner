@@ -40,7 +40,7 @@ namespace Vupa
 
         // String
         public string Name { get { return name; } set { name = value; } }
-        private string name = "player";
+        private string name;
 
         // Bool
         public bool isAlive;
