@@ -162,11 +162,11 @@ namespace Vupa
             font = Content.Load<SpriteFont>("Fonts/font");
             textBox = Content.Load<Texture2D>("GameTextures/textbox");
             backgroundSprite = Content.Load<Texture2D>("GameTextures/background");
-            lvl1box = Content.Load<Texture2D>("GameTextures/lvl1info");
-            lvl2box = Content.Load<Texture2D>("GameTextures/lvl2info");
-            lvl3box = Content.Load<Texture2D>("GameTextures/lvl3info");
-            lvl4box = Content.Load<Texture2D>("GameTextures/lvl4info");
-            controlsinfo = Content.Load<Texture2D>("GameTextures/controls");
+            lvl1box = Content.Load<Texture2D>("GameTextures/info1");
+            lvl2box = Content.Load<Texture2D>("GameTextures/info2");
+            lvl3box = Content.Load<Texture2D>("GameTextures/info3");
+            lvl4box = Content.Load<Texture2D>("GameTextures/info4");
+            controlsinfo = Content.Load<Texture2D>("GameTextures/controls2");
 
             player.LoadContent(Content);
             visualManager.LoadContent(Content);
@@ -318,7 +318,7 @@ namespace Vupa
                             _spriteBatch.Draw(backgroundSprite, backgroundRectangle, Color.White);
                             visualManager.Draw(_spriteBatch);
                             player.Draw(_spriteBatch);
-                            _spriteBatch.Draw(controlsinfo, new Vector2(1180, 430), Color.White);
+                            _spriteBatch.Draw(controlsinfo, new Vector2(1180, 270), Color.White);
 
                             // draws goal ontop of fog of war
                             if (lvlnumber < 5)
@@ -329,25 +329,25 @@ namespace Vupa
                             // Draws infobox depending on lvlnumber
                             if (lvlnumber == 1)
                             {
-                                _spriteBatch.Draw(lvl1box, new Vector2(1125, 650), Color.White);
+                                _spriteBatch.Draw(lvl1box, new Vector2(1125, 545), Color.White);
                             }
                             if (lvlnumber == 2)
                             {
-                                _spriteBatch.Draw(lvl2box, new Vector2(1125, 650), Color.White);
+                                _spriteBatch.Draw(lvl2box, new Vector2(1125, 545), Color.White);
                             }
                             if (lvlnumber == 3)
                             {
-                                _spriteBatch.Draw(lvl3box, new Vector2(1125, 650), Color.White);
+                                _spriteBatch.Draw(lvl3box, new Vector2(1125, 545), Color.White);
                             }
                             if (lvlnumber == 4)
                             {
-                                _spriteBatch.Draw(lvl4box, new Vector2(1125, 650), Color.White);
+                                _spriteBatch.Draw(lvl4box, new Vector2(1125, 545), Color.White);
                             }
 
-                            _spriteBatch.Draw(textBox, new Rectangle(522, 0,350,60), Color.White);
-                            _spriteBatch.DrawString(font, $"Score: {player.score} ", new Vector2(800, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Sanity: {player.Health} ", new Vector2(530, 10), Color.White);
-                            _spriteBatch.DrawString(font, $"Player Name: {player.Name} ", new Vector2(530, 30), Color.White);
+                            _spriteBatch.Draw(textBox, new Rectangle(1100, 95, 300, 80), Color.White);
+                            _spriteBatch.DrawString(font, $" {player.score} ", new Vector2(1349, 113), Color.White);
+                            _spriteBatch.DrawString(font, $" {player.Health} ", new Vector2(1238, 113), Color.White);
+                            _spriteBatch.DrawString(font, $" {player.Name} ", new Vector2(1238, 143), Color.White);
                         }
                         break;
                     }
