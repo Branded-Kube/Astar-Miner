@@ -1,20 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vupa
 {
     public class AStar
     {
         #region Fields & Properties
-        public List<Node> closed;
+        private List<Node> closed;
 
-        public List<Node> open;
+        private List<Node> open;
         //public static Node neighbour;
-        public Node Neighbour { get; set; }
+        private Node Neighbour { get; set; }
 
         public List<Node> Closed
         {
