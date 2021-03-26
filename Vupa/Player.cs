@@ -2,62 +2,66 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace Vupa
 {
     public class Player
     {
         #region Fields & Properties
-        Texture2D sprite;
+
+        // Textures
+        private Texture2D sprite;
         private Texture2D fogSprite1;
         private Texture2D fogSprite2;
         private Texture2D fogSprite3;
         private Texture2D fogSprite4;
-        //private Texture2D healthBox;
-        Color color = Color.White;
-        Rectangle playerRectangle;
-        Rectangle fogRectangle;
-        Point size;
-        Point fogSize;
-        KeyboardState oldState;
-        public Point position;
+        private Color color = Color.White;
+
+        // Point
         public Point tmpposition;
-        public int Health {get {return health;} set { health = value; } }
-        int health;
+        private Point position;
+        private Point size;
+        private Point fogPosition;
+        private Point fogSize;
+
+        // Rectangle
+        private Rectangle playerRectangle;
+        private Rectangle fogRectangle;
+
+        // Int
         public int score;
-        public string name = "player";
+        public int Health {get {return health;} set { health = value; } }
+        private int health;
+
+        // String
         public string Name { get { return name; } set { name = value; } }
-        bool correct;
-        Point fogPosition;
-        bool dontMove;
-        bool dontMove1 = false;
+        private string name;
 
-
-        public Keys currentKey;
-        public Keys oldKey;
-
-        bool correctPathCheck = false;
-
+        // Bool
         public bool isAlive;
+        private bool dontMove;
+        private bool dontMoveCorner;
+        private bool correct;
+        private bool correctPathCheck;
 
-        KeyboardState newState;
+        // Keybord / Keys
+        private KeyboardState oldState;
+        private KeyboardState newState;
+        private Keys currentKey;
+
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Player constructor, start is the players start position
+        /// </summary>
+        /// <param name="start"></param>
         public Player(Point start)
         {
-            this.tmpposition = new Point(start.X *100, start.Y*100);
-            this.fogPosition = new Point(position.X -1500, position.Y -1500);
             this.size = new Point(100, 100);
             this.playerRectangle = new Rectangle(position, size);
             this.fogSize = new Point(3098, 3098);
             this.fogRectangle = new Rectangle(fogPosition, fogSize);
-            position = tmpposition;
 
         }
         #endregion
@@ -67,26 +71,26 @@ namespace Vupa
         {
             CheckState();
 
+            // Calls move if any key is pressed
             if (Keyboard.GetState().GetPressedKeys().Length > 0)
             {
-
                 Move(currentKey);
             }
 
             currentKey = Keys.None;
-            this.playerRectangle.X = position.X;
-            this.playerRectangle.Y = position.Y;
-            this.fogRectangle.X = position.X -1500;
-            this.fogRectangle.Y = position.Y - 1500;
+            
 
         }
 
-        // Brugt til at tjekke hvilken tast er trykket på,.
-
+        /// <summary>
+        /// Checks which key is pressed
+        /// Then checks if player is inside game borders
+        /// If moving to a corner (7,9,1,3) checks if there is a wall diagonal/horizontal to the player position in the direction player is trying to move to
+        /// </summary>
         public void CheckState()
         {
             newState = Keyboard.GetState();
-            dontMove1 = false;
+            dontMoveCorner = false;
 
             if (isAlive == true)
             {
@@ -100,10 +104,10 @@ namespace Vupa
                         {
                             if (playerRectangle.Y == cell.BoundingRectangle.Y - 100 && playerRectangle.X == cell.BoundingRectangle.X || playerRectangle.Y == cell.BoundingRectangle.Y && playerRectangle.X == cell.BoundingRectangle.X + 100)
                             {
-                                dontMove1 = true;
+                                dontMoveCorner = true;
                             }
                         }
-                        if (dontMove1 == false)
+                        if (dontMoveCorner == false)
                         {
                             currentKey = Keys.NumPad1;
 
@@ -130,10 +134,10 @@ namespace Vupa
                         {
                             if (playerRectangle.Y == cell.BoundingRectangle.Y - 100 && playerRectangle.X == cell.BoundingRectangle.X || playerRectangle.Y == cell.BoundingRectangle.Y && playerRectangle.X == cell.BoundingRectangle.X - 100)
                             {
-                                dontMove1 = true;
+                                dontMoveCorner = true;
                             }
                         }
-                        if (dontMove1 == false)
+                        if (dontMoveCorner == false)
                         {
                             currentKey = Keys.NumPad3;
                         }
@@ -167,10 +171,10 @@ namespace Vupa
                         {
                             if (playerRectangle.Y == cell.BoundingRectangle.Y + 100 && playerRectangle.X == cell.BoundingRectangle.X || playerRectangle.Y == cell.BoundingRectangle.Y && playerRectangle.X == cell.BoundingRectangle.X + 100)
                             {
-                                dontMove1 = true;
+                                dontMoveCorner = true;
                             }
                         }
-                        if (dontMove1 == false)
+                        if (dontMoveCorner == false)
                         {
                             currentKey = Keys.NumPad7;
 
@@ -197,11 +201,11 @@ namespace Vupa
                         {
                             if (playerRectangle.Y == cell.BoundingRectangle.Y + 100 && playerRectangle.X == cell.BoundingRectangle.X || playerRectangle.Y == cell.BoundingRectangle.Y && playerRectangle.X == cell.BoundingRectangle.X - 100)
                             {
-                                dontMove1 = true;
+                                dontMoveCorner = true;
 
                             }
                         }
-                        if (dontMove1 == false)
+                        if (dontMoveCorner == false)
                         {
                             currentKey = Keys.NumPad9;
                         }
@@ -214,7 +218,7 @@ namespace Vupa
 
 
         //player movement (keybinds)
-        //checks is the tile is NotWalkable
+        //checks is the cell is NotWalkable
         public Point Move(Keys pressedKey)
         {
             KeyboardState newState = Keyboard.GetState();
@@ -324,13 +328,20 @@ namespace Vupa
                 VisualManager.start.X = position.X / 100;
                 VisualManager.start.Y = position.Y / 100;
             }
-            dontMove = false;
 
+            // Moves player and fog
+            playerRectangle.X = position.X;
+            playerRectangle.Y = position.Y;
+            fogRectangle.X = position.X - 1500;
+            fogRectangle.Y = position.Y - 1500;
+
+            // Creates new astar path after player have moved
             Game1.visualManager.FindPath();
 
+            dontMove = false;
             correctPathCheck = false;
             oldState = newState;
-            return tmpposition;
+            return position;
 
         }
         //checks is the player has moved to a square on the optimal path of the A*
@@ -377,9 +388,12 @@ namespace Vupa
             fogSprite2 = content.Load<Texture2D>("GameTextures/fow2");
             fogSprite3 = content.Load<Texture2D>("GameTextures/fow3");
             fogSprite4 = content.Load<Texture2D>("GameTextures/fow4");
-           /////////7 healthBox = content.Load<Texture2D>("GameTextures/textbox2");
         }
 
+        /// <summary>
+        /// Draws player sprite and fow depending on lvlnumber
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite,playerRectangle, color);
