@@ -28,7 +28,7 @@ namespace Vupa
         //private CellType clickType;
         private Texture2D sprite;
         private Texture2D wallSprite;
-        private Texture2D startSprite;
+        private Texture2D playerSprite;
         private Texture2D goalSprite;
         //Collections
         public List<Cell> grid;
@@ -161,7 +161,7 @@ namespace Vupa
             }
             if (cell.MyPos == VisualManager.start)
             {
-                cell.Sprite = startSprite;
+                cell.Sprite = playerSprite;
                 cell.MyColor = Color.Gray;
 
             }
@@ -183,7 +183,7 @@ namespace Vupa
 
             wallSprite = Game1.content.Load<Texture2D>("GameTextures/wall");
 
-            startSprite = Game1.content.Load<Texture2D>("GameTextures/player");
+            playerSprite = Game1.content.Load<Texture2D>("GameTextures/player");
 
             goalSprite = Game1.content.Load<Texture2D>("GameTextures/goal");
         }
