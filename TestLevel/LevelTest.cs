@@ -6,7 +6,7 @@ using Vupa;
 namespace TestLevel
 {
     [TestClass]
-    public class UnitTest1
+    public class LevelTest
     {
         [TestMethod]
         public void TestSetStart1()
