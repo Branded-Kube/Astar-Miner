@@ -95,7 +95,7 @@ namespace Vupa
             base.Initialize();
         }
         /// <summary>
-        /// Checks if an XML exits, otherwise creates one
+        /// Checks if an XML exists, otherwise creates one
         /// </summary>
         private void CheckXML()
         {
