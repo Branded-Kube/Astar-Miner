@@ -19,8 +19,6 @@ namespace Vupa
 
         AStar aStar;
 
-
-        //private CellType clickType;
         private Texture2D sprite;
         private Texture2D wallSprite;
         private Texture2D playerSprite;
@@ -30,11 +28,6 @@ namespace Vupa
 
         public static List<Node> finalPath;
 
-        //public List<Cell> Grid
-        //{
-        //    get { return grid; }
-        //    set { grid = value; }
-        //}
 
         #endregion
 
