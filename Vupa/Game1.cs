@@ -217,7 +217,6 @@ namespace Vupa
                             }
                             else
                             {
-                                Debug.WriteLine("WIN SCREEN"); 
                                 state = State.GAMEOVER;
                             }
                             GenerateLvl();
