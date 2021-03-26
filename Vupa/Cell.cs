@@ -17,9 +17,6 @@ namespace Vupa
 
         private bool walkAble;
 
-
-        //CellType myType = CellType.EMPTY;
-
         public bool WalkAble
         {
             get { return walkAble; }
@@ -41,8 +38,6 @@ namespace Vupa
             get { return myColor; }
             set { myColor = value; }
         }
-
-
 
         public Point MyPos
         {
@@ -68,9 +63,6 @@ namespace Vupa
             this.cellSize = size;
 
             walkAble = true;
-
-            //myColor = Color.Black;
-
         }
         #endregion
 

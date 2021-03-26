@@ -232,8 +232,6 @@ namespace Vupa
                 correctPathCheck = true;
 
                 return tmpposition;
-                    
-                
             }
 
             else if (pressedKey == Keys.NumPad2)
@@ -285,7 +283,6 @@ namespace Vupa
 
                 return tmpposition;
             }
-
 
 
             else if (pressedKey == Keys.NumPad8)
@@ -349,7 +346,6 @@ namespace Vupa
         //if not, they get 1 health subtracted from their total
         public void CorrectPath()
         {
-           
                 foreach (Node node in VisualManager.finalPath)
                 {
                     if (node.Position.X == position.X / 100 && node.Position.Y == position.Y / 100)

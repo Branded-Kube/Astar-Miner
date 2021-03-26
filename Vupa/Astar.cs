@@ -49,7 +49,6 @@ namespace Vupa
             closed.Clear();
             open.Clear();
             List<Node> finalPath = new List<Node>();
-           
 
             Node currentNode = nodes.Find(x => x.Position == start);
 

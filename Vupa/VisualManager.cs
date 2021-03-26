@@ -63,10 +63,7 @@ namespace Vupa
             if (Game1.level.LvlNumber == 1)
             {
                 ColorNodes();
-
             }
-
-
         }
 
         /// <summary>
@@ -95,16 +92,13 @@ namespace Vupa
             List<Node> allNodes = new List<Node>();
             foreach (Cell cell in grid)
             {
-                
                 if (cell.WalkAble)
                 {
                     cell.MyNode = new Node(cell.MyPos);
                     allNodes.Add(cell.MyNode);
                 }
                 ChangeTexture(cell);
-
             }
-
             return allNodes;
         }
 
